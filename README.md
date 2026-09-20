@@ -6,7 +6,7 @@ Production-oriented ACM Student Chapter platform for Birla Institute of Technolo
 
 ## Live site
 
-GitHub Pages: `https://sh20raj.github.io/acm-bitmesra.github.io/`
+GitHub Pages: `https://acm-bitmesra.github.io/`
 
 ## Stack
 
