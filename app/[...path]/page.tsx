@@ -29,7 +29,7 @@ export const dynamicParams = false;
 export async function generateMetadata({params}:{params:Promise<Params>}):Promise<Metadata>{
   const {path}=await params;
   const slug=path.join('/');
-  const title = path.length===2 ? (path[0]==='projects' ? projects.find(x=>x.slug===path[1])?.title : path[0]==='events' ? events.find(x=>x.slug===path[1])?.title : articles.find(x=>x.slug===path[1])?.title) : simplePages[path[0]]?.title || 'Community';
+  const title = path.length===2 ? (path[0]==='projects' ? projects.find(x=>x.slug===path[1])?.title : path[0]==='events' ? events.find(x=>x.slug===path[1])?.title : articles.find(x=>x.slug===path[1])?.title) : ({ideas:'Ideas',leaderboard:'Leaderboard'}[path[0]] || simplePages[path[0]]?.title || 'ACM BIT Mesra');
   return { title, description:SITE_DESCRIPTION, alternates:{canonical:`${SITE_URL}/${slug}`}, openGraph:{title:`${title} — ${SITE_NAME}`,description:SITE_DESCRIPTION,url:`${SITE_URL}/${slug}`} };
 }
 
