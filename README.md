@@ -4,6 +4,10 @@
 
 Production-oriented ACM Student Chapter platform for Birla Institute of Technology, Mesra.
 
+## Live site
+
+GitHub Pages: `https://sh20raj.github.io/acm-bitmesra.github.io/`
+
 ## Stack
 
 - Next.js App Router
@@ -26,16 +30,6 @@ npm run dev
 npm run typecheck
 npm run build
 ```
-
-## GitHub Pages
-
-The app exports statically with:
-
-```text
-/acm-bitmesra.github.io
-```
-
-GitHub Actions deploys the `out/` directory to Pages.
 
 ## Content
 
