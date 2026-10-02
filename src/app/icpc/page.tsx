@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Trophy, Users, ShieldCheck, ArrowRight, Award, Compass, Timer } from "lucide-react";
+import { Trophy, Users, ShieldCheck, Award, Compass, Timer } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "ICPC Regional Track",

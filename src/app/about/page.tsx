@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
-import { CheckCircle2, ArrowRight, ExternalLink, ShieldCheck, Compass, Lightbulb, History, Building2 } from "lucide-react";
+import { CheckCircle2, ExternalLink, ShieldCheck, Compass, Lightbulb, Building2 } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "About Chapter",

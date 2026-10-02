@@ -7,7 +7,6 @@ import { getPublishedBlogPosts } from "@/data/blog";
 import { studentResources } from "@/data/resources";
 import { activitiesData } from "@/data/activities";
 import { getPublicTeamMembers } from "@/data/team";
-import { siteConfig } from "@/config/site";
 import { Search, X, Calendar, FileText, BookOpen, Layers, User, ArrowRight } from "lucide-react";
 
 interface SearchResultItem {

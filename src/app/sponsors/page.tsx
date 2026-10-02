@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { institutionalPartners, sponsorBenefits } from "@/data/sponsors";
 import { siteConfig } from "@/config/site";
 import { Building2, ExternalLink, ShieldCheck, Mail, CheckCircle2 } from "lucide-react";

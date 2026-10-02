@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { siteConfig } from "@/config/site";
-import { Sparkles, CheckCircle2, HelpCircle, ArrowRight, Code2, Users, Flame } from "lucide-react";
+import { Sparkles, HelpCircle, Code2, Users, Flame } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Join ACM BIT Mesra · Inductions",

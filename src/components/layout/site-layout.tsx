@@ -26,8 +26,18 @@ export function SiteLayout({ children }: SiteLayoutProps) {
 
   return (
     <div className="relative flex min-h-screen flex-col bg-background text-foreground">
+      {/* Skip to Content for Keyboard Accessibility */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-ring font-mono text-xs"
+      >
+        Skip to main content
+      </a>
+
       <Navbar onOpenSearch={() => setSearchOpen(true)} />
-      <main className="flex-1">{children}</main>
+      <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
+        {children}
+      </main>
       <Footer />
       <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
     </div>

@@ -5,7 +5,7 @@ import { activitiesData } from "@/data/activities";
 import { events } from "@/data/events";
 import { studentResources } from "@/data/resources";
 import { EventCard } from "@/components/events/event-card";
-import { ArrowLeft, ArrowRight, BookOpen, CheckCircle2, MapPin, ExternalLink } from "lucide-react";
+import { ArrowLeft, CheckCircle2, ExternalLink } from "lucide-react";
 
 interface ActivityDetailPageProps {
   params: Promise<{ slug: string }>;

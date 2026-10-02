@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { events } from "@/data/events";
-import { formatDate, formatDateRange } from "@/lib/date";
+import { formatDateRange } from "@/lib/date";
 import { Badge } from "@/components/ui/badge";
 import { EventCard } from "@/components/events/event-card";
 import { siteConfig } from "@/config/site";

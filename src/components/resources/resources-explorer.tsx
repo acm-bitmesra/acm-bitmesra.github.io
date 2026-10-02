@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { Resource } from "@/types";
-import { Search, ExternalLink, BookOpen, Video, Code2, FileText, Bookmark } from "lucide-react";
+import { Search, ExternalLink, BookOpen, Video, FileText, Bookmark } from "lucide-react";
 import { GithubIcon } from "@/components/ui/icons";
 
 interface ResourcesExplorerProps {

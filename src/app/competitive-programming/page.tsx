@@ -3,7 +3,7 @@ import Link from "next/link";
 import { studentResources } from "@/data/resources";
 import { events } from "@/data/events";
 import { EventCard } from "@/components/events/event-card";
-import { Code2, Trophy, Flame, CheckCircle2, ArrowRight, ExternalLink, Terminal } from "lucide-react";
+import { Code2, Trophy, Flame, ExternalLink, Terminal } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Competitive Programming Hub",

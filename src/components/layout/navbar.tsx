@@ -34,6 +34,17 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
     }
   }, [mobileMenuOpen]);
 
+  // Close mobile menu on Escape key
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && mobileMenuOpen) {
+        setMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [mobileMenuOpen]);
+
   // Close mobile menu on route change
   React.useEffect(() => {
     setMobileMenuOpen(false);
@@ -63,7 +74,7 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
         </Link>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-1 lg:gap-2">
+        <nav className="hidden md:flex items-center gap-1 lg:gap-2" aria-label="Main Navigation">
           {siteConfig.nav.map((item) => {
             const isActive = pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href));
             return (
@@ -76,6 +87,7 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                     ? "text-foreground bg-secondary font-semibold"
                     : "text-muted-foreground hover:text-foreground hover:bg-secondary/60"
                 )}
+                aria-current={isActive ? "page" : undefined}
               >
                 {item.title}
               </Link>
@@ -91,6 +103,7 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
             onClick={onOpenSearch}
             className="flex items-center gap-2 h-9 px-3 rounded-md border border-border/80 bg-secondary/40 text-xs font-mono text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
             title="Search site (Cmd+K)"
+            aria-label="Search site"
           >
             <Search className="h-3.5 w-3.5" />
             <span className="hidden lg:inline">Search...</span>
@@ -114,7 +127,7 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
               href={siteConfig.social.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="LinkedIn"
+              aria-label="LinkedIn Profile"
               className="p-2 rounded-md hover:text-foreground hover:bg-secondary transition-colors"
             >
               <LinkedinIcon className="h-4 w-4" />
@@ -143,7 +156,7 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle Menu"
+            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileMenuOpen}
             className="p-2 rounded-md text-foreground hover:bg-secondary focus:outline-none"
           >
@@ -154,7 +167,12 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-border bg-background/95 backdrop-blur-lg px-4 pt-2 pb-6 space-y-4">
+        <div
+          role="dialog"
+          aria-label="Mobile Navigation Menu"
+          aria-modal="true"
+          className="md:hidden border-b border-border bg-background/95 backdrop-blur-lg px-4 pt-2 pb-6 space-y-4"
+        >
           <nav className="flex flex-col space-y-1">
             {siteConfig.nav.map((item) => {
               const isActive = pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href));
@@ -168,6 +186,7 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                       ? "text-primary bg-primary/10 font-semibold"
                       : "text-muted-foreground hover:text-foreground hover:bg-secondary"
                   )}
+                  aria-current={isActive ? "page" : undefined}
                 >
                   {item.title}
                 </Link>
