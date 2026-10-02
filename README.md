@@ -82,6 +82,17 @@ npx wrangler deploy
 
 ---
 
+## 📚 Comprehensive Documentation
+
+- [**System Architecture (`ARCHITECTURE.md`)**](ARCHITECTURE.md) — Technical overview, SSG pipeline, Cloudflare Worker design, and performance.
+- [**Content Management Guide (`CONTENT_GUIDE.md`)**](CONTENT_GUIDE.md) — Instructions for updating events, blogs, team members, and verification policies.
+- [**Deployment Guide (`DEPLOYMENT.md`)**](DEPLOYMENT.md) — Cloudflare Workers, custom domain (`acmbitm.campsy.app`), and DNS setup.
+- [**Contributing Guidelines (`CONTRIBUTING.md`)**](CONTRIBUTING.md) — Developer setup, coding conventions, and PR workflow.
+- [**Design System Specification (`DESIGN_SYSTEM.md`)**](DESIGN_SYSTEM.md) — Color tokens, typography scales, and UI guidelines.
+- [**Content Audit Baseline (`CONTENT_AUDIT.md`)**](CONTENT_AUDIT.md) — Section 67 verification policy and legacy asset analysis.
+
+---
+
 ## 📜 License
 
 Licensed under the [MIT License](LICENSE). Built with pride by the ACM BIT Mesra community.
