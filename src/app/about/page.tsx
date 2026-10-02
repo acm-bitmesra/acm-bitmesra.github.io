@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
-import { CheckCircle2, ExternalLink, ShieldCheck, Compass, Lightbulb, Building2 } from "lucide-react";
+import { CheckCircle2, ExternalLink, ShieldCheck } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "About Chapter",
@@ -19,99 +19,85 @@ const beliefs = [
 
 const historyMilestones = [
   {
-    era: "Foundational Era",
-    period: "Early Chapter Establishment",
+    era: "Charter Inception",
+    period: "Early Establishment",
     description:
-      "Formed by passionate computing students and faculty advisors in the Department of Computer Science & Engineering at BIT Mesra, inaugurating an institutional student charter affiliated with ACM Global.",
+      "Formed by computing students and faculty advisors in the Department of Computer Science & Engineering at BIT Mesra, inaugurating an institutional student charter affiliated with ACM Global.",
   },
   {
-    era: "Contest Culture & CodeZilla",
+    era: "Contest Culture & CQM",
     period: "Algorithmic Growth",
     description:
-      "Initiated regular campus coding contests and CodeZilla, creating a consistent pipeline of students training for ACM-ICPC regional contests and algorithmic competitions.",
+      "Initiated regular campus coding contests and CodeZilla, creating a consistent pipeline of students training for ICPC regional contests and algorithmic competitions.",
   },
   {
-    era: "Hackathon Expansion & Hack-A-Bit",
-    period: "Flagship Hackathon Era",
+    era: "Hackathon Expansion",
+    period: "Hack-A-Bit Flagship",
     description:
       "Launched Hack-A-Bit, expanding the chapter's reach across Eastern India with multi-day, multi-track student hackathons featuring real-world product prototyping.",
   },
   {
-    era: "Modern Developer & Open-Source Community",
+    era: "Modern Developer Community",
     period: "Present Day",
     description:
-      "Evolving into an integrated developer ecosystem combining competitive programming, full-stack systems engineering, research exposure, and open-source contributions.",
+      "Integrated developer ecosystem combining competitive programming, full-stack systems engineering, research exposure, and open-source contributions.",
   },
 ];
 
 export default function AboutPage() {
   return (
-    <div className="py-12 sm:py-20">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 space-y-16 sm:space-y-24">
-        {/* Hero Section */}
-        <section className="space-y-6">
-          <div className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary/60 px-3 py-1 text-xs font-mono text-muted-foreground backdrop-blur-sm">
-            <Building2 className="h-3.5 w-3.5 text-primary" />
-            <span>Birla Institute of Technology, Mesra · Established Chapter</span>
+    <div className="py-10 sm:py-16">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 space-y-12">
+        {/* Document Header */}
+        <div className="space-y-3 border-b border-border/60 pb-6">
+          <div className="text-xs font-mono text-muted-foreground">
+            Overview / About the Chapter
           </div>
-
-          <h1 className="text-3xl sm:text-6xl font-black tracking-tight text-foreground leading-tight">
-            What is ACM BIT Mesra?
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
+            About ACM BIT Mesra
           </h1>
-
-          <p className="text-base sm:text-xl text-muted-foreground leading-relaxed max-w-3xl">
-            We are the official student chapter of the Association for Computing Machinery (ACM) at Birla Institute of Technology, Mesra. We are a technical society run by students, for students, dedicated to advancing computing as a science and a craft.
+          <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">
+            The official Association for Computing Machinery student chapter at Birla Institute of Technology, Mesra, chartered to advance computing education, contest culture, and systems engineering.
           </p>
-        </section>
+        </div>
 
-        {/* Mission & Vision Grid */}
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="rounded-2xl border border-border bg-card p-8 space-y-4 relative overflow-hidden">
-            <div className="h-10 w-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
-              <Compass className="h-5 w-5" />
-            </div>
-            <h2 className="text-2xl font-bold tracking-tight text-foreground">Our Mission</h2>
-            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-              To cultivate an enduring culture of problem solving, software excellence, and technical leadership at BIT Mesra. We empower students across disciplines to gain competence in algorithmic thinking, production engineering, and collaborative development.
+        {/* Mission & Vision Callout (Notion Style) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="rounded-lg border border-border/80 bg-card p-5 space-y-2">
+            <h2 className="text-sm font-semibold text-foreground">Our Mission</h2>
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              Empower engineering students to build production-grade software, compete globally in algorithmic contests, contribute to open source, and develop strong engineering leadership.
             </p>
           </div>
-
-          <div className="rounded-2xl border border-border bg-card p-8 space-y-4 relative overflow-hidden">
-            <div className="h-10 w-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
-              <Lightbulb className="h-5 w-5" />
-            </div>
-            <h2 className="text-2xl font-bold tracking-tight text-foreground">Our Vision</h2>
-            <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-              To serve as the premier student-led computing hub in the region, bridging the gap between foundational computer science education and real-world technology challenges, fostering alumni who build meaningful software systems globally.
+          <div className="rounded-lg border border-border/80 bg-card p-5 space-y-2">
+            <h2 className="text-sm font-semibold text-foreground">Our Vision</h2>
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              To be the premier student computing hub in the region, bridging the gap between computational theory and real-world technology challenges, fostering alumni who ship impactful systems globally.
             </p>
           </div>
-        </section>
+        </div>
 
-        {/* Section: What We Believe */}
-        <section className="space-y-8">
-          <div className="space-y-3">
-            <span className="font-mono text-xs uppercase tracking-wider text-primary">Foundations</span>
-            <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-foreground">
-              What We Believe
+        {/* Section: Foundational Principles */}
+        <section className="space-y-4">
+          <div className="border-b border-border/60 pb-2">
+            <h2 className="text-base font-semibold tracking-tight text-foreground">
+              Guiding Principles
             </h2>
-            <p className="text-sm sm:text-base text-muted-foreground max-w-2xl">
-              Principles that guide our workshops, hackathons, contest preparation, and community interactions.
-            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {beliefs.map((belief, idx) => (
               <div
                 key={idx}
-                className="rounded-xl border border-border bg-card p-6 space-y-2 hover:border-border/80 transition-colors"
+                className="rounded-lg border border-border/70 bg-card p-4 space-y-1 transition-colors hover:bg-secondary/20"
               >
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-primary shrink-0" />
-                  <h3 className="text-base font-bold text-foreground">
+                  <CheckCircle2 className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
+                  <h3 className="text-xs font-semibold text-foreground">
                     {belief.title}
                   </h3>
                 </div>
-                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed pl-6">
+                <p className="text-xs text-muted-foreground leading-relaxed pl-5.5">
                   {belief.description}
                 </p>
               </div>
@@ -120,32 +106,28 @@ export default function AboutPage() {
         </section>
 
         {/* Section: Chapter History Timeline */}
-        <section className="space-y-8 border-t border-border pt-16">
-          <div className="space-y-3">
-            <span className="font-mono text-xs uppercase tracking-wider text-primary">Timeline</span>
-            <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-foreground">
+        <section className="space-y-4">
+          <div className="border-b border-border/60 pb-2">
+            <h2 className="text-base font-semibold tracking-tight text-foreground">
               Chapter History & Milestones
             </h2>
-            <p className="text-sm text-muted-foreground max-w-2xl">
-              A chronology of algorithmic contests, hackathons, and community growth at BIT Mesra.
-            </p>
           </div>
 
-          <div className="space-y-6">
+          <div className="divide-y divide-border/60 rounded-lg border border-border/80 bg-card overflow-hidden">
             {historyMilestones.map((milestone, idx) => (
               <div
                 key={idx}
-                className="flex flex-col sm:flex-row sm:items-start gap-4 sm:gap-8 rounded-xl border border-border bg-card p-6"
+                className="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-6 p-4 hover:bg-secondary/20 transition-colors"
               >
-                <div className="sm:w-48 shrink-0 space-y-1">
-                  <span className="font-mono text-xs font-bold text-primary block">
+                <div className="sm:w-44 shrink-0 space-y-0.5">
+                  <span className="font-mono text-xs font-semibold text-foreground block">
                     {milestone.era}
                   </span>
-                  <span className="text-xs font-mono text-muted-foreground block">
+                  <span className="text-[11px] font-mono text-muted-foreground block">
                     {milestone.period}
                   </span>
                 </div>
-                <p className="text-sm text-muted-foreground leading-relaxed flex-1">
+                <p className="text-xs text-muted-foreground leading-relaxed flex-1">
                   {milestone.description}
                 </p>
               </div>
@@ -154,67 +136,54 @@ export default function AboutPage() {
         </section>
 
         {/* Section: Institutional Relationships */}
-        <section className="rounded-2xl border border-border bg-secondary/30 p-8 sm:p-10 space-y-6">
-          <div className="space-y-2">
-            <div className="flex items-center gap-2 text-xs font-mono text-primary font-semibold">
-              <ShieldCheck className="h-4 w-4" />
+        <section className="rounded-lg border border-border/80 bg-secondary/30 p-6 space-y-4">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground">
+              <ShieldCheck className="h-3.5 w-3.5" />
               <span>INSTITUTIONAL AFFILIATION</span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
-              ACM + BIT Mesra & Global Connection
+            <h2 className="text-base font-semibold tracking-tight text-foreground">
+              Institutional Relationship
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm text-muted-foreground leading-relaxed">
-            <div className="space-y-3">
-              <h3 className="font-bold text-foreground flex items-center gap-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-muted-foreground leading-relaxed">
+            <div className="space-y-2">
+              <h3 className="font-semibold text-foreground flex items-center gap-1.5">
                 <span>Birla Institute of Technology, Mesra</span>
                 <a href={siteConfig.institution.url} target="_blank" rel="noopener noreferrer">
-                  <ExternalLink className="h-3.5 w-3.5 text-primary" />
+                  <ExternalLink className="h-3 w-3 text-muted-foreground hover:text-foreground" />
                 </a>
               </h3>
               <p>
-                Founded in 1955 by philanthropist and industrialist B.M. Birla, BIT Mesra is a premier technical deemed university in Ranchi, Jharkhand. The ACM Student Chapter operates under the guidance of the Department of Computer Science & Engineering.
+                Founded in 1955 by philanthropist and industrialist B.M. Birla, BIT Mesra is a premier technical university in Ranchi, Jharkhand. The ACM Student Chapter operates under the guidance of the Department of Computer Science & Engineering.
               </p>
             </div>
 
-            <div className="space-y-3">
-              <h3 className="font-bold text-foreground flex items-center gap-2">
+            <div className="space-y-2">
+              <h3 className="font-semibold text-foreground flex items-center gap-1.5">
                 <span>ACM Global Student Charter</span>
                 <a href={siteConfig.parentOrganization.url} target="_blank" rel="noopener noreferrer">
-                  <ExternalLink className="h-3.5 w-3.5 text-primary" />
+                  <ExternalLink className="h-3 w-3 text-muted-foreground hover:text-foreground" />
                 </a>
               </h3>
               <p>
-                The Association for Computing Machinery is the world&apos;s largest educational and scientific computing society. Our chapter is chartered by ACM Global as a student chapter, operating locally at BIT Mesra while connecting our members to ACM&apos;s global digital library, student competitions, and professional ethics.
+                The Association for Computing Machinery is the world&apos;s largest educational computing society. Our chapter is chartered by ACM Global, connecting our student members to international resources, conferences, and ethics.
               </p>
             </div>
           </div>
         </section>
 
-        {/* Join CTA */}
-        <section className="pt-4 text-center space-y-4">
-          <h2 className="text-2xl font-bold tracking-tight text-foreground">
-            Ready to build with us?
-          </h2>
-          <p className="text-sm text-muted-foreground max-w-md mx-auto">
-            Discover upcoming inductions or attend our weekly coding and development meetups.
-          </p>
-          <div className="pt-2 flex justify-center gap-4">
-            <Link
-              href="/join"
-              className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-6 text-sm font-semibold text-primary-foreground shadow hover:bg-primary/90 transition-colors"
-            >
-              Join the Chapter
-            </Link>
-            <Link
-              href="/activities"
-              className="inline-flex h-10 items-center justify-center rounded-md border border-border px-5 text-sm font-medium hover:bg-secondary transition-colors"
-            >
-              Explore Activities
-            </Link>
-          </div>
-        </section>
+        {/* Join Link */}
+        <div className="pt-2 border-t border-border/60 flex items-center justify-between text-xs">
+          <span className="text-muted-foreground font-mono">Ready to get involved?</span>
+          <Link
+            href="/join"
+            className="inline-flex h-8 items-center justify-center rounded-md bg-neutral-900 px-3 text-xs font-medium text-white hover:bg-neutral-800 dark:bg-neutral-100 dark:text-neutral-900 transition-colors"
+          >
+            Induction Details →
+          </Link>
+        </div>
       </div>
     </div>
   );

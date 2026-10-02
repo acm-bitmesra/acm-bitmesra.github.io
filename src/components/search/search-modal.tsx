@@ -222,19 +222,19 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                     onClose();
                   }}
                   onMouseEnter={() => setSelectedIndex(idx)}
-                  className={`flex items-start gap-3 p-3 rounded-xl cursor-pointer transition-colors ${
+                  className={`flex items-start gap-3 p-2.5 rounded-lg cursor-pointer transition-colors ${
                     isSelected
                       ? "bg-secondary text-foreground"
                       : "text-muted-foreground hover:bg-secondary/60 hover:text-foreground"
                   }`}
                 >
                   <div className="mt-0.5 shrink-0">
-                    {item.category === "EVENT" && <Calendar className="h-4 w-4 text-primary" />}
-                    {item.category === "BLOG" && <FileText className="h-4 w-4 text-primary" />}
-                    {item.category === "RESOURCE" && <BookOpen className="h-4 w-4 text-primary" />}
-                    {item.category === "ACTIVITY" && <Layers className="h-4 w-4 text-primary" />}
-                    {item.category === "TEAM" && <User className="h-4 w-4 text-primary" />}
-                    {item.category === "PAGE" && <ArrowRight className="h-4 w-4 text-primary" />}
+                    {item.category === "EVENT" && <Calendar className="h-4 w-4 text-muted-foreground" />}
+                    {item.category === "BLOG" && <FileText className="h-4 w-4 text-muted-foreground" />}
+                    {item.category === "RESOURCE" && <BookOpen className="h-4 w-4 text-muted-foreground" />}
+                    {item.category === "ACTIVITY" && <Layers className="h-4 w-4 text-muted-foreground" />}
+                    {item.category === "TEAM" && <User className="h-4 w-4 text-muted-foreground" />}
+                    {item.category === "PAGE" && <ArrowRight className="h-4 w-4 text-muted-foreground" />}
                   </div>
 
                   <div className="flex-1 min-w-0 space-y-0.5">

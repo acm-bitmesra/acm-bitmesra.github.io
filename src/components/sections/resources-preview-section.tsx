@@ -1,60 +1,55 @@
 import Link from "next/link";
 import { studentResources } from "@/data/resources";
-import { ArrowRight, BookOpen, ExternalLink } from "lucide-react";
+import { ArrowRight, ArrowUpRight, BookMarked } from "lucide-react";
 
 export function ResourcesPreviewSection() {
   return (
-    <section className="py-20 border-b border-border bg-background">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-          <div className="space-y-3">
-            <div className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-primary">
-              <span>05 / Curated Knowledge</span>
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
-              Developer & Algorithmic Resources
+    <section className="py-16 border-b border-border/80 bg-background">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-border/60 pb-4">
+          <div>
+            <h2 className="text-2xl font-bold tracking-tight text-foreground">
+              Curated Roadmaps
             </h2>
-            <p className="text-muted-foreground text-sm sm:text-base max-w-xl">
-              Curated foundations, competitive programming guides, and systems learning materials recommended by ACM mentors.
+            <p className="text-xs text-muted-foreground mt-1">
+              Foundational problem sets, contest guides, and systems references.
             </p>
           </div>
           <Link
             href="/resources"
-            className="inline-flex items-center gap-1.5 text-xs font-mono font-medium text-primary hover:underline"
+            className="text-xs font-mono text-muted-foreground hover:text-foreground inline-flex items-center gap-1 group"
           >
-            Browse all resources <ArrowRight className="h-3.5 w-3.5" />
+            All resources <ArrowRight className="h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Notion-style Bookmarks List */}
+        <div className="rounded-lg border border-border/80 bg-card overflow-hidden divide-y divide-border/60">
           {studentResources.slice(0, 4).map((resource, idx) => (
             <a
               key={idx}
               href={resource.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-xl border border-border bg-card p-5 flex flex-col justify-between transition-all hover:border-border/80 hover:shadow-sm group"
+              className="group flex flex-col sm:flex-row sm:items-center justify-between p-4 gap-3 transition-colors hover:bg-secondary/40"
             >
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-[10px] font-semibold text-primary uppercase tracking-wider px-2 py-0.5 rounded bg-primary/10 border border-primary/20">
-                    {resource.category}
-                  </span>
-                  <BookOpen className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
+              <div className="flex items-start sm:items-center gap-3 min-w-0">
+                <BookMarked className="h-4 w-4 mt-0.5 sm:mt-0 text-muted-foreground shrink-0" />
+                <div className="space-y-0.5 min-w-0">
+                  <div className="text-sm font-semibold text-foreground group-hover:underline truncate">
+                    {resource.title}
+                  </div>
+                  <div className="text-xs text-muted-foreground line-clamp-1 max-w-xl">
+                    {resource.description}
+                  </div>
                 </div>
-                <h3 className="text-base font-bold text-foreground group-hover:text-primary transition-colors">
-                  {resource.title}
-                </h3>
-                <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">
-                  {resource.description}
-                </p>
               </div>
 
-              <div className="pt-4 mt-4 border-t border-border/60 flex items-center justify-between text-xs font-mono text-muted-foreground">
-                <span>{resource.level || "Curated"}</span>
-                <span className="flex items-center gap-1 group-hover:text-foreground transition-colors">
-                  Open <ExternalLink className="h-3 w-3" />
+              <div className="flex items-center gap-3 shrink-0 self-end sm:self-center">
+                <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-secondary text-secondary-foreground border border-border/50">
+                  {resource.category}
                 </span>
+                <ArrowUpRight className="h-3.5 w-3.5 text-muted-foreground group-hover:text-foreground transition-colors" />
               </div>
             </a>
           ))}

@@ -67,16 +67,16 @@ export function ResourcesExplorer({ initialResources }: ResourcesExplorerProps) 
       </div>
 
       {/* Category Tabs */}
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="flex flex-wrap items-center gap-1.5">
         {CATEGORIES.map((cat) => (
           <button
             key={cat}
             type="button"
             onClick={() => setSelectedCategory(cat)}
-            className={`px-3.5 py-1.5 rounded-full text-xs font-mono font-medium transition-colors ${
+            className={`px-3 py-1 rounded-md text-xs font-mono transition-colors ${
               selectedCategory === cat
-                ? "bg-primary text-primary-foreground shadow-sm"
-                : "border border-border bg-secondary/50 text-muted-foreground hover:bg-secondary hover:text-foreground"
+                ? "bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900 font-medium"
+                : "border border-border/70 bg-secondary/40 text-muted-foreground hover:bg-secondary hover:text-foreground"
             }`}
           >
             {cat}
@@ -85,7 +85,7 @@ export function ResourcesExplorer({ initialResources }: ResourcesExplorerProps) 
       </div>
 
       {/* Results Count */}
-      <div className="flex items-center justify-between text-xs font-mono text-muted-foreground border-b border-border pb-3">
+      <div className="flex items-center justify-between text-xs font-mono text-muted-foreground border-b border-border/60 pb-3">
         <span>
           Showing {filteredResources.length} curated resource{filteredResources.length === 1 ? "" : "s"}
         </span>
@@ -93,7 +93,7 @@ export function ResourcesExplorer({ initialResources }: ResourcesExplorerProps) 
           <button
             type="button"
             onClick={() => setSelectedCategory("All")}
-            className="hover:text-primary transition-colors"
+            className="hover:underline transition-colors"
           >
             Reset Category
           </button>
@@ -102,7 +102,7 @@ export function ResourcesExplorer({ initialResources }: ResourcesExplorerProps) 
 
       {/* Resource Cards Grid */}
       {filteredResources.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredResources.map((res, idx) => {
             const TypeIcon = typeIcons[res.type] || FileText;
             return (
@@ -111,11 +111,11 @@ export function ResourcesExplorer({ initialResources }: ResourcesExplorerProps) 
                 href={res.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-xl border border-border bg-card p-6 flex flex-col justify-between hover:border-border/80 hover:shadow-md transition-all group"
+                className="rounded-lg border border-border/80 bg-card p-5 flex flex-col justify-between hover:border-border hover:bg-secondary/20 transition-colors group"
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-primary px-2 py-0.5 rounded bg-primary/10 border border-primary/20">
+                    <span className="font-mono text-[10px] text-muted-foreground uppercase px-2 py-0.5 rounded bg-secondary border border-border/60">
                       {res.category}
                     </span>
                     <span className="flex items-center gap-1 font-mono text-[11px] text-muted-foreground uppercase">

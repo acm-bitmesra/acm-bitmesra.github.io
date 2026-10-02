@@ -59,7 +59,7 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
           : "border-transparent bg-background/50 backdrop-blur-sm"
       )}
     >
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Brand / Logo */}
         <Link href="/" className="flex items-center gap-3 group focus:outline-none">
           <AcmLogo className="h-9 w-9 group-hover:scale-105 transition-transform" />

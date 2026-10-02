@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { siteConfig } from "@/config/site";
-import { Sparkles, HelpCircle, Code2, Users, Flame } from "lucide-react";
+import { Code2, Users, Terminal, HelpCircle } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Join ACM BIT Mesra · Inductions",
@@ -9,132 +9,129 @@ export const metadata: Metadata = {
 };
 
 const selectionSteps = [
-  { step: "01", title: "Registration", desc: "Fill out the official chapter induction form expressing your focus areas (Competitive Programming, Web/Systems Development, Hackathons, Design/Media)." },
-  { step: "02", title: "Aptitude & Coding Round", desc: "An objective problem-solving and algorithmic logic assessment testing basic coding concepts and analytical reasoning." },
-  { step: "03", title: "Technical Task / Interaction", desc: "A discussion with senior chapter members reviewing your code, side projects, or problem-solving approaches." },
-  { step: "04", title: "Induction & Orientation", desc: "Welcome to ACM BIT Mesra. You are assigned to a Special Interest Group (SIG) and paired with a senior mentor." },
+  { step: "01", title: "Registration", desc: "Fill out the chapter induction form indicating your interest tracks (Competitive Programming, Systems/Web, Design, Operations)." },
+  { step: "02", title: "Aptitude & Coding Round", desc: "An objective logic and problem-solving assessment evaluating basic analytical reasoning and programming fundamentals." },
+  { step: "03", title: "Technical Task / Discussion", desc: "A peer discussion with senior members reviewing your code, side projects, or problem-solving intuition." },
+  { step: "04", title: "Orientation & Onboarding", desc: "Inducted members join specific Special Interest Groups (SIGs) and receive guidance from senior chapter mentors." },
 ];
 
 const faqs = [
   {
     q: "Can first-year students apply?",
-    a: "Yes! First-year students are actively encouraged to apply. We look for curiosity, problem-solving enthusiasm, and commitment to learning rather than encyclopedic prior knowledge.",
+    a: "Yes. First-year students are actively encouraged to apply. We value curiosity, problem-solving enthusiasm, and consistency over extensive prior knowledge.",
   },
   {
-    q: "Is prior competitive programming or development experience required?",
-    a: "No prior competitive programming rating is mandatory. Basic familiarity with any programming language (C++, C, Python, or Java) and strong logic skills are sufficient for junior inductees.",
+    q: "Is prior competitive programming experience required?",
+    a: "No prior contest rating is mandatory. Basic familiarity with any programming language (C++, C, Python, or Java) and logical reasoning are sufficient.",
   },
   {
-    q: "Is ACM only open to Computer Science & Engineering students?",
-    a: "No. ACM BIT Mesra is an institute-wide technical society open to all branches (ECE, EEE, Mechanical, Chemical, IT, etc.) as well as postgraduate students (MCA, M.Tech). Passion for computing is what matters.",
+    q: "Is membership limited to Computer Science students?",
+    a: "No. ACM BIT Mesra is open to all engineering departments (ECE, EEE, Mechanical, Chemical, Production, etc.) as well as postgraduate students (MCA, M.Tech).",
   },
   {
-    q: "How often is chapter recruitment conducted?",
-    a: "Official chapter inductions are conducted annually during the Autumn semester for the incoming freshman and sophomore batches, with supplementary recruitment for specific project roles as needed.",
+    q: "How often are inductions held?",
+    a: "Official chapter inductions take place annually during the Autumn semester for incoming batches, with supplementary recruitment for specialized project roles as needed.",
   },
   {
-    q: "What should I prepare for the induction?",
-    a: "Brush up on fundamental programming syntax (loops, arrays, functions), basic algorithmic intuition, and be ready to explain any projects or technologies you have explored.",
+    q: "What should I prepare?",
+    a: "Review core programming syntax (loops, arrays, functions, recursion), practice basic algorithmic logic, and prepare to explain any projects you have built.",
   },
 ];
 
 export default function JoinPage() {
   return (
-    <div className="py-12 sm:py-20">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 space-y-16">
-        {/* Hero */}
-        <section className="space-y-6">
-          <div className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary/60 px-3.5 py-1 text-xs font-mono text-primary backdrop-blur-sm">
-            <Sparkles className="h-3.5 w-3.5" />
-            <span>Chapter Recruitment · Membership</span>
+    <div className="py-10 sm:py-16">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 space-y-12">
+        {/* Document Header */}
+        <div className="space-y-3 border-b border-border/60 pb-6">
+          <div className="text-xs font-mono text-muted-foreground">
+            Membership / Chapter Inductions
           </div>
-
-          <h1 className="text-3xl sm:text-6xl font-black tracking-tight text-foreground leading-tight">
-            Join the ACM BIT Mesra Community
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
+            Join ACM BIT Mesra
           </h1>
-
-          <p className="text-base sm:text-xl text-muted-foreground leading-relaxed max-w-3xl">
-            Surround yourself with students who love building real software, mastering algorithms, and competing at the highest collegiate level.
+          <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">
+            Information regarding recruitment, eligibility, and the annual induction workflow for undergraduate and postgraduate students.
           </p>
+        </div>
 
-          <div className="pt-2 flex flex-wrap gap-4">
+        {/* Current Status Callout */}
+        <div className="rounded-lg border border-border/80 bg-secondary/30 p-5 space-y-2">
+          <div className="text-xs font-mono text-muted-foreground uppercase tracking-wider">
+            Induction Cycle Notice
+          </div>
+          <p className="text-xs sm:text-sm text-foreground leading-relaxed">
+            Formal recruitment cycles are announced campus-wide at the start of each academic semester. For off-cycle project collaboration or inquiries, contact the executive team directly.
+          </p>
+          <div className="pt-2">
             <a
               href={`mailto:${siteConfig.social.email}?subject=ACM%20BIT%20Mesra%20Membership%20Inquiry`}
-              className="inline-flex h-11 items-center justify-center rounded-md bg-primary px-8 text-sm font-semibold text-primary-foreground shadow hover:bg-primary/90 transition-colors"
+              className="inline-flex h-8 items-center justify-center rounded-md bg-neutral-900 px-3 text-xs font-medium text-white hover:bg-neutral-800 dark:bg-neutral-100 dark:text-neutral-900 transition-colors"
             >
-              Express Interest via Email
-            </a>
-            <a
-              href="#process"
-              className="inline-flex h-11 items-center justify-center rounded-md border border-border px-5 text-sm font-medium hover:bg-secondary transition-colors"
-            >
-              See Selection Flow ↓
+              Contact Membership Lead →
             </a>
           </div>
-        </section>
+        </div>
 
-        {/* Section: Who Should Apply? */}
-        <section className="rounded-2xl border border-border bg-card p-8 sm:p-10 space-y-6">
-          <div className="space-y-2">
-            <span className="font-mono text-xs uppercase tracking-wider text-primary">Eligibility</span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-foreground">
-              Who Should Apply?
+        {/* Tracks */}
+        <section className="space-y-4">
+          <div className="border-b border-border/60 pb-2">
+            <h2 className="text-base font-semibold tracking-tight text-foreground">
+              Focus Tracks
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm text-muted-foreground leading-relaxed">
-            <div className="space-y-2">
-              <h3 className="font-bold text-foreground flex items-center gap-2">
-                <Code2 className="h-4 w-4 text-primary" /> Problem Solvers
-              </h3>
-              <p>
-                Students who enjoy logic puzzles, mathematics, discrete structures, and want to compete in Codeforces, CodeChef, and ICPC regionals.
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-muted-foreground">
+            <div className="rounded-lg border border-border/70 bg-card p-5 space-y-2">
+              <div className="flex items-center gap-2 text-foreground font-semibold">
+                <Code2 className="h-4 w-4 text-muted-foreground" />
+                <span>Competitive Programming</span>
+              </div>
+              <p className="leading-relaxed">
+                Focus on algorithms, data structures, Codeforces/CodeChef contest performance, and ICPC regional preparation.
               </p>
             </div>
-            <div className="space-y-2">
-              <h3 className="font-bold text-foreground flex items-center gap-2">
-                <Flame className="h-4 w-4 text-primary" /> Software Builders
-              </h3>
-              <p>
-                Developers who want to ship modern web apps, distributed backends, mobile tools, and contribute to public open-source software.
+
+            <div className="rounded-lg border border-border/70 bg-card p-5 space-y-2">
+              <div className="flex items-center gap-2 text-foreground font-semibold">
+                <Terminal className="h-4 w-4 text-muted-foreground" />
+                <span>Software & Systems</span>
+              </div>
+              <p className="leading-relaxed">
+                Full-stack web applications, developer CLI utilities, distributed services, and open-source contributions.
               </p>
             </div>
-            <div className="space-y-2">
-              <h3 className="font-bold text-foreground flex items-center gap-2">
-                <Users className="h-4 w-4 text-primary" /> Organizers & Designers
-              </h3>
-              <p>
-                Creative minds who want to design intuitive user interfaces, coordinate 36-hour hackathons, and shape campus technical culture.
+
+            <div className="rounded-lg border border-border/70 bg-card p-5 space-y-2">
+              <div className="flex items-center gap-2 text-foreground font-semibold">
+                <Users className="h-4 w-4 text-muted-foreground" />
+                <span>Design & Operations</span>
+              </div>
+              <p className="leading-relaxed">
+                User experience design, hackathon organization, technical writing, media production, and community initiatives.
               </p>
             </div>
           </div>
         </section>
 
-        {/* Section: Selection Process */}
-        <section id="process" className="space-y-8 scroll-mt-24">
-          <div className="space-y-3">
-            <span className="font-mono text-xs uppercase tracking-wider text-primary">Selection Flow</span>
-            <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-foreground">
-              How Inductions Work
+        {/* Selection Steps */}
+        <section className="space-y-4">
+          <div className="border-b border-border/60 pb-2">
+            <h2 className="text-base font-semibold tracking-tight text-foreground">
+              Induction Workflow
             </h2>
-            <p className="text-sm text-muted-foreground max-w-2xl">
-              A transparent, merit-based selection pipeline designed to assess problem solving, collaboration, and passion.
-            </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="divide-y divide-border/60 rounded-lg border border-border/80 bg-card overflow-hidden">
             {selectionSteps.map((s) => (
-              <div
-                key={s.step}
-                className="rounded-xl border border-border bg-card p-6 flex flex-col justify-between space-y-4"
-              >
-                <div className="space-y-2">
-                  <span className="font-mono text-xs font-bold text-primary px-2 py-0.5 rounded bg-primary/10 border border-primary/20">
-                    STEP {s.step}
-                  </span>
-                  <h3 className="text-base font-bold text-foreground">
+              <div key={s.step} className="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-6 p-4 hover:bg-secondary/20 transition-colors">
+                <span className="font-mono text-xs font-semibold text-foreground shrink-0 w-20">
+                  Step {s.step}
+                </span>
+                <div className="space-y-0.5 flex-1">
+                  <div className="text-xs font-semibold text-foreground">
                     {s.title}
-                  </h3>
+                  </div>
                   <p className="text-xs text-muted-foreground leading-relaxed">
                     {s.desc}
                   </p>
@@ -144,39 +141,28 @@ export default function JoinPage() {
           </div>
         </section>
 
-        {/* Section: Frequently Asked Questions */}
-        <section className="space-y-6 rounded-2xl border border-border bg-card p-8 sm:p-10">
-          <div className="space-y-2">
-            <span className="font-mono text-xs uppercase tracking-wider text-primary">FAQ</span>
-            <h2 className="text-2xl font-bold tracking-tight text-foreground flex items-center gap-2">
-              <HelpCircle className="h-5 w-5 text-primary" /> Frequently Asked Questions
+        {/* FAQs */}
+        <section className="space-y-4">
+          <div className="border-b border-border/60 pb-2">
+            <h2 className="text-base font-semibold tracking-tight text-foreground flex items-center gap-2">
+              <HelpCircle className="h-4 w-4 text-muted-foreground" />
+              Frequently Asked Questions
             </h2>
           </div>
 
-          <div className="space-y-6 pt-4 divide-y divide-border/60">
-            {faqs.map((faq, i) => (
-              <div key={i} className="pt-4 first:pt-0 space-y-1.5">
-                <h3 className="text-base font-bold text-foreground">
+          <div className="space-y-3">
+            {faqs.map((faq, idx) => (
+              <div key={idx} className="rounded-lg border border-border/70 bg-card p-4 space-y-1.5">
+                <h3 className="text-xs font-semibold text-foreground">
                   {faq.q}
                 </h3>
-                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                <p className="text-xs text-muted-foreground leading-relaxed">
                   {faq.a}
                 </p>
               </div>
             ))}
           </div>
         </section>
-
-        {/* Bottom Contact Reminder */}
-        <div className="rounded-xl border border-border bg-secondary/40 p-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-muted-foreground">
-          <span>Questions about membership? Email our student coordinators:</span>
-          <a
-            href={`mailto:${siteConfig.social.email}`}
-            className="text-primary font-bold hover:underline"
-          >
-            {siteConfig.social.email} →
-          </a>
-        </div>
       </div>
     </div>
   );

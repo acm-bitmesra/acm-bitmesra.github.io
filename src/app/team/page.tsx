@@ -17,31 +17,31 @@ export default function TeamPage() {
   const leads = publicMembers.filter((m) => m.category === "leads");
 
   return (
-    <div className="py-12 sm:py-20">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-16">
-        {/* Header */}
-        <div className="max-w-3xl space-y-4">
-          <div className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-primary">
-            <span>Chapter Leadership · Governance</span>
+    <div className="py-10 sm:py-16">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 space-y-12">
+        {/* Document Header */}
+        <div className="space-y-2 border-b border-border/60 pb-6">
+          <div className="text-xs font-mono text-muted-foreground">
+            Governance / Leadership & Mentors
           </div>
-          <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-foreground">
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
             Executive Team & Mentors
           </h1>
-          <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-            The team guiding academic coordination, competitive programming leagues, hackathons, and software engineering initiatives at BIT Mesra.
+          <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">
+            Faculty guidance and student leadership coordinating contests, hackathons, and developer education at BIT Mesra.
           </p>
         </div>
 
         {/* Faculty Sponsor Section */}
         {faculty.length > 0 && (
-          <section className="space-y-6">
-            <div className="flex items-center gap-2 border-b border-border pb-3">
-              <ShieldCheck className="h-5 w-5 text-primary" />
-              <h2 className="text-xl font-bold tracking-tight text-foreground">
+          <section className="space-y-4">
+            <div className="flex items-center gap-2 border-b border-border/60 pb-2">
+              <ShieldCheck className="h-4 w-4 text-muted-foreground" />
+              <h2 className="text-base font-semibold tracking-tight text-foreground">
                 Faculty Advisory
               </h2>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {faculty.map((member) => (
                 <MemberCard key={member.slug} member={member} />
               ))}
@@ -51,13 +51,13 @@ export default function TeamPage() {
 
         {/* Student Leadership Notice / Verified Members */}
         {executive.length > 0 ? (
-          <section className="space-y-6">
-            <div className="border-b border-border pb-3">
-              <h2 className="text-xl font-bold tracking-tight text-foreground">
+          <section className="space-y-4">
+            <div className="border-b border-border/60 pb-2">
+              <h2 className="text-base font-semibold tracking-tight text-foreground">
                 Executive Body
               </h2>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {executive.map((member) => (
                 <MemberCard key={member.slug} member={member} />
               ))}
@@ -65,35 +65,35 @@ export default function TeamPage() {
           </section>
         ) : null}
 
-        {/* Section 67 Verification Transparency Banner */}
-        <section className="rounded-xl border border-border/80 bg-secondary/30 p-6 sm:p-8 space-y-3">
-          <div className="flex items-center gap-2 font-mono text-xs text-primary font-bold">
-            <Info className="h-4 w-4" />
+        {/* Section 67 Verification Transparency Banner / Notion Callout */}
+        <section className="rounded-lg border border-border/80 bg-secondary/30 p-5 space-y-2 text-xs">
+          <div className="flex items-center gap-2 font-mono text-muted-foreground font-semibold">
+            <Info className="h-3.5 w-3.5 shrink-0" />
             <span>ANNUAL EXECUTIVE ROSTER UPDATE</span>
           </div>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            In accordance with chapter verification standards, the active 2026–2027 student executive appointments are confirmed following each academic session&apos;s induction cycle under the Department of Computer Science & Engineering. Unverified student rosters are withheld from public indexing to preserve archival accuracy.
+          <p className="text-muted-foreground leading-relaxed">
+            In accordance with chapter verification standards, active student executive appointments are confirmed following each academic session&apos;s induction cycle under the Department of Computer Science & Engineering. Unverified student rosters are withheld from public indexing to preserve archival accuracy.
           </p>
-          <div className="pt-2">
+          <div className="pt-1">
             <Link
               href="/alumni"
-              className="inline-flex items-center gap-1.5 text-xs font-mono font-medium text-primary hover:underline"
+              className="inline-flex items-center gap-1 font-mono text-foreground hover:underline"
             >
               <span>Explore previous leadership batches in Alumni Archive</span>
-              <ArrowRight className="h-3.5 w-3.5" />
+              <ArrowRight className="h-3 w-3" />
             </Link>
           </div>
         </section>
 
         {/* Leads & Coordinators if verified */}
         {leads.length > 0 && (
-          <section className="space-y-6">
-            <div className="border-b border-border pb-3">
-              <h2 className="text-xl font-bold tracking-tight text-foreground">
+          <section className="space-y-4">
+            <div className="border-b border-border/60 pb-2">
+              <h2 className="text-base font-semibold tracking-tight text-foreground">
                 Domain Leads & Coordinators
               </h2>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {leads.map((member) => (
                 <MemberCard key={member.slug} member={member} />
               ))}
@@ -101,18 +101,18 @@ export default function TeamPage() {
           </section>
         )}
 
-        {/* Join the Team CTA */}
-        <div className="rounded-2xl border border-border bg-card p-8 sm:p-10 text-center space-y-4">
-          <h2 className="text-2xl font-bold tracking-tight text-foreground">
+        {/* Join the Team Callout */}
+        <div className="rounded-lg border border-border/80 bg-card p-6 space-y-3">
+          <h2 className="text-lg font-bold tracking-tight text-foreground">
             Want to lead chapter initiatives?
           </h2>
-          <p className="text-sm text-muted-foreground max-w-lg mx-auto">
+          <p className="text-xs text-muted-foreground max-w-lg leading-relaxed">
             Annual inductions are conducted for competitive programming mentors, technical developers, event coordinators, and designers.
           </p>
-          <div className="pt-2">
+          <div className="pt-1">
             <Link
               href="/join"
-              className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-6 text-sm font-semibold text-primary-foreground shadow hover:bg-primary/90 transition-colors"
+              className="inline-flex h-8 items-center justify-center rounded-md bg-neutral-900 px-3 text-xs font-medium text-white hover:bg-neutral-800 dark:bg-neutral-100 dark:text-neutral-900 transition-colors"
             >
               See Induction Process
             </Link>

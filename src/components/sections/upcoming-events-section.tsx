@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Event } from "@/types";
 import { formatDate } from "@/lib/date";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, MapPin, ArrowRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 
 interface UpcomingEventsSectionProps {
   events: Event[];
@@ -10,42 +10,55 @@ interface UpcomingEventsSectionProps {
 
 export function UpcomingEventsSection({ events }: UpcomingEventsSectionProps) {
   return (
-    <section className="py-20 border-b border-border bg-background">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-          <div className="space-y-3">
-            <div className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-primary">
-              <span>03 / Calendar & Schedule</span>
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
-              Upcoming & Recent Events
+    <section className="py-16 border-b border-border/80 bg-background">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-border/60 pb-4">
+          <div>
+            <h2 className="text-2xl font-bold tracking-tight text-foreground">
+              Event Schedule
             </h2>
-            <p className="text-muted-foreground text-sm sm:text-base max-w-xl">
-              Regular coding contests, technical hackathons, and hands-on workshops scheduled across the semester.
+            <p className="text-xs text-muted-foreground mt-1">
+              Contests, internal sprints, and technical workshops.
             </p>
           </div>
           <Link
             href="/events"
-            className="inline-flex items-center gap-1.5 text-xs font-mono font-medium text-primary hover:underline"
+            className="text-xs font-mono text-muted-foreground hover:text-foreground inline-flex items-center gap-1 group"
           >
-            Explore complete event archive <ArrowRight className="h-3.5 w-3.5" />
+            All events archive <ArrowRight className="h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {events.slice(0, 3).map((event) => {
-            const isUpcoming = event.status === "upcoming";
-            return (
-              <div
-                key={event.slug}
-                className="rounded-xl border border-border bg-card p-6 flex flex-col justify-between transition-all hover:border-border/80 hover:shadow-md group"
-              >
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-xs text-muted-foreground flex items-center gap-1.5">
-                      <Calendar className="h-3.5 w-3.5 text-primary" />
+        {/* Notion Database Table View */}
+        <div className="rounded-lg border border-border/80 bg-card overflow-hidden">
+          <div className="divide-y divide-border/60">
+            {events.slice(0, 4).map((event) => {
+              const isUpcoming = event.status === "upcoming";
+              return (
+                <Link
+                  key={event.slug}
+                  href={`/events/${event.slug}`}
+                  className="group flex flex-col sm:flex-row sm:items-center justify-between p-4 gap-3 transition-colors hover:bg-secondary/40"
+                >
+                  <div className="flex items-start sm:items-center gap-3 min-w-0">
+                    <span className="font-mono text-xs text-muted-foreground shrink-0 w-24">
                       {formatDate(event.date)}
                     </span>
+                    <div className="space-y-0.5 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-semibold text-foreground group-hover:underline truncate">
+                          {event.title}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                        <span>{event.category}</span>
+                        <span>·</span>
+                        <span>{event.location}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3 shrink-0 self-end sm:self-center">
                     <Badge
                       variant={
                         isUpcoming
@@ -56,45 +69,17 @@ export function UpcomingEventsSection({ events }: UpcomingEventsSectionProps) {
                       }
                     >
                       {isUpcoming
-                        ? "Registration Open"
+                        ? "Upcoming"
                         : event.status === "live"
                         ? "Live"
-                        : "Completed"}
+                        : "Past"}
                     </Badge>
+                    <ArrowUpRight className="h-4 w-4 text-muted-foreground/60 group-hover:text-foreground transition-colors hidden sm:block" />
                   </div>
-
-                  <div className="space-y-2">
-                    <span className="font-mono text-[11px] uppercase tracking-wider text-primary">
-                      {event.category}
-                    </span>
-                    <h3 className="text-lg font-bold tracking-tight text-foreground group-hover:text-primary transition-colors">
-                      <Link href={`/events/${event.slug}`}>{event.title}</Link>
-                    </h3>
-                    <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">
-                      {event.shortDescription}
-                    </p>
-                  </div>
-
-                  {event.location && (
-                    <div className="flex items-center gap-1.5 font-mono text-[11px] text-muted-foreground pt-1">
-                      <MapPin className="h-3 w-3 text-primary shrink-0" />
-                      <span className="truncate">{event.location}</span>
-                    </div>
-                  )}
-                </div>
-
-                <div className="pt-6 mt-6 border-t border-border/60 flex items-center justify-between">
-                  <Link
-                    href={`/events/${event.slug}`}
-                    className="inline-flex items-center gap-1 text-xs font-semibold text-foreground group-hover:text-primary transition-colors"
-                  >
-                    <span>{isUpcoming ? "View & Register" : "Read Summary"}</span>
-                    <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
-                  </Link>
-                </div>
-              </div>
-            );
-          })}
+                </Link>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>

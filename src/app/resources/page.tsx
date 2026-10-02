@@ -10,18 +10,18 @@ export const metadata: Metadata = {
 
 export default function ResourcesPage() {
   return (
-    <div className="py-12 sm:py-20">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-12">
-        {/* Header */}
-        <div className="max-w-3xl space-y-4">
-          <div className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-primary">
-            <span>Knowledge Base · Curated Materials</span>
+    <div className="py-10 sm:py-16">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 space-y-8">
+        {/* Document Header */}
+        <div className="space-y-2 border-b border-border/60 pb-6">
+          <div className="text-xs font-mono text-muted-foreground">
+            Knowledge Base / Learning Hub
           </div>
-          <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-foreground">
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
             Student Resources
           </h1>
-          <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-            A vetted repository of algorithmic guides, open-source tutorials, and systems textbooks recommended by ACM mentors to support self-directed study and contest preparation.
+          <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">
+            Vetted problem sets, contest guides, and systems documentation curated by ACM BIT Mesra members for peer learning.
           </p>
         </div>
 

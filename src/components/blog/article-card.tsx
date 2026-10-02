@@ -9,11 +9,11 @@ interface ArticleCardProps {
 
 export function ArticleCard({ post }: ArticleCardProps) {
   return (
-    <article className="rounded-xl border border-border bg-card p-6 flex flex-col justify-between transition-all hover:border-border/80 hover:shadow-md group">
-      <div className="space-y-4">
+    <article className="rounded-lg border border-border/80 bg-card p-5 flex flex-col justify-between hover:border-border hover:bg-secondary/20 transition-colors group">
+      <div className="space-y-3">
         {/* Category & Reading Time */}
         <div className="flex items-center justify-between gap-2">
-          <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-primary px-2 py-0.5 rounded bg-primary/10 border border-primary/20">
+          <span className="font-mono text-[10px] text-muted-foreground uppercase px-2 py-0.5 rounded bg-secondary border border-border/60">
             {post.category}
           </span>
           <span className="flex items-center gap-1 font-mono text-xs text-muted-foreground">
@@ -23,8 +23,8 @@ export function ArticleCard({ post }: ArticleCardProps) {
         </div>
 
         {/* Title & Description */}
-        <div className="space-y-2">
-          <h3 className="text-xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors leading-snug">
+        <div className="space-y-1.5">
+          <h3 className="text-base font-semibold tracking-tight text-foreground group-hover:underline leading-snug">
             <Link href={`/blog/${post.slug}`}>{post.title}</Link>
           </h3>
           <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed line-clamp-3">

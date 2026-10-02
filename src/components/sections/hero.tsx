@@ -1,122 +1,119 @@
 import Link from "next/link";
-import { ArrowRight, Calendar, Terminal } from "lucide-react";
+import { ArrowRight, Code2, Trophy, Terminal, BookOpen } from "lucide-react";
 import { AcmLogo } from "@/components/ui/icons";
 
 export function HeroSection() {
   return (
-    <section className="relative overflow-hidden border-b border-border bg-background pt-16 pb-20 md:pt-24 md:pb-28">
-      {/* Background Technical Grid */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-40 pointer-events-none" />
-      <div className="absolute -top-40 -right-40 h-96 w-96 rounded-full bg-primary/5 blur-3xl pointer-events-none" />
-
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          {/* Left Column: Editorial Headline & Actions */}
-          <div className="lg:col-span-7 space-y-6 text-left">
-            <div className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary/60 px-3 py-1 text-xs font-mono text-muted-foreground backdrop-blur-sm">
-              <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>BIT Mesra · ACM Student Chapter</span>
-              <span className="text-border">|</span>
-              <span className="text-foreground">Est. Computing Culture</span>
-            </div>
-
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-foreground leading-[1.08]">
-              Build. Compete. <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-foreground via-foreground/90 to-primary">
-                Create.
-              </span>
-            </h1>
-
-            <p className="max-w-2xl text-base sm:text-lg text-muted-foreground leading-relaxed">
-              A technical community at BIT Mesra empowering students through competitive programming, software development, hackathons, technical workshops, open source, and collaborative learning.
-            </p>
-
-            <div className="flex flex-wrap items-center gap-3 pt-2">
-              <Link
-                href="/about"
-                className="inline-flex h-11 items-center justify-center rounded-md bg-primary px-6 text-sm font-semibold text-primary-foreground shadow transition-all hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring gap-2 group"
-              >
-                Explore ACM
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-              <Link
-                href="/events"
-                className="inline-flex h-11 items-center justify-center rounded-md border border-border bg-secondary/50 px-5 text-sm font-medium text-foreground transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring gap-2"
-              >
-                <Calendar className="h-4 w-4 text-muted-foreground" />
-                Upcoming Events
-              </Link>
-            </div>
-
-            {/* Verification Metadata Footnote */}
-            <div className="pt-4 flex items-center gap-6 text-xs font-mono text-muted-foreground/80">
-              <div className="flex items-center gap-2">
-                <span className="text-primary font-bold">●</span>
-                <span>Ranchi, Jharkhand</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-primary font-bold">●</span>
-                <span>Deemed University Campus</span>
-              </div>
-            </div>
+    <section className="relative border-b border-border bg-background pt-16 pb-16 md:pt-24 md:pb-20">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <div className="space-y-8">
+          {/* Notion-style Document Header & Meta */}
+          <div className="flex items-center gap-3 text-xs font-mono text-muted-foreground">
+            <span className="flex items-center gap-1.5 font-semibold text-foreground">
+              <AcmLogo className="h-4 w-4" />
+              ACM BIT Mesra
+            </span>
+            <span>/</span>
+            <span>Est. 2016</span>
+            <span>/</span>
+            <span className="text-muted-foreground/80">Ranchi, Jharkhand</span>
           </div>
 
-          {/* Right Column: Sophisticated Technical Composition */}
-          <div className="lg:col-span-5">
-            <div className="rounded-xl border border-border bg-card/80 p-5 shadow-2xl backdrop-blur-sm relative space-y-4">
-              {/* Window Header */}
-              <div className="flex items-center justify-between border-b border-border/80 pb-3">
-                <div className="flex items-center gap-2">
-                  <div className="h-3 w-3 rounded-full bg-red-500/80" />
-                  <div className="h-3 w-3 rounded-full bg-yellow-500/80" />
-                  <div className="h-3 w-3 rounded-full bg-green-500/80" />
-                  <span className="ml-2 font-mono text-xs text-muted-foreground flex items-center gap-1.5">
-                    <Terminal className="h-3.5 w-3.5 text-primary" />
-                    acm@bitmesra:~$
-                  </span>
-                </div>
-                <AcmLogo className="h-5 w-5" />
-              </div>
+          {/* Main Title & Value Proposition */}
+          <div className="space-y-4 max-w-3xl">
+            <h1 className="text-4xl sm:text-6xl font-bold tracking-tight text-foreground leading-[1.08]">
+              Build. Compete. Ship.
+            </h1>
+            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
+              A student-led computing society at Birla Institute of Technology, Mesra. We practice algorithms, build software systems, compete in ICPC, and organize Hack-A-Bit.
+            </p>
+          </div>
 
-              {/* Code / Technical Fragment */}
-              <div className="font-mono text-xs text-muted-foreground space-y-2 py-1 leading-relaxed">
-                <p className="text-emerald-400">
-                  {"// ACM BIT Mesra Core Philosophy"}
-                </p>
-                <p>
-                  <span className="text-purple-400">const</span> chapter = &#123;
-                </p>
-                <p className="pl-4">
-                  name: <span className="text-amber-300">&quot;ACM BIT Mesra&quot;</span>,
-                </p>
-                <p className="pl-4">
-                  mission: <span className="text-amber-300">&quot;Empower computing excellence&quot;</span>,
-                </p>
-                <p className="pl-4">
-                  pillars: [
-                </p>
-                <p className="pl-8 text-foreground">
-                  &quot;Competitive Programming&quot;,
-                </p>
-                <p className="pl-8 text-foreground">
-                  &quot;Developer Community&quot;,
-                </p>
-                <p className="pl-8 text-foreground">
-                  &quot;Hack-A-Bit&quot;,
-                </p>
-                <p className="pl-8 text-foreground">
-                  &quot;Open Source Systems&quot;
-                </p>
-                <p className="pl-4">],</p>
-                <p className="pl-4">
-                  ready: <span className="text-blue-400">true</span>
-                </p>
-                <p>&#125;;</p>
-                <div className="pt-2 border-t border-border/60 flex items-center justify-between text-[11px]">
-                  <span className="text-muted-foreground">ICPC Asia-West Track</span>
-                  <span className="text-primary font-semibold">Active Cycle 2026</span>
+          {/* Primary Actions */}
+          <div className="flex flex-wrap items-center gap-3 pt-1">
+            <Link
+              href="/events"
+              className="inline-flex h-9 items-center justify-center rounded-md bg-neutral-900 px-4 text-xs font-medium text-white transition-colors hover:bg-neutral-800 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-white gap-2 shadow-sm"
+            >
+              Upcoming Events
+              <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
+            <Link
+              href="/resources"
+              className="inline-flex h-9 items-center justify-center rounded-md border border-border bg-secondary/60 px-4 text-xs font-medium text-foreground transition-colors hover:bg-secondary gap-2"
+            >
+              Browse Resources
+            </Link>
+            <Link
+              href="/join"
+              className="inline-flex h-9 items-center justify-center rounded-md px-3 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Induction Guide →
+            </Link>
+          </div>
+
+          {/* Notion-style Directory Cards / Quick Anchors */}
+          <div className="pt-6 border-t border-border/70">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+              <Link
+                href="/competitive-programming"
+                className="group flex items-start gap-3 rounded-md border border-border/60 bg-secondary/30 p-3 text-left transition-all hover:border-border hover:bg-secondary/70"
+              >
+                <Code2 className="h-4 w-4 mt-0.5 text-muted-foreground group-hover:text-foreground transition-colors shrink-0" />
+                <div className="space-y-0.5">
+                  <div className="text-xs font-medium text-foreground group-hover:underline">
+                    Competitive Prog
+                  </div>
+                  <div className="text-[11px] text-muted-foreground line-clamp-1">
+                    CQM, Codeforces, ICPC
+                  </div>
                 </div>
-              </div>
+              </Link>
+
+              <Link
+                href="/events/hack-a-bit"
+                className="group flex items-start gap-3 rounded-md border border-border/60 bg-secondary/30 p-3 text-left transition-all hover:border-border hover:bg-secondary/70"
+              >
+                <Trophy className="h-4 w-4 mt-0.5 text-muted-foreground group-hover:text-foreground transition-colors shrink-0" />
+                <div className="space-y-0.5">
+                  <div className="text-xs font-medium text-foreground group-hover:underline">
+                    Hack-A-Bit
+                  </div>
+                  <div className="text-[11px] text-muted-foreground line-clamp-1">
+                    Annual flagship hackathon
+                  </div>
+                </div>
+              </Link>
+
+              <Link
+                href="/activities/open-source"
+                className="group flex items-start gap-3 rounded-md border border-border/60 bg-secondary/30 p-3 text-left transition-all hover:border-border hover:bg-secondary/70"
+              >
+                <Terminal className="h-4 w-4 mt-0.5 text-muted-foreground group-hover:text-foreground transition-colors shrink-0" />
+                <div className="space-y-0.5">
+                  <div className="text-xs font-medium text-foreground group-hover:underline">
+                    Open Source
+                  </div>
+                  <div className="text-[11px] text-muted-foreground line-clamp-1">
+                    Student tooling & repos
+                  </div>
+                </div>
+              </Link>
+
+              <Link
+                href="/resources"
+                className="group flex items-start gap-3 rounded-md border border-border/60 bg-secondary/30 p-3 text-left transition-all hover:border-border hover:bg-secondary/70"
+              >
+                <BookOpen className="h-4 w-4 mt-0.5 text-muted-foreground group-hover:text-foreground transition-colors shrink-0" />
+                <div className="space-y-0.5">
+                  <div className="text-xs font-medium text-foreground group-hover:underline">
+                    Learning Hub
+                  </div>
+                  <div className="text-[11px] text-muted-foreground line-clamp-1">
+                    DSA sheets & roadmaps
+                  </div>
+                </div>
+              </Link>
             </div>
           </div>
         </div>

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { getPublishedBlogPosts } from "@/data/blog";
 import { ArticleCard } from "@/components/blog/article-card";
-import { BookOpen } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Technical Blog & Engineering Notes",
@@ -13,24 +12,23 @@ export default function BlogIndexPage() {
   const publishedPosts = getPublishedBlogPosts();
 
   return (
-    <div className="py-12 sm:py-20">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-12">
-        {/* Header */}
-        <div className="max-w-3xl space-y-4">
-          <div className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-primary">
-            <BookOpen className="h-3.5 w-3.5" />
-            <span>Technical Editorial · Engineering Insights</span>
+    <div className="py-10 sm:py-16">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 space-y-8">
+        {/* Document Header */}
+        <div className="space-y-2 border-b border-border/60 pb-6">
+          <div className="text-xs font-mono text-muted-foreground">
+            Editorial / Engineering Articles
           </div>
-          <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-foreground">
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
             Chapter Technical Blog
           </h1>
-          <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-            Written by students and mentors at BIT Mesra. Deep dives into algorithmic invariants, distributed systems, open-source maintainership, and modern software architecture.
+          <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">
+            Articles by students and mentors at BIT Mesra covering algorithmic techniques, distributed tools, open-source maintainership, and systems architecture.
           </p>
         </div>
 
         {/* Articles Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {publishedPosts.map((post) => (
             <ArticleCard key={post.slug} post={post} />
           ))}

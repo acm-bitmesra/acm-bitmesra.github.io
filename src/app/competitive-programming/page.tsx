@@ -3,7 +3,7 @@ import Link from "next/link";
 import { studentResources } from "@/data/resources";
 import { events } from "@/data/events";
 import { EventCard } from "@/components/events/event-card";
-import { Code2, Trophy, Flame, ExternalLink, Terminal } from "lucide-react";
+import { ExternalLink, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Competitive Programming Hub",
@@ -34,7 +34,7 @@ const contestPlatforms = [
   },
   {
     name: "CSES Problem Set",
-    desc: "A rigorously organized collection of 300 classic algorithmic problems covering all core topics.",
+    desc: "A rigorously organized collection of classic algorithmic problems covering core topics.",
     url: "https://cses.fi/problemset/",
     recommendedFor: "Topic-wise problem mastery",
   },
@@ -46,7 +46,7 @@ const contestPlatforms = [
   },
   {
     name: "CodeChef",
-    desc: "Regular Starters and monthly division contests tailored for collegiate problem solvers.",
+    desc: "Regular Starters and division contests tailored for collegiate problem solvers.",
     url: "https://www.codechef.com/",
     recommendedFor: "Beginner-friendly contest practice",
   },
@@ -57,138 +57,95 @@ export default function CompetitiveProgrammingPage() {
   const cpResources = studentResources.filter((r) => r.category === "Competitive Programming" || r.category === "DSA");
 
   return (
-    <div className="py-12 sm:py-20">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 space-y-16 sm:space-y-24">
-        {/* Hero */}
-        <section className="space-y-6">
-          <div className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary/60 px-3 py-1 text-xs font-mono text-primary backdrop-blur-sm">
-            <Code2 className="h-3.5 w-3.5" />
-            <span>Algorithmic Excellence · Contest Track</span>
+    <div className="py-10 sm:py-16">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 space-y-12">
+        {/* Document Header */}
+        <div className="space-y-3 border-b border-border/60 pb-6">
+          <div className="text-xs font-mono text-muted-foreground">
+            Tracks / Competitive Programming
           </div>
-
-          <h1 className="text-3xl sm:text-6xl font-black tracking-tight text-foreground leading-tight">
-            Competitive Programming at BIT Mesra
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
+            Competitive Programming
           </h1>
-
-          <p className="text-base sm:text-xl text-muted-foreground leading-relaxed max-w-3xl">
-            Competitive programming is the art of solving algorithmic puzzles under strict runtime and memory limits. At ACM BIT Mesra, we build a disciplined culture of weekly practice, peer editorials, and ICPC regional preparation.
+          <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">
+            Algorithmic problem solving, contest preparation, and ICPC regional training at BIT Mesra.
           </p>
-
-          <div className="flex flex-wrap items-center gap-4 pt-2">
-            <Link
-              href="/events/codezilla"
-              className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-6 text-sm font-semibold text-primary-foreground shadow hover:bg-primary/90 transition-colors"
-            >
-              Explore CodeZilla
-            </Link>
+          <div className="flex items-center gap-3 pt-2">
             <Link
               href="/icpc"
-              className="inline-flex h-10 items-center justify-center rounded-md border border-border px-5 text-sm font-medium hover:bg-secondary transition-colors"
+              className="inline-flex h-8 items-center justify-center rounded-md bg-neutral-900 px-3 text-xs font-medium text-white hover:bg-neutral-800 dark:bg-neutral-100 dark:text-neutral-900 transition-colors gap-1.5"
             >
-              ICPC Asia-West Track →
+              ICPC Regional Track <ArrowRight className="h-3 w-3" />
+            </Link>
+            <Link
+              href="/events"
+              className="inline-flex h-8 items-center justify-center rounded-md border border-border px-3 text-xs font-medium text-foreground hover:bg-secondary transition-colors"
+            >
+              Upcoming Contests
             </Link>
           </div>
-        </section>
+        </div>
 
-        {/* Section: Why Competitive Programming */}
-        <section className="rounded-2xl border border-border bg-card p-8 sm:p-10 space-y-6">
-          <h2 className="text-2xl font-bold tracking-tight text-foreground">
-            Why Practice Competitive Programming?
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm text-muted-foreground leading-relaxed">
-            <div className="space-y-2">
-              <h3 className="font-bold text-foreground flex items-center gap-2">
-                <Flame className="h-4 w-4 text-primary" /> Algorithmic Rigor
-              </h3>
-              <p>
-                You learn to immediately anticipate edge cases, overflow risks, and algorithmic complexity limits before writing a single line of code.
-              </p>
-            </div>
-            <div className="space-y-2">
-              <h3 className="font-bold text-foreground flex items-center gap-2">
-                <Terminal className="h-4 w-4 text-primary" /> Rapid Debugging
-              </h3>
-              <p>
-                Contests force you to develop acute debugging reflexes, write minimal reproduction test cases, and reason about state under pressure.
-              </p>
-            </div>
-            <div className="space-y-2">
-              <h3 className="font-bold text-foreground flex items-center gap-2">
-                <Trophy className="h-4 w-4 text-primary" /> Global Benchmarking
-              </h3>
-              <p>
-                Collegiate contests and platforms like Codeforces provide transparent feedback on your problem-solving capabilities against peers worldwide.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Visual Roadmap (Section 44) */}
-        <section className="space-y-8">
-          <div className="space-y-3">
-            <span className="font-mono text-xs uppercase tracking-wider text-primary">Curriculum</span>
-            <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-foreground">
+        {/* Roadmap (Notion Table / List) */}
+        <section className="space-y-4">
+          <div className="border-b border-border/60 pb-2">
+            <h2 className="text-base font-semibold tracking-tight text-foreground">
               Algorithmic Progression Roadmap
             </h2>
-            <p className="text-sm sm:text-base text-muted-foreground max-w-2xl">
-              An 11-step learning progression followed by ACM problem setters from beginner fundamentals to regional collegiate contests.
+            <p className="text-xs text-muted-foreground">
+              Core topic progression practiced by chapter problem solvers.
             </p>
           </div>
 
-          <div className="space-y-4">
+          <div className="divide-y divide-border/60 rounded-lg border border-border/80 bg-card overflow-hidden">
             {cpRoadmap.map((item) => (
               <div
                 key={item.step}
-                className="rounded-xl border border-border bg-card p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 transition-all hover:border-border/80 hover:shadow-sm group"
+                className="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-6 p-3.5 hover:bg-secondary/20 transition-colors"
               >
-                <div className="flex items-start sm:items-center gap-4">
-                  <span className="font-mono text-xs font-bold text-primary px-2.5 py-1 rounded bg-primary/10 border border-primary/20 shrink-0">
-                    STEP {item.step}
+                <span className="font-mono text-xs text-muted-foreground shrink-0 w-12">
+                  #{item.step}
+                </span>
+                <div className="sm:w-64 shrink-0">
+                  <span className="text-xs font-semibold text-foreground">
+                    {item.title}
                   </span>
-                  <div>
-                    <h3 className="text-base font-bold text-foreground group-hover:text-primary transition-colors">
-                      {item.title}
-                    </h3>
-                    <p className="text-xs text-muted-foreground leading-relaxed">
-                      {item.desc}
-                    </p>
-                  </div>
                 </div>
+                <p className="text-xs text-muted-foreground leading-relaxed flex-1">
+                  {item.desc}
+                </p>
               </div>
             ))}
           </div>
         </section>
 
-        {/* Recommended Contest Platforms */}
-        <section className="space-y-6">
-          <div className="space-y-2">
-            <span className="font-mono text-xs uppercase tracking-wider text-primary">Platforms</span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground">
-              Where to Practice Daily
+        {/* Platforms */}
+        <section className="space-y-4">
+          <div className="border-b border-border/60 pb-2">
+            <h2 className="text-base font-semibold tracking-tight text-foreground">
+              Recommended Platforms
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {contestPlatforms.map((plat) => (
               <a
                 key={plat.name}
                 href={plat.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-xl border border-border bg-card p-6 flex flex-col justify-between hover:border-primary transition-colors group"
+                className="rounded-lg border border-border/70 bg-card p-4 space-y-2 hover:border-border hover:bg-secondary/20 transition-colors group"
               >
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors">
-                      {plat.name}
-                    </h3>
-                    <ExternalLink className="h-4 w-4 text-muted-foreground group-hover:text-primary" />
-                  </div>
-                  <p className="text-xs text-muted-foreground leading-relaxed">
-                    {plat.desc}
-                  </p>
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xs font-semibold text-foreground group-hover:underline">
+                    {plat.name}
+                  </h3>
+                  <ExternalLink className="h-3 w-3 text-muted-foreground" />
                 </div>
-                <div className="pt-4 mt-4 border-t border-border/60 text-[11px] font-mono text-primary font-semibold">
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  {plat.desc}
+                </p>
+                <div className="pt-2 border-t border-border/50 text-[10px] font-mono text-muted-foreground">
                   {plat.recommendedFor}
                 </div>
               </a>
@@ -196,18 +153,15 @@ export default function CompetitiveProgrammingPage() {
           </div>
         </section>
 
-        {/* ACM Coding Contests */}
+        {/* Contests */}
         {cpEvents.length > 0 && (
-          <section className="space-y-6 border-t border-border pt-12">
-            <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold tracking-tight text-foreground">
-                Chapter Coding Contests & Sprints
+          <section className="space-y-4">
+            <div className="border-b border-border/60 pb-2">
+              <h2 className="text-base font-semibold tracking-tight text-foreground">
+                Chapter Contests
               </h2>
-              <Link href="/events" className="text-xs font-mono text-primary hover:underline">
-                All Contests →
-              </Link>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {cpEvents.map((e) => (
                 <EventCard key={e.slug} event={e} />
               ))}
@@ -215,41 +169,32 @@ export default function CompetitiveProgrammingPage() {
           </section>
         )}
 
-        {/* Related Resources */}
+        {/* Resources */}
         {cpResources.length > 0 && (
-          <section className="space-y-6 border-t border-border pt-12">
-            <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold tracking-tight text-foreground">
-                CP Guides & Handbooks
+          <section className="space-y-4">
+            <div className="border-b border-border/60 pb-2">
+              <h2 className="text-base font-semibold tracking-tight text-foreground">
+                Practice Sheets & Textbooks
               </h2>
-              <Link href="/resources" className="text-xs font-mono text-primary hover:underline">
-                Explore Library →
-              </Link>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-              {cpResources.slice(0, 3).map((r, i) => (
+            <div className="divide-y divide-border/60 rounded-lg border border-border/80 bg-card overflow-hidden">
+              {cpResources.map((res, idx) => (
                 <a
-                  key={i}
-                  href={r.url}
+                  key={idx}
+                  href={res.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-xl border border-border bg-card p-5 flex flex-col justify-between hover:border-primary transition-colors"
+                  className="flex items-center justify-between p-3.5 hover:bg-secondary/20 transition-colors group"
                 >
-                  <div className="space-y-2">
-                    <span className="font-mono text-[10px] text-primary font-bold uppercase">
-                      {r.category}
+                  <div className="space-y-0.5">
+                    <span className="text-xs font-medium text-foreground group-hover:underline">
+                      {res.title}
                     </span>
-                    <h3 className="text-sm font-bold text-foreground">
-                      {r.title}
-                    </h3>
-                    <p className="text-xs text-muted-foreground line-clamp-2">
-                      {r.description}
+                    <p className="text-xs text-muted-foreground line-clamp-1">
+                      {res.description}
                     </p>
                   </div>
-                  <div className="pt-3 mt-3 border-t border-border/60 text-[11px] font-mono text-muted-foreground flex justify-between">
-                    <span>{r.author || "Curated"}</span>
-                    <ExternalLink className="h-3 w-3" />
-                  </div>
+                  <ExternalLink className="h-3.5 w-3.5 text-muted-foreground group-hover:text-foreground shrink-0 ml-4" />
                 </a>
               ))}
             </div>

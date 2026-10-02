@@ -33,6 +33,8 @@ export async function generateMetadata({
   };
 }
 
+import { Callout } from "@/components/ui/callout";
+
 export default async function ActivityDetailPage({ params }: ActivityDetailPageProps) {
   const { slug } = await params;
   const activity = activitiesData.find((a) => a.slug === slug);
@@ -52,8 +54,8 @@ export default async function ActivityDetailPage({ params }: ActivityDetailPageP
   );
 
   return (
-    <div className="py-12 sm:py-20">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 space-y-16">
+    <div className="py-10 sm:py-16">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 space-y-12">
         {/* Navigation Breadcrumb */}
         <div>
           <Link
@@ -64,52 +66,44 @@ export default async function ActivityDetailPage({ params }: ActivityDetailPageP
           </Link>
         </div>
 
-        {/* Hero Section */}
-        <section className="space-y-6">
-          <div className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary/60 px-3 py-1 text-xs font-mono text-primary backdrop-blur-sm">
-            <span>Focus Area · {activity.categoryName}</span>
+        {/* Document Header */}
+        <div className="space-y-3 border-b border-border pb-8">
+          <div className="text-xs font-mono text-muted-foreground uppercase tracking-wider">
+            Focus Area · {activity.categoryName}
           </div>
-
-          <h1 className="text-3xl sm:text-6xl font-black tracking-tight text-foreground">
+          <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-foreground">
             {activity.title}
           </h1>
-
-          <p className="text-lg sm:text-2xl text-muted-foreground font-medium leading-relaxed max-w-3xl">
+          <p className="text-base text-muted-foreground leading-relaxed max-w-2xl">
             {activity.tagline}
           </p>
-        </section>
+        </div>
 
-        {/* Explanation / Overview */}
-        <section className="rounded-2xl border border-border bg-card p-8 sm:p-10 space-y-6">
-          <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-foreground">
-            How We Approach {activity.title}
-          </h2>
-          <div className="space-y-4 text-sm sm:text-base text-muted-foreground leading-relaxed">
-            <p className="text-foreground font-medium">{activity.summary}</p>
+        {/* Explanation / Overview Callout */}
+        <Callout>
+          <div className="space-y-3 text-sm leading-relaxed">
+            <p className="font-semibold text-foreground">{activity.summary}</p>
             {activity.overview.map((para, idx) => (
-              <p key={idx}>{para}</p>
+              <p key={idx} className="text-muted-foreground">{para}</p>
             ))}
           </div>
-        </section>
+        </Callout>
 
         {/* Focus Areas Grid */}
-        <section className="space-y-6">
-          <div className="space-y-2">
-            <span className="font-mono text-xs uppercase tracking-wider text-primary">Core Competencies</span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground">
-              What Students Master
-            </h2>
-          </div>
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold tracking-tight text-foreground">
+            Core Competencies
+          </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {activity.focusAreas.map((area, idx) => (
               <div
                 key={idx}
-                className="rounded-xl border border-border bg-card p-6 space-y-2 hover:border-border/80 transition-colors"
+                className="rounded-lg border border-border bg-card p-5 space-y-2 hover:bg-neutral-50/50 dark:hover:bg-neutral-900/50 transition-colors"
               >
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-primary shrink-0" />
-                  <h3 className="text-base font-bold text-foreground">
+                  <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                  <h3 className="text-sm font-semibold text-foreground">
                     {area.title}
                   </h3>
                 </div>
@@ -123,33 +117,30 @@ export default async function ActivityDetailPage({ params }: ActivityDetailPageP
 
         {/* Learning Roadmap */}
         {activity.learningRoadmap.length > 0 && (
-          <section className="space-y-6">
-            <div className="space-y-2">
-              <span className="font-mono text-xs uppercase tracking-wider text-primary">Curriculum</span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-foreground">
-                Structured Learning Progression
-              </h2>
-            </div>
+          <section className="space-y-4">
+            <h2 className="text-xl font-semibold tracking-tight text-foreground">
+              Learning Progression
+            </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {activity.learningRoadmap.map((road, idx) => (
                 <div
                   key={idx}
-                  className="rounded-xl border border-border bg-card p-5 flex flex-col justify-between space-y-4"
+                  className="rounded-lg border border-border bg-card p-4 flex flex-col justify-between space-y-3"
                 >
-                  <div className="space-y-2">
-                    <span className="font-mono text-xs font-bold text-primary block">
+                  <div className="space-y-1">
+                    <span className="font-mono text-xs text-muted-foreground block">
                       {road.phase}
                     </span>
-                    <h3 className="text-base font-bold text-foreground">
+                    <h3 className="text-sm font-semibold text-foreground">
                       {road.title}
                     </h3>
                   </div>
 
-                  <ul className="space-y-1.5 border-t border-border/60 pt-3 text-xs text-muted-foreground">
+                  <ul className="space-y-1 border-t border-border pt-3 text-xs text-muted-foreground">
                     {road.topics.map((t, i) => (
                       <li key={i} className="flex items-center gap-1.5">
-                        <span className="text-primary font-bold">›</span>
+                        <span className="text-neutral-400">›</span>
                         <span>{t}</span>
                       </li>
                     ))}
@@ -162,16 +153,16 @@ export default async function ActivityDetailPage({ params }: ActivityDetailPageP
 
         {/* Related Events Section */}
         {relatedEvents.length > 0 && (
-          <section className="space-y-6 border-t border-border pt-12">
+          <section className="space-y-4 border-t border-border pt-8">
             <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold tracking-tight text-foreground">
+              <h2 className="text-xl font-semibold tracking-tight text-foreground">
                 Related Events & Contests
               </h2>
-              <Link href="/events" className="text-xs font-mono text-primary hover:underline">
+              <Link href="/events" className="text-xs font-mono text-muted-foreground hover:text-foreground">
                 View All Events →
               </Link>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {relatedEvents.map((e) => (
                 <EventCard key={e.slug} event={e} />
               ))}
@@ -181,36 +172,36 @@ export default async function ActivityDetailPage({ params }: ActivityDetailPageP
 
         {/* Recommended Resources */}
         {recommendedResources.length > 0 && (
-          <section className="space-y-6 border-t border-border pt-12">
+          <section className="space-y-4 border-t border-border pt-8">
             <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold tracking-tight text-foreground">
+              <h2 className="text-xl font-semibold tracking-tight text-foreground">
                 Recommended Resources
               </h2>
-              <Link href="/resources" className="text-xs font-mono text-primary hover:underline">
+              <Link href="/resources" className="text-xs font-mono text-muted-foreground hover:text-foreground">
                 All Resources →
               </Link>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {recommendedResources.slice(0, 3).map((res, i) => (
                 <a
                   key={i}
                   href={res.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-xl border border-border bg-card p-5 flex flex-col justify-between hover:border-primary transition-colors group"
+                  className="rounded-lg border border-border bg-card p-4 flex flex-col justify-between hover:bg-neutral-50/50 dark:hover:bg-neutral-900/50 transition-colors group"
                 >
-                  <div className="space-y-2">
-                    <span className="font-mono text-[10px] text-primary font-semibold uppercase">
+                  <div className="space-y-1.5">
+                    <span className="font-mono text-[10px] text-muted-foreground uppercase">
                       {res.category}
                     </span>
-                    <h3 className="text-base font-bold text-foreground group-hover:text-primary transition-colors">
+                    <h3 className="text-sm font-semibold text-foreground group-hover:underline">
                       {res.title}
                     </h3>
                     <p className="text-xs text-muted-foreground line-clamp-2">
                       {res.description}
                     </p>
                   </div>
-                  <div className="pt-4 mt-4 border-t border-border/60 flex items-center justify-between text-xs font-mono text-muted-foreground">
+                  <div className="pt-3 mt-3 border-t border-border flex items-center justify-between text-xs font-mono text-muted-foreground">
                     <span>{res.author || "Curated"}</span>
                     <ExternalLink className="h-3 w-3" />
                   </div>
@@ -221,22 +212,24 @@ export default async function ActivityDetailPage({ params }: ActivityDetailPageP
         )}
 
         {/* CTA */}
-        <section className="rounded-2xl border border-border bg-secondary/40 p-8 sm:p-10 text-center space-y-4">
-          <h2 className="text-2xl font-bold text-foreground">
-            Get Involved with {activity.title}
-          </h2>
-          <p className="text-sm text-muted-foreground max-w-lg mx-auto">
-            Join the SIG discussions, attend peer-led problem solving sessions, and participate in upcoming team contests.
-          </p>
-          <div className="pt-2">
+        <Callout>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="space-y-1">
+              <p className="text-sm font-semibold text-foreground">
+                Get Involved with {activity.title}
+              </p>
+              <p className="text-xs text-muted-foreground">
+                Join discussions, attend peer-led problem solving sessions, and participate in upcoming team contests.
+              </p>
+            </div>
             <Link
               href="/join"
-              className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-6 text-sm font-semibold text-primary-foreground shadow hover:bg-primary/90 transition-colors"
+              className="inline-flex h-9 items-center justify-center rounded-md bg-neutral-900 px-4 text-xs font-medium text-white dark:bg-white dark:text-neutral-900 hover:bg-neutral-800 dark:hover:bg-neutral-100 transition-colors shrink-0"
             >
-              Join the Chapter
+              Join Chapter
             </Link>
           </div>
-        </section>
+        </Callout>
       </div>
     </div>
   );

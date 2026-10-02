@@ -11,12 +11,12 @@ export function Badge({
   ...props
 }: BadgeProps) {
   const variants = {
-    default: "border-transparent bg-primary text-primary-foreground hover:bg-primary/80",
-    secondary: "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80",
-    outline: "text-foreground border-border",
-    destructive: "border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80",
-    success: "border-transparent bg-emerald-950/60 text-emerald-400 border border-emerald-800/40",
-    warning: "border-transparent bg-amber-950/60 text-amber-300 border border-amber-800/40",
+    default: "border-transparent bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900",
+    secondary: "border-transparent bg-neutral-100 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200",
+    outline: "text-neutral-700 dark:text-neutral-300 border-neutral-200 dark:border-neutral-800 bg-transparent",
+    destructive: "border-rose-200/80 bg-rose-50 text-rose-700 dark:bg-rose-950/40 dark:text-rose-300 dark:border-rose-900/50",
+    success: "border-emerald-200/80 bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-900/50",
+    warning: "border-amber-200/80 bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-300 dark:border-amber-900/50",
   };
 
   return (

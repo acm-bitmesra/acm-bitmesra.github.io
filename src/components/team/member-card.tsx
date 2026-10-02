@@ -9,11 +9,11 @@ interface MemberCardProps {
 
 export function MemberCard({ member }: MemberCardProps) {
   return (
-    <div className="rounded-xl border border-border bg-card p-6 flex flex-col justify-between transition-all hover:border-border/80 hover:shadow-md group">
-      <div className="space-y-4">
+    <div className="rounded-lg border border-border/80 bg-card p-5 flex flex-col justify-between transition-colors hover:border-border hover:bg-secondary/20 group">
+      <div className="space-y-3">
         {/* Avatar Placeholder or Image */}
-        <div className="flex items-center gap-4">
-          <div className="h-14 w-14 rounded-full border border-border bg-secondary flex items-center justify-center text-muted-foreground group-hover:border-primary transition-colors shrink-0">
+        <div className="flex items-center gap-3.5">
+          <div className="h-11 w-11 rounded-full border border-border/80 bg-secondary flex items-center justify-center text-muted-foreground transition-colors shrink-0">
             {member.avatar ? (
               <img
                 src={member.avatar}
@@ -21,14 +21,14 @@ export function MemberCard({ member }: MemberCardProps) {
                 className="h-full w-full rounded-full object-cover"
               />
             ) : (
-              <User className="h-6 w-6 text-muted-foreground group-hover:text-primary transition-colors" />
+              <User className="h-5 w-5 text-muted-foreground group-hover:text-foreground transition-colors" />
             )}
           </div>
           <div className="space-y-0.5 overflow-hidden">
-            <h3 className="text-lg font-bold tracking-tight text-foreground group-hover:text-primary transition-colors truncate">
+            <h3 className="text-base font-semibold tracking-tight text-foreground group-hover:underline truncate">
               <Link href={`/team/${member.slug}`}>{member.name}</Link>
             </h3>
-            <p className="text-xs font-mono text-primary font-medium truncate">
+            <p className="text-xs font-mono text-muted-foreground truncate">
               {member.role}
             </p>
             {member.batch && (
