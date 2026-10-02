@@ -4,7 +4,7 @@ interface Env {
   };
 }
 
-export default {
+const worker = {
   async fetch(request: Request, env: Env): Promise<Response> {
     const response = await env.ASSETS.fetch(request);
 
@@ -22,3 +22,5 @@ export default {
     });
   },
 };
+
+export default worker;
