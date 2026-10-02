@@ -9,6 +9,8 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
+    "test:prod": "node scripts/validate-production.mjs",
+    "test": "npm run typecheck && npm run lint && npm run test:prod",
     "cf:build": "next build",
     "cf:deploy": "wrangler deploy"
   },
