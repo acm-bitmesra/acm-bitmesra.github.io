@@ -1,16 +1,27 @@
+import { HeroSection } from "@/components/sections/hero";
+import { StatsStrip } from "@/components/sections/stats-strip";
+import { PillarsSection } from "@/components/sections/pillars-section";
+import { FeaturedEventSection } from "@/components/sections/featured-event-section";
+import { UpcomingEventsSection } from "@/components/sections/upcoming-events-section";
+import { ImpactSection } from "@/components/sections/impact-section";
+import { ResourcesPreviewSection } from "@/components/sections/resources-preview-section";
+import { JoinCtaSection } from "@/components/sections/join-cta-section";
+import { events } from "@/data/events";
+
 export default function HomePage() {
+  const featuredEvent = events.find((e) => e.isFeatured) || events[0];
+  const otherEvents = events.filter((e) => e.slug !== featuredEvent.slug);
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-8 text-center">
-      <div className="inline-flex items-center gap-2 rounded-full border border-border px-3 py-1 text-xs font-mono text-muted-foreground mb-6">
-        <span className="h-2 w-2 rounded-full bg-emerald-500" />
-        ACM BIT Mesra Rebuild · System Bootstrapped
-      </div>
-      <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight">
-        Build. Compete. Create.
-      </h1>
-      <p className="mt-4 max-w-xl text-muted-foreground text-sm sm:text-base">
-        ACM Student&apos;s Chapter, Birla Institute of Technology, Mesra. Empowering computing, algorithmic mastery, and collaborative engineering.
-      </p>
-    </main>
+    <div className="flex flex-col min-h-screen">
+      <HeroSection />
+      <StatsStrip />
+      <PillarsSection />
+      {featuredEvent && <FeaturedEventSection event={featuredEvent} />}
+      <UpcomingEventsSection events={otherEvents} />
+      <ImpactSection />
+      <ResourcesPreviewSection />
+      <JoinCtaSection />
+    </div>
   );
 }
