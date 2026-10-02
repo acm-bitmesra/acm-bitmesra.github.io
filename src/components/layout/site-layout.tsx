@@ -3,6 +3,7 @@
 import * as React from "react";
 import { Navbar } from "./navbar";
 import { Footer } from "./footer";
+import { SearchModal } from "@/components/search/search-modal";
 
 interface SiteLayoutProps {
   children: React.ReactNode;
@@ -24,10 +25,11 @@ export function SiteLayout({ children }: SiteLayoutProps) {
   }, []);
 
   return (
-    <div className="relative flex min-h-screen flex-col bg-background text-foreground" data-search-active={searchOpen}>
+    <div className="relative flex min-h-screen flex-col bg-background text-foreground">
       <Navbar onOpenSearch={() => setSearchOpen(true)} />
       <main className="flex-1">{children}</main>
       <Footer />
+      <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
     </div>
   );
 }
