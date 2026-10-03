@@ -2,32 +2,38 @@ import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { ExternalLink, Mail } from "lucide-react";
 import { GithubIcon, LinkedinIcon, InstagramIcon, AcmLogo } from "@/components/ui/icons";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
     <footer className="border-t border-border bg-card text-card-foreground">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12">
           {/* Col 1: ACM BIT Mesra Brand & Identity */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
               <AcmLogo className="h-8 w-8" />
-              <span className="text-base font-bold tracking-tight">
-                ACM Student&apos;s Chapter
-              </span>
+              <div className="flex flex-col">
+                <span className="text-base font-bold tracking-tight text-foreground">
+                  ACM BIT Mesra
+                </span>
+                <span className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
+                  Student Chapter
+                </span>
+              </div>
             </div>
             <p className="text-sm text-muted-foreground max-w-sm leading-relaxed">
               Birla Institute of Technology, Mesra. A dedicated technical society empowering students through competitive programming, systems engineering, developer education, hackathons, and collaborative open source.
             </p>
-            <div className="pt-2 flex items-center gap-3 text-muted-foreground">
+            <div className="pt-2 flex items-center gap-2.5 text-muted-foreground">
               <a
                 href={siteConfig.social.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GitHub Organization"
-                className="h-8 w-8 rounded-md border border-border flex items-center justify-center hover:text-foreground hover:bg-secondary transition-colors"
+                className="h-8 w-8 rounded-lg border border-border flex items-center justify-center hover:text-foreground hover:bg-secondary transition-colors"
               >
                 <GithubIcon className="h-4 w-4" />
               </a>
@@ -36,7 +42,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn Profile"
-                className="h-8 w-8 rounded-md border border-border flex items-center justify-center hover:text-foreground hover:bg-secondary transition-colors"
+                className="h-8 w-8 rounded-lg border border-border flex items-center justify-center hover:text-foreground hover:bg-secondary transition-colors"
               >
                 <LinkedinIcon className="h-4 w-4" />
               </a>
@@ -45,14 +51,14 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram Profile"
-                className="h-8 w-8 rounded-md border border-border flex items-center justify-center hover:text-foreground hover:bg-secondary transition-colors"
+                className="h-8 w-8 rounded-lg border border-border flex items-center justify-center hover:text-foreground hover:bg-secondary transition-colors"
               >
                 <InstagramIcon className="h-4 w-4" />
               </a>
               <a
                 href={`mailto:${siteConfig.social.email}`}
                 aria-label="Contact Email"
-                className="h-8 w-8 rounded-md border border-border flex items-center justify-center hover:text-foreground hover:bg-secondary transition-colors"
+                className="h-8 w-8 rounded-lg border border-border flex items-center justify-center hover:text-foreground hover:bg-secondary transition-colors"
               >
                 <Mail className="h-4 w-4" />
               </a>
@@ -189,10 +195,13 @@ export function Footer() {
 
         {/* Bottom Bar */}
         <div className="mt-12 pt-8 border-t border-border/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground text-center sm:text-left">
-          <p>© {currentYear} ACM Student&apos;s Chapter, BIT Mesra. Built by the ACM BIT Mesra community.</p>
-          <p className="font-mono text-xs text-muted-foreground/80 text-center sm:text-right break-words">
-            {siteConfig.location.campus} • {siteConfig.location.city}, {siteConfig.location.state}
-          </p>
+          <p>© {currentYear} ACM Student Chapter, BIT Mesra. Built by the ACM BIT Mesra community.</p>
+          <div className="flex flex-col sm:flex-row items-center gap-3">
+            <p className="font-mono text-xs text-muted-foreground/80 text-center sm:text-right break-words">
+              {siteConfig.location.campus} • {siteConfig.location.city}, {siteConfig.location.state}
+            </p>
+            <ThemeToggle />
+          </div>
         </div>
       </div>
     </footer>

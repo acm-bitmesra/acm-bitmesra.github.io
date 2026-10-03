@@ -7,6 +7,7 @@ import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 import { Menu, X, Search } from "lucide-react";
 import { GithubIcon, LinkedinIcon, InstagramIcon, AcmLogo } from "@/components/ui/icons";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 interface NavbarProps {
   onOpenSearch?: () => void;
@@ -19,9 +20,9 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
 
   React.useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      setScrolled(window.scrollY > 15);
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -55,34 +56,43 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
       className={cn(
         "sticky top-0 z-40 w-full transition-all duration-200 border-b",
         scrolled
-          ? "border-border/60 bg-background/90 backdrop-blur-md shadow-sm"
-          : "border-transparent bg-background/50 backdrop-blur-sm"
+          ? "border-border/80 bg-background/95 backdrop-blur-md shadow-xs"
+          : "border-border/40 bg-background/80 backdrop-blur-sm"
       )}
     >
-      <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8 gap-2 sm:gap-4">
         {/* Brand / Logo */}
-        <Link href="/" className="flex items-center gap-3 group focus:outline-none">
-          <AcmLogo className="h-10 w-10 group-hover:scale-105 transition-transform" />
-          <div className="flex flex-col">
-            <span className="text-base font-bold tracking-tight text-foreground group-hover:text-primary transition-colors">
+        <Link
+          href="/"
+          className="flex items-center gap-2.5 sm:gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-lg shrink-0"
+          aria-label="ACM BIT Mesra Homepage"
+        >
+          <AcmLogo className="h-9 w-9 sm:h-10 sm:w-10 group-hover:scale-105 transition-transform shrink-0" />
+          <div className="flex flex-col justify-center">
+            <span className="text-base sm:text-lg font-bold tracking-tight text-foreground leading-none group-hover:text-primary transition-colors whitespace-nowrap">
               ACM BIT Mesra
             </span>
-            <span className="text-[11px] font-mono uppercase tracking-wider text-muted-foreground">
+            <span className="text-[10px] sm:text-[11px] font-mono uppercase tracking-widest text-muted-foreground leading-none mt-1 whitespace-nowrap">
               Student Chapter
             </span>
           </div>
         </Link>
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-1 lg:gap-1.5" aria-label="Main Navigation">
+        <nav
+          className="hidden md:flex items-center gap-0.5 lg:gap-1 shrink min-w-0"
+          aria-label="Main Navigation"
+        >
           {siteConfig.nav.map((item) => {
-            const isActive = pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href));
+            const isActive =
+              pathname === item.href ||
+              (item.href !== "/" && pathname.startsWith(item.href));
             return (
               <Link
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "px-3 py-1.5 text-sm lg:text-base font-medium rounded-lg transition-colors",
+                  "px-2.5 lg:px-3 py-1.5 text-xs lg:text-sm font-medium rounded-md whitespace-nowrap transition-colors select-none",
                   isActive
                     ? "text-foreground bg-secondary font-semibold"
                     : "text-muted-foreground hover:text-foreground hover:bg-secondary/60"
@@ -95,31 +105,44 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
           })}
         </nav>
 
-        {/* Right CTA + Utility Actions */}
-        <div className="hidden md:flex items-center gap-2.5">
-          {/* Search Trigger */}
+        {/* Right CTA + Search + Utility Actions */}
+        <div className="hidden md:flex items-center gap-2 lg:gap-2.5 shrink-0">
+          {/* Search Trigger: Desktop with input style and shortcut */}
           <button
             type="button"
             onClick={onOpenSearch}
-            className="flex items-center gap-2 h-9 px-3 rounded-lg border border-border/80 bg-secondary/40 text-xs sm:text-sm font-mono text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors"
+            className="hidden lg:flex items-center justify-between w-36 xl:w-44 h-9 px-2.5 rounded-lg border border-border/80 bg-secondary/30 text-xs font-mono text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring shrink-0"
             title="Search site (Cmd+K)"
             aria-label="Search site"
           >
-            <Search className="h-4 w-4" />
-            <span className="hidden lg:inline">Search...</span>
-            <kbd className="pointer-events-none hidden lg:inline-flex h-5 select-none items-center gap-1 rounded border border-border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground">
+            <span className="flex items-center gap-2 truncate">
+              <Search className="h-3.5 w-3.5 shrink-0" />
+              <span className="truncate">Search...</span>
+            </span>
+            <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-0.5 rounded border border-border bg-muted/80 px-1.5 font-mono text-[10px] font-medium text-muted-foreground shrink-0">
               ⌘K
             </kbd>
           </button>
 
-          {/* External Socials */}
-          <div className="flex items-center border-l border-border pl-2.5 gap-1.5 text-muted-foreground">
+          {/* Search Trigger: Tablet icon button (768px to 1023px) */}
+          <button
+            type="button"
+            onClick={onOpenSearch}
+            className="flex lg:hidden items-center justify-center h-9 w-9 rounded-lg border border-border/80 bg-secondary/30 text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring shrink-0"
+            title="Search site (Cmd+K)"
+            aria-label="Search site"
+          >
+            <Search className="h-4 w-4" />
+          </button>
+
+          {/* External Socials (Visible on Large Desktop ≥ 1280px) */}
+          <div className="hidden xl:flex items-center border-l border-border/70 pl-2 gap-1 text-muted-foreground shrink-0">
             <a
               href={siteConfig.social.github}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub Organization"
-              className="p-2 rounded-lg hover:text-foreground hover:bg-secondary transition-colors"
+              className="p-1.5 rounded-lg hover:text-foreground hover:bg-secondary transition-colors"
             >
               <GithubIcon className="h-4 w-4" />
             </a>
@@ -128,28 +151,31 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn Profile"
-              className="p-2 rounded-lg hover:text-foreground hover:bg-secondary transition-colors"
+              className="p-1.5 rounded-lg hover:text-foreground hover:bg-secondary transition-colors"
             >
               <LinkedinIcon className="h-4 w-4" />
             </a>
           </div>
 
-          {/* Primary Action Button */}
+          {/* Theme Toggle */}
+          <ThemeToggle />
+
+          {/* Primary Action Button (Whitespace nowrap strictly enforced) */}
           <Link
             href="/join"
-            className="ml-1 inline-flex h-9 items-center justify-center rounded-lg bg-primary px-4 text-xs sm:text-sm font-semibold text-primary-foreground shadow-xs transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="inline-flex h-9 items-center justify-center rounded-lg bg-primary px-3.5 text-xs sm:text-sm font-semibold text-primary-foreground shadow-xs transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring whitespace-nowrap shrink-0"
           >
             Join ACM
           </Link>
         </div>
 
-        {/* Mobile Hamburger & Quick Search Button */}
-        <div className="flex md:hidden items-center gap-1">
+        {/* Mobile Hamburger & Quick Search Button (< 768px) */}
+        <div className="flex md:hidden items-center gap-1 shrink-0">
           <button
             type="button"
             onClick={onOpenSearch}
-            aria-label="Search"
-            className="p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-secondary"
+            aria-label="Search site"
+            className="flex items-center justify-center h-10 w-10 rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             <Search className="h-5 w-5" />
           </button>
@@ -158,9 +184,9 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileMenuOpen}
-            className="p-2 rounded-md text-foreground hover:bg-secondary focus:outline-none"
+            className="flex items-center justify-center h-10 w-10 rounded-lg text-foreground hover:bg-secondary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
-            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
         </div>
       </div>
@@ -171,17 +197,19 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
           role="dialog"
           aria-label="Mobile Navigation Menu"
           aria-modal="true"
-          className="md:hidden border-b border-border bg-background/95 backdrop-blur-lg px-4 pt-2 pb-6 space-y-4"
+          className="md:hidden border-b border-border bg-background/98 backdrop-blur-xl px-4 pt-3 pb-6 space-y-4"
         >
           <nav className="flex flex-col space-y-1">
             {siteConfig.nav.map((item) => {
-              const isActive = pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href));
+              const isActive =
+                pathname === item.href ||
+                (item.href !== "/" && pathname.startsWith(item.href));
               return (
                 <Link
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "flex items-center min-h-[44px] px-3.5 py-2.5 text-base font-medium rounded-md transition-colors",
+                    "flex items-center min-h-[44px] px-3.5 py-2.5 text-base font-medium rounded-lg transition-colors whitespace-nowrap",
                     isActive
                       ? "text-primary bg-primary/10 font-semibold"
                       : "text-muted-foreground hover:text-foreground hover:bg-secondary"
@@ -194,20 +222,27 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
             })}
           </nav>
 
-          <div className="pt-2 border-t border-border flex flex-col gap-3">
+          <div className="pt-3 border-t border-border flex flex-col gap-3">
+            <div className="flex items-center justify-between px-1">
+              <span className="text-xs font-mono text-muted-foreground uppercase tracking-wider">
+                Appearance
+              </span>
+              <ThemeToggle showLabel={true} />
+            </div>
+
             <Link
               href="/join"
-              className="w-full inline-flex h-11 items-center justify-center rounded-md bg-primary text-sm font-semibold text-primary-foreground shadow hover:bg-primary/90 transition-colors"
+              className="w-full inline-flex h-11 items-center justify-center rounded-lg bg-primary text-sm font-semibold text-primary-foreground shadow hover:bg-primary/90 transition-colors whitespace-nowrap"
             >
               Join ACM Chapter
             </Link>
 
-            <div className="flex flex-wrap items-center justify-around gap-2 pt-2 text-muted-foreground">
+            <div className="flex flex-wrap items-center justify-around gap-2 pt-2 text-muted-foreground border-t border-border/40">
               <a
                 href={siteConfig.social.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 text-xs hover:text-foreground p-1.5"
+                className="flex items-center gap-1.5 text-xs hover:text-foreground p-2"
               >
                 <GithubIcon className="h-4 w-4" /> GitHub
               </a>
@@ -215,7 +250,7 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                 href={siteConfig.social.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 text-xs hover:text-foreground p-1.5"
+                className="flex items-center gap-1.5 text-xs hover:text-foreground p-2"
               >
                 <LinkedinIcon className="h-4 w-4" /> LinkedIn
               </a>
@@ -223,13 +258,13 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                 href={siteConfig.social.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 text-xs hover:text-foreground p-1.5"
+                className="flex items-center gap-1.5 text-xs hover:text-foreground p-2"
               >
                 <InstagramIcon className="h-4 w-4" /> Instagram
               </a>
               <a
                 href={`mailto:${siteConfig.social.email}`}
-                className="flex items-center gap-1.5 text-xs hover:text-foreground p-1.5"
+                className="flex items-center gap-1.5 text-xs hover:text-foreground p-2"
               >
                 Email
               </a>

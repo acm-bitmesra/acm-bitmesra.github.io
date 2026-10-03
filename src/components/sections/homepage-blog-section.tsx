@@ -38,30 +38,31 @@ export async function HomepageBlogSection() {
   if (posts.length === 0) return null;
 
   return (
-    <section className="py-16 border-b border-border/80 bg-background/50">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 space-y-8">
-        <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-border/60 pb-4">
+    <section className="py-14 sm:py-16 md:py-20 border-b border-border/80 bg-background/50">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 space-y-8">
+        <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-3 border-b border-border/60 pb-4">
           <div>
-            <div className="inline-flex items-center gap-2 font-mono text-[11px] text-primary uppercase tracking-wider mb-1">
+            <div className="inline-flex items-center gap-2 font-mono text-xs text-primary uppercase tracking-wider mb-1">
               <BookOpen className="h-3.5 w-3.5" />
               <span>Engineering & Research Publications</span>
             </div>
-            <h2 className="text-2xl font-bold tracking-tight text-foreground">
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
               Chapter Dispatches
             </h2>
-            <p className="text-xs text-muted-foreground mt-1">
+            <p className="text-sm sm:text-base text-muted-foreground mt-1">
               Deep dives into algorithms, systems engineering, research, and student computing initiatives.
             </p>
           </div>
           <Link
             href="/blog"
-            className="text-xs font-mono text-muted-foreground hover:text-foreground inline-flex items-center gap-1 group shrink-0"
+            className="text-xs sm:text-sm font-mono font-medium text-foreground hover:text-primary transition-colors inline-flex items-center gap-1.5 group shrink-0"
           >
-            All articles <ArrowRight className="h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
+            <span>All articles</span>
+            <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
           {posts.map((post) => (
             <ArticleCard key={post.slug} post={post} />
           ))}

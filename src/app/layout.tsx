@@ -82,7 +82,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark scroll-smooth">
+    <html lang="en" className="dark scroll-smooth" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                var stored = localStorage.getItem('theme');
+                if (stored === 'light') {
+                  document.documentElement.classList.remove('dark');
+                } else if (stored === 'dark') {
+                  document.documentElement.classList.add('dark');
+                } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+                  document.documentElement.classList.remove('dark');
+                } else {
+                  document.documentElement.classList.add('dark');
+                }
+              } catch (e) {}
+            `,
+          }}
+        />
+      </head>
       <body className="min-h-screen w-full overflow-x-hidden bg-background font-sans text-foreground antialiased selection:bg-red-500/20 selection:text-red-200">
         <SiteLayout>{children}</SiteLayout>
       </body>

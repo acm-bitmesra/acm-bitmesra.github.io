@@ -7,10 +7,10 @@ import { Badge } from "@/components/ui/badge";
 import { EventCard } from "@/components/events/event-card";
 import { siteConfig } from "@/config/site";
 import { GithubIcon } from "@/components/ui/icons";
+import { EventShareActions } from "@/components/events/event-share-actions";
 import {
   Trophy,
   ArrowLeft,
-  Share2,
   CheckCircle2,
   HelpCircle,
   FileText,
@@ -88,6 +88,7 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
     notFound();
   }
 
+  const pageUrl = `${siteConfig.url}/events/${event.slug}`;
   const isUpcoming = event.status === "upcoming";
   const isLive = event.status === "live";
   const isCompleted = event.status === "completed" || event.status === "archived";
@@ -147,20 +148,7 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
           >
             <ArrowLeft className="h-3.5 w-3.5" /> Back to All Events
           </Link>
-          <div className="flex items-center gap-2">
-            <span className="font-mono text-xs text-muted-foreground">Share:</span>
-            <a
-              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                `${event.title} at @acmbitmesra`
-              )}&url=${encodeURIComponent(`${siteConfig.url}/events/${event.slug}`)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Share on Twitter"
-              className="p-1 rounded border border-border text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <Share2 className="h-3.5 w-3.5" />
-            </a>
-          </div>
+          <EventShareActions title={event.title} url={pageUrl} />
         </div>
 
         {/* Notion-style Document Header & Properties Table */}
@@ -305,30 +293,30 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
           {/* Registration CTA */}
           <div className="pt-2 flex flex-wrap items-center gap-3">
             {isRegistrationClosed ? (
-              <div className="flex flex-col sm:flex-row sm:items-center gap-3 w-full sm:w-auto">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3.5 w-full sm:w-auto">
                 <button
                   type="button"
                   disabled
                   aria-disabled="true"
-                  className="inline-flex h-10 sm:h-9 items-center justify-center gap-2 rounded-md bg-neutral-900/40 dark:bg-white/20 px-5 text-xs font-medium text-muted-foreground cursor-not-allowed border border-border w-full sm:w-auto"
+                  className="inline-flex h-11 items-center justify-center gap-2.5 rounded-lg bg-neutral-900/40 dark:bg-white/20 px-6 text-sm font-semibold text-muted-foreground cursor-not-allowed border border-border w-full sm:w-auto"
                 >
                   <GithubIcon className="h-4 w-4 opacity-60" />
                   <span>Register with GitHub</span>
-                  <span className="ml-1 rounded bg-secondary px-1.5 py-0.5 text-[10px] font-mono text-muted-foreground">
+                  <span className="ml-1 rounded bg-secondary px-2 py-0.5 text-xs font-mono text-muted-foreground">
                     Opening Soon
                   </span>
                 </button>
-                <span className="text-xs font-mono text-muted-foreground flex items-center gap-1.5">
-                  <Lock className="h-3 w-3 text-muted-foreground" />
+                <span className="text-xs sm:text-sm font-mono text-muted-foreground flex items-center gap-1.5">
+                  <Lock className="h-3.5 w-3.5 text-muted-foreground" />
                   {event.registrationStatusText || "Registration Opening Soon"}
                 </span>
               </div>
             ) : isUpcoming && event.registrationUrl ? (
               <a
                 href={event.registrationUrl}
-                className="inline-flex h-10 sm:h-9 items-center justify-center rounded-md bg-neutral-900 px-5 text-xs font-medium text-white dark:bg-white dark:text-neutral-900 hover:bg-neutral-800 dark:hover:bg-neutral-100 transition-colors w-full sm:w-auto"
+                className="inline-flex h-11 items-center justify-center rounded-lg bg-neutral-900 px-6 text-sm font-semibold text-white dark:bg-white dark:text-neutral-900 hover:bg-neutral-800 dark:hover:bg-neutral-100 transition-colors w-full sm:w-auto shadow-xs"
               >
-                Register for Event
+                Register for Event →
               </a>
             ) : null}
 

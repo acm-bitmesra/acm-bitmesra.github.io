@@ -76,16 +76,16 @@ export function EventsExplorer({ initialEvents }: EventsExplorerProps) {
   return (
     <div className="space-y-8">
       {/* Search and Sort Toolbar */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 p-4 rounded-xl border border-border bg-card">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 p-4 sm:p-5 rounded-xl border border-border bg-card">
         {/* Search Input */}
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <input
             type="text"
             placeholder="Search events by title, topics, keywords..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full h-10 rounded-md border border-border bg-background pl-9 pr-4 text-base sm:text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring"
+            className="w-full h-11 rounded-lg border border-border bg-background pl-10 pr-4 text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow"
           />
         </div>
 
@@ -95,7 +95,7 @@ export function EventsExplorer({ initialEvents }: EventsExplorerProps) {
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as SortOption)}
-            className="h-10 rounded-md border border-border bg-background px-3 text-xs font-mono text-foreground focus:outline-none focus:ring-1 focus:ring-ring"
+            className="h-11 rounded-lg border border-border bg-background px-3 text-xs sm:text-sm font-mono text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
           >
             <option value="newest">Sort: Newest First</option>
             <option value="oldest">Sort: Oldest First</option>
@@ -105,7 +105,7 @@ export function EventsExplorer({ initialEvents }: EventsExplorerProps) {
       </div>
 
       {/* Category Pills & Status Tabs */}
-      <div className="space-y-3">
+      <div className="space-y-4">
         {/* Category Pills */}
         <div className="flex flex-wrap items-center gap-2">
           {CATEGORIES.map((cat) => (
@@ -113,10 +113,10 @@ export function EventsExplorer({ initialEvents }: EventsExplorerProps) {
               key={cat}
               type="button"
               onClick={() => setSelectedCategory(cat)}
-              className={`px-3 py-1.5 rounded-full text-xs font-mono font-medium transition-colors ${
+              className={`px-3.5 py-1.5 min-h-[36px] rounded-lg text-xs sm:text-sm font-mono transition-colors ${
                 selectedCategory === cat
-                  ? "bg-primary text-primary-foreground shadow-sm"
-                  : "border border-border bg-secondary/50 text-muted-foreground hover:bg-secondary hover:text-foreground"
+                  ? "bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900 font-semibold shadow-xs"
+                  : "border border-border/80 bg-card text-muted-foreground hover:bg-secondary hover:text-foreground"
               }`}
             >
               {cat}
@@ -125,7 +125,7 @@ export function EventsExplorer({ initialEvents }: EventsExplorerProps) {
         </div>
 
         {/* Status Filter Sub-bar */}
-        <div className="flex flex-wrap items-center justify-between gap-y-2 gap-x-3 text-xs font-mono text-muted-foreground pt-1 border-b border-border pb-3">
+        <div className="flex flex-wrap items-center justify-between gap-y-2 gap-x-3 text-xs sm:text-sm font-mono text-muted-foreground pt-1 border-b border-border/60 pb-3">
           <div className="flex flex-wrap items-center gap-3">
             <span className="font-semibold text-foreground">Status:</span>
             {["all", "upcoming", "completed"].map((st) => (
@@ -143,8 +143,8 @@ export function EventsExplorer({ initialEvents }: EventsExplorerProps) {
               </button>
             ))}
           </div>
-          <span className="text-xs text-muted-foreground/80">
-            Showing {filteredEvents.length} event{filteredEvents.length === 1 ? "" : "s"}
+          <span>
+            Showing <span className="font-semibold text-foreground">{filteredEvents.length}</span> event{filteredEvents.length === 1 ? "" : "s"}
           </span>
         </div>
       </div>
@@ -157,11 +157,11 @@ export function EventsExplorer({ initialEvents }: EventsExplorerProps) {
           ))}
         </div>
       ) : (
-        <div className="rounded-xl border border-dashed border-border p-12 text-center space-y-3">
-          <p className="font-mono text-sm text-foreground">
+        <div className="rounded-xl border border-dashed border-border p-12 text-center space-y-4">
+          <p className="font-mono text-base text-foreground font-semibold">
             No events match your current filter parameters.
           </p>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-sm text-muted-foreground max-w-md mx-auto">
             Try resetting your search query or selecting &quot;All&quot; categories.
           </p>
           <button
@@ -171,7 +171,7 @@ export function EventsExplorer({ initialEvents }: EventsExplorerProps) {
               setStatusFilter("all");
               setSearchQuery("");
             }}
-            className="inline-flex h-8 items-center rounded-md border border-border px-3 text-xs font-medium hover:bg-secondary transition-colors"
+            className="inline-flex h-9 items-center rounded-lg border border-border px-4 text-xs sm:text-sm font-mono font-medium hover:bg-secondary transition-colors"
           >
             Reset Filters
           </button>

@@ -237,16 +237,16 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                     {item.category === "PAGE" && <ArrowRight className="h-4 w-4 text-muted-foreground" />}
                   </div>
 
-                  <div className="flex-1 min-w-0 space-y-0.5">
+                  <div className="flex-1 min-w-0 space-y-1">
                     <div className="flex items-center gap-2">
-                      <span className="text-sm font-semibold text-foreground truncate">
+                      <span className="text-sm sm:text-base font-semibold text-foreground truncate">
                         {item.title}
                       </span>
-                      <span className="font-mono text-[9px] uppercase px-1.5 py-0.2 rounded border border-border/80 text-muted-foreground bg-background/50 shrink-0">
+                      <span className="font-mono text-xs uppercase px-2 py-0.5 rounded-md border border-border/80 text-muted-foreground bg-background/60 shrink-0 font-medium">
                         {item.category}
                       </span>
                     </div>
-                    <p className="text-xs text-muted-foreground truncate">
+                    <p className="text-xs sm:text-sm text-muted-foreground truncate">
                       {item.description}
                     </p>
                   </div>
