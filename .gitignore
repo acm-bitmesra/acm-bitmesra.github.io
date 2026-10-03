@@ -15,6 +15,7 @@ dist/
 
 # Cloudflare
 .wrangler/
+.open-next/
 
 # System / IDE
 .DS_Store

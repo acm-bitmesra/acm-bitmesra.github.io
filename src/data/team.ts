@@ -2,12 +2,26 @@ import { TeamMember } from "@/types";
 
 export const teamMembers: TeamMember[] = [
   {
-    slug: "faculty-sponsor",
-    name: "Faculty Sponsor",
+    slug: "dr-sumit-srivastava",
+    name: "Dr. Sumit Srivastava",
     role: "Faculty Sponsor & Chapter Advisor",
     category: "faculty",
-    program: "Department of Computer Science & Engineering",
-    bio: "Guiding the student chapter in academic alignment, institutional coordination, and computing ethics at BIT Mesra.",
+    program: "Assistant Professor, Department of Computer Science & Engineering",
+    bio: "Faculty Sponsor & Chapter Advisor for the ACM Student Chapter at BIT Mesra. Assistant Professor in the Department of Computer Science & Engineering with 14+ years of academic and research experience. Leading research in cybersecurity, artificial intelligence, signal processing, voice biometrics, and digital forensics.",
+    avatar: "/images/team/dr-sumit-srivastava.jpg",
+    website: "https://bitmesra.ac.in/Show_profile/35614D7A75715142676139346B6156434248324B56413D3D",
+    interests: [
+      "Cybersecurity & Network Security",
+      "Artificial Intelligence & Machine Learning",
+      "Signal Processing",
+      "Voice Biometrics & Speaker Identification",
+      "Digital Forensics",
+    ],
+    contributions: [
+      "Faculty Sponsor & Chapter Advisor, ACM BIT Mesra",
+      "Academic & Research Mentorship in Computer Science",
+      "Institutional Coordination with ACM Global",
+    ],
     isVerified: true,
   },
   {

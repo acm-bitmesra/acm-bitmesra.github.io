@@ -6,16 +6,16 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:worker": "opennextjs-cloudflare",
+    "build:worker": "opennextjs-cloudflare build",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "test:prod": "node scripts/validate-production.mjs",
     "test:auth": "node scripts/test-auth-and-blog.mjs",
     "test": "npm run typecheck && npm run lint && npm run test:auth && npm run test:prod",
-    "cf:build": "next build && opennextjs-cloudflare",
-    "cf:deploy": "opennextjs-cloudflare && wrangler deploy",
-    "deploy": "next build && opennextjs-cloudflare && wrangler deploy"
+    "cf:build": "next build && opennextjs-cloudflare build",
+    "cf:deploy": "opennextjs-cloudflare build && OPEN_NEXT_DEPLOY=true wrangler deploy",
+    "deploy": "next build && opennextjs-cloudflare build && OPEN_NEXT_DEPLOY=true wrangler deploy"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.2.0",
@@ -42,6 +42,7 @@
     "eslint": "^9.20.1",
     "eslint-config-next": "^15.1.7",
     "postcss": "^8.5.2",
+    "sharp": "^0.35.5",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.7.3",
     "wrangler": "^4.147.0"

@@ -45,6 +45,14 @@ export async function generateMetadata({
   }
 
   const pageUrl = `${siteConfig.url}/events/${event.slug}`;
+  const ogImageUrl =
+    event.slug === "hacktoberfest-2026"
+      ? `${siteConfig.url}/images/events/hacktoberfest-2026-og.png`
+      : event.coverImage?.startsWith("http")
+      ? event.coverImage
+      : event.coverImage
+      ? `${siteConfig.url}${event.coverImage}`
+      : `${siteConfig.url}/og.png`;
 
   return {
     title: `${event.title} | ${event.category}`,
@@ -54,11 +62,20 @@ export async function generateMetadata({
       description: event.shortDescription,
       url: pageUrl,
       type: "article",
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: `${event.title} - ACM BIT Mesra`,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: `${event.title} | ACM BIT Mesra`,
       description: event.shortDescription,
+      images: [ogImageUrl],
     },
   };
 }

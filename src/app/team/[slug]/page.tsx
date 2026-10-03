@@ -11,16 +11,20 @@ interface MemberDetailPageProps {
 
 export async function generateStaticParams() {
   const members = getPublicTeamMembers();
-  return members.map((m) => ({
+  const slugs = members.map((m) => ({
     slug: m.slug,
   }));
+  slugs.push({ slug: "faculty-sponsor" });
+  return slugs;
 }
 
 export async function generateMetadata({
   params,
 }: MemberDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const member = getPublicTeamMembers().find((m) => m.slug === slug);
+  const member = getPublicTeamMembers().find(
+    (m) => m.slug === slug || (slug === "faculty-sponsor" && m.category === "faculty")
+  );
 
   if (!member) {
     return { title: "Member Not Found" };
@@ -34,7 +38,9 @@ export async function generateMetadata({
 
 export default async function MemberDetailPage({ params }: MemberDetailPageProps) {
   const { slug } = await params;
-  const member = getPublicTeamMembers().find((m) => m.slug === slug);
+  const member = getPublicTeamMembers().find(
+    (m) => m.slug === slug || (slug === "faculty-sponsor" && m.category === "faculty")
+  );
 
   if (!member) {
     notFound();

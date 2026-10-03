@@ -44,17 +44,36 @@ export const metadata: Metadata = {
     title: "ACM BIT Mesra — Computing, Coding & Innovation",
     description: siteConfig.description,
     siteName: siteConfig.name,
+    images: [
+      {
+        url: `${siteConfig.url}/og.png`,
+        width: 1200,
+        height: 630,
+        alt: "ACM BIT Mesra — Association for Computing Machinery Student Chapter",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "ACM BIT Mesra — Computing, Coding & Innovation",
     description: siteConfig.description,
+    images: [`${siteConfig.url}/og.png`],
   },
   icons: {
-    icon: "/icon.svg",
-    shortcut: "/icon.svg",
-    apple: "/icon.svg",
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: [
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
   },
+  manifest: "/manifest.webmanifest",
 };
 
 export default function RootLayout({
