@@ -111,6 +111,15 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
               {children}
             </a>
           ),
+          img: ({ src, alt }) => (
+            <img
+              src={src}
+              alt={alt || ""}
+              loading="lazy"
+              decoding="async"
+              className="max-w-full h-auto rounded-lg border border-border/80 my-4"
+            />
+          ),
         }}
       >
         {content}

@@ -60,13 +60,17 @@ export default async function MemberDetailPage({ params }: MemberDetailPageProps
         </div>
 
         {/* Member Profile Card */}
-        <div className="rounded-2xl border border-border bg-card p-8 sm:p-12 space-y-8">
+        <div className="rounded-2xl border border-border bg-card p-5 sm:p-8 lg:p-12 space-y-8">
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 text-center sm:text-left">
             <div className="h-24 w-24 rounded-full border-2 border-primary/20 bg-secondary flex items-center justify-center text-muted-foreground shrink-0 overflow-hidden">
               {member.avatar ? (
                 <img
                   src={member.avatar}
                   alt={member.name}
+                  width={96}
+                  height={96}
+                  loading="lazy"
+                  decoding="async"
                   className="h-full w-full object-cover"
                 />
               ) : (
@@ -98,6 +102,40 @@ export default async function MemberDetailPage({ params }: MemberDetailPageProps
               {member.bio}
             </p>
           </div>
+
+          {member.interests && member.interests.length > 0 && (
+            <div className="border-t border-border pt-6 space-y-3">
+              <h3 className="text-xs font-mono uppercase text-muted-foreground font-semibold">
+                Specializations & Focus Areas
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {member.interests.map((interest, idx) => (
+                  <span
+                    key={idx}
+                    className="inline-flex items-center rounded-md border border-border/80 bg-secondary/60 px-2.5 py-1 text-xs font-mono text-foreground"
+                  >
+                    {interest}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {member.contributions && member.contributions.length > 0 && (
+            <div className="border-t border-border pt-6 space-y-3">
+              <h3 className="text-xs font-mono uppercase text-muted-foreground font-semibold">
+                Leadership & Contributions
+              </h3>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                {member.contributions.map((contribution, idx) => (
+                  <li key={idx} className="flex items-start gap-2">
+                    <span className="text-primary font-bold">›</span>
+                    <span>{contribution}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           {/* Social / Direct Channels */}
           {(member.github || member.linkedin || member.website) && (

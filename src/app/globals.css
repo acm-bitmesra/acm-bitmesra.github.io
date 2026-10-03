@@ -53,13 +53,32 @@
   * {
     @apply border-border;
   }
+  html {
+    overflow-x: hidden;
+    max-width: 100vw;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
   body {
     @apply bg-background text-foreground antialiased selection:bg-neutral-200 selection:text-neutral-900 dark:selection:bg-neutral-800 dark:selection:text-neutral-100;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    overflow-x: hidden;
+    max-width: 100vw;
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
   :focus-visible {
     outline: 2px solid hsl(var(--primary));
     outline-offset: 2px;
+  }
+  /* Prevent iOS Safari 16px auto-zoom on mobile inputs */
+  input, select, textarea {
+    font-size: 16px;
+  }
+  @media (min-width: 640px) {
+    input, select, textarea {
+      font-size: 14px;
+    }
   }
 }
 

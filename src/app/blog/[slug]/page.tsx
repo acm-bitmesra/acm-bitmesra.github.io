@@ -183,6 +183,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             <img
               src={post.coverImageUrl}
               alt={post.coverImageAlt || post.title}
+              loading="lazy"
+              decoding="async"
               className="w-full h-auto max-h-[460px] object-cover"
             />
           </div>

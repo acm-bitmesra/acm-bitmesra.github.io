@@ -130,11 +130,32 @@ export interface TeamMember {
 export interface Resource {
   title: string;
   description: string;
-  category: "DSA" | "Competitive Programming" | "Development" | "Open Source" | "Systems" | "Career";
-  type: "article" | "video" | "course" | "github" | "document";
+  category:
+    | "DSA"
+    | "Competitive Programming"
+    | "Systems"
+    | "Development"
+    | "Open Source"
+    | "System Design"
+    | "AI & Machine Learning"
+    | "Career"
+    | "Foundations"
+    | string;
+  type: "article" | "video" | "course" | "github" | "document" | "interactive" | "roadmap";
   url: string;
   author?: string;
-  level?: "Beginner" | "Intermediate" | "Advanced";
+  level?:
+    | "Beginner"
+    | "Intermediate"
+    | "Advanced"
+    | "All Levels"
+    | "Beginner to Advanced"
+    | "Beginner to Intermediate"
+    | "Intermediate to Advanced"
+    | string;
+  tags?: string[];
+  featured?: boolean;
+  highlights?: string[];
 }
 
 export interface BlogPost {

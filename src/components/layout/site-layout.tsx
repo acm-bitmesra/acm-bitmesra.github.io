@@ -37,7 +37,7 @@ export function SiteLayout({ children }: SiteLayoutProps) {
   }
 
   return (
-    <div className="relative flex min-h-screen flex-col bg-background text-foreground">
+    <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background text-foreground">
       {/* Skip to Content for Keyboard Accessibility */}
       <a
         href="#main-content"
@@ -47,7 +47,7 @@ export function SiteLayout({ children }: SiteLayoutProps) {
       </a>
 
       <Navbar onOpenSearch={() => setSearchOpen(true)} />
-      <main id="main-content" tabIndex={-1} className="flex-1 focus:outline-none">
+      <main id="main-content" tabIndex={-1} className="flex-1 w-full overflow-x-hidden focus:outline-none">
         {children}
       </main>
       <Footer />

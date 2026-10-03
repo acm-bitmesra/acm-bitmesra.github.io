@@ -266,8 +266,8 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
         </div>
 
         {/* Footer Shortcut Legend */}
-        <div className="border-t border-border px-4 py-2.5 bg-secondary/30 flex items-center justify-between text-[11px] font-mono text-muted-foreground">
-          <div className="flex items-center gap-3">
+        <div className="border-t border-border px-4 py-2.5 bg-secondary/30 flex items-center justify-between text-xs font-mono text-muted-foreground">
+          <div className="hidden sm:flex items-center gap-3">
             <span>↑↓ Navigate</span>
             <span>↵ Select</span>
             <span>ESC Close</span>

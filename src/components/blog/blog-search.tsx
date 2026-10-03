@@ -69,7 +69,7 @@ export function BlogSearch({
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search engineering articles by title, topic, or keyword..."
-          className="w-full h-10 pl-10 pr-10 rounded-md border border-border/80 bg-secondary/30 text-xs sm:text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-colors"
+          className="w-full h-10 pl-10 pr-10 rounded-md border border-border/80 bg-secondary/30 text-base sm:text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-colors"
         />
         {searchTerm && (
           <button

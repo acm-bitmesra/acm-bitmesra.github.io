@@ -69,7 +69,7 @@ export default function AlumniPage() {
             {alumniBatches.map((batch) => (
               <div
                 key={batch.academicYear}
-                className="rounded-2xl border border-border bg-card p-6 sm:p-8 space-y-6"
+                className="rounded-2xl border border-border bg-card p-4 sm:p-6 lg:p-8 space-y-6"
               >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border/80 pb-4">
                   <div className="space-y-1">
@@ -106,7 +106,7 @@ export default function AlumniPage() {
         </section>
 
         {/* Connect Banner */}
-        <section className="rounded-2xl border border-border bg-secondary/40 p-8 sm:p-10 text-center space-y-4">
+        <section className="rounded-2xl border border-border bg-secondary/40 p-5 sm:p-8 lg:p-10 text-center space-y-4">
           <h2 className="text-2xl font-bold text-foreground">
             Are you an ACM BIT Mesra alumnus?
           </h2>

@@ -197,9 +197,9 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
 
           {/* Properties Table (Notion database view) */}
           <div className="rounded-lg border border-border bg-card divide-y divide-border text-xs sm:text-sm">
-            <div className="grid grid-cols-3 sm:grid-cols-4 p-3 items-center">
-              <span className="text-muted-foreground font-mono">Status</span>
-              <div className="col-span-2 sm:col-span-3">
+            <div className="flex flex-col sm:grid sm:grid-cols-4 p-3 gap-1 sm:gap-0 sm:items-center">
+              <span className="text-muted-foreground font-mono sm:col-span-1">Status</span>
+              <div className="sm:col-span-3 min-w-0">
                 <Badge
                   variant={
                     isRegistrationClosed
@@ -222,80 +222,80 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
               </div>
             </div>
 
-            <div className="grid grid-cols-3 sm:grid-cols-4 p-3 items-center">
-              <span className="text-muted-foreground font-mono">Category</span>
-              <div className="col-span-2 sm:col-span-3">
+            <div className="flex flex-col sm:grid sm:grid-cols-4 p-3 gap-1 sm:gap-0 sm:items-center">
+              <span className="text-muted-foreground font-mono sm:col-span-1">Category</span>
+              <div className="sm:col-span-3 min-w-0">
                 <Badge variant="outline" className="font-mono text-xs">
                   {event.category}
                 </Badge>
               </div>
             </div>
 
-            <div className="grid grid-cols-3 sm:grid-cols-4 p-3 items-center">
-              <span className="text-muted-foreground font-mono">Date</span>
-              <span className="col-span-2 sm:col-span-3 text-foreground font-medium">
+            <div className="flex flex-col sm:grid sm:grid-cols-4 p-3 gap-1 sm:gap-0 sm:items-center">
+              <span className="text-muted-foreground font-mono sm:col-span-1">Date</span>
+              <span className="sm:col-span-3 text-foreground font-medium min-w-0 break-words">
                 {formatDateRange(event.date, event.endDate)}
               </span>
             </div>
 
             {event.time && (
-              <div className="grid grid-cols-3 sm:grid-cols-4 p-3 items-center">
-                <span className="text-muted-foreground font-mono">Time</span>
-                <span className="col-span-2 sm:col-span-3 text-foreground">
+              <div className="flex flex-col sm:grid sm:grid-cols-4 p-3 gap-1 sm:gap-0 sm:items-center">
+                <span className="text-muted-foreground font-mono sm:col-span-1">Time</span>
+                <span className="sm:col-span-3 text-foreground min-w-0 break-words">
                   {event.time}
                 </span>
               </div>
             )}
 
             {event.location && (
-              <div className="grid grid-cols-3 sm:grid-cols-4 p-3 items-center">
-                <span className="text-muted-foreground font-mono">Venue</span>
-                <span className="col-span-2 sm:col-span-3 text-foreground">
+              <div className="flex flex-col sm:grid sm:grid-cols-4 p-3 gap-1 sm:gap-0 sm:items-center">
+                <span className="text-muted-foreground font-mono sm:col-span-1">Venue</span>
+                <span className="sm:col-span-3 text-foreground min-w-0 break-words">
                   {event.location}
                 </span>
               </div>
             )}
 
             {event.organizers && event.organizers.length > 0 && (
-              <div className="grid grid-cols-3 sm:grid-cols-4 p-3 items-center">
-                <span className="text-muted-foreground font-mono">Organizers</span>
-                <span className="col-span-2 sm:col-span-3 text-muted-foreground">
+              <div className="flex flex-col sm:grid sm:grid-cols-4 p-3 gap-1 sm:gap-0 sm:items-center">
+                <span className="text-muted-foreground font-mono sm:col-span-1">Organizers</span>
+                <span className="sm:col-span-3 text-muted-foreground min-w-0 break-words">
                   {event.organizers.join(", ")}
                 </span>
               </div>
             )}
 
             {event.theme && (
-              <div className="grid grid-cols-3 sm:grid-cols-4 p-3 items-center">
-                <span className="text-muted-foreground font-mono">Theme</span>
-                <span className="col-span-2 sm:col-span-3 text-foreground font-medium">
+              <div className="flex flex-col sm:grid sm:grid-cols-4 p-3 gap-1 sm:gap-0 sm:items-center">
+                <span className="text-muted-foreground font-mono sm:col-span-1">Theme</span>
+                <span className="sm:col-span-3 text-foreground font-medium min-w-0 break-words">
                   {event.theme}
                 </span>
               </div>
             )}
 
             {event.tags && event.tags.length > 0 && (
-              <div className="grid grid-cols-3 sm:grid-cols-4 p-3 items-center">
-                <span className="text-muted-foreground font-mono">Focus</span>
-                <span className="col-span-2 sm:col-span-3 text-muted-foreground">
+              <div className="flex flex-col sm:grid sm:grid-cols-4 p-3 gap-1 sm:gap-0 sm:items-center">
+                <span className="text-muted-foreground font-mono sm:col-span-1">Focus</span>
+                <span className="sm:col-span-3 text-muted-foreground min-w-0 break-words">
                   {event.tags.join(" • ")}
                 </span>
               </div>
             )}
 
             {event.challengeTitle && (
-              <div className="grid grid-cols-3 sm:grid-cols-4 p-3 items-center">
-                <span className="text-muted-foreground font-mono">Challenge</span>
-                <span className="col-span-2 sm:col-span-3 text-foreground font-medium">
+              <div className="flex flex-col sm:grid sm:grid-cols-4 p-3 gap-1 sm:gap-0 sm:items-center">
+                <span className="text-muted-foreground font-mono sm:col-span-1">Challenge</span>
+                <span className="sm:col-span-3 text-foreground font-medium min-w-0 break-words">
                   {event.challengeTitle} (Details to be announced)
                 </span>
               </div>
             )}
 
             {event.prizes && event.prizes.length > 0 && (
-              <div className="grid grid-cols-3 sm:grid-cols-4 p-3 items-center">
-                <span className="text-muted-foreground font-mono">Prizes</span>
-                <span className="col-span-2 sm:col-span-3 text-foreground font-medium">
+              <div className="flex flex-col sm:grid sm:grid-cols-4 p-3 gap-1 sm:gap-0 sm:items-center">
+                <span className="text-muted-foreground font-mono sm:col-span-1">Prizes</span>
+                <span className="sm:col-span-3 text-foreground font-medium min-w-0 break-words">
                   {event.prizes[0].reward}
                 </span>
               </div>
@@ -305,12 +305,12 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
           {/* Registration CTA */}
           <div className="pt-2 flex flex-wrap items-center gap-3">
             {isRegistrationClosed ? (
-              <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3 w-full sm:w-auto">
                 <button
                   type="button"
                   disabled
                   aria-disabled="true"
-                  className="inline-flex h-9 items-center justify-center gap-2 rounded-md bg-neutral-900/40 dark:bg-white/20 px-5 text-xs font-medium text-muted-foreground cursor-not-allowed border border-border"
+                  className="inline-flex h-10 sm:h-9 items-center justify-center gap-2 rounded-md bg-neutral-900/40 dark:bg-white/20 px-5 text-xs font-medium text-muted-foreground cursor-not-allowed border border-border w-full sm:w-auto"
                 >
                   <GithubIcon className="h-4 w-4 opacity-60" />
                   <span>Register with GitHub</span>
@@ -326,7 +326,7 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
             ) : isUpcoming && event.registrationUrl ? (
               <a
                 href={event.registrationUrl}
-                className="inline-flex h-9 items-center justify-center rounded-md bg-neutral-900 px-5 text-xs font-medium text-white dark:bg-white dark:text-neutral-900 hover:bg-neutral-800 dark:hover:bg-neutral-100 transition-colors"
+                className="inline-flex h-10 sm:h-9 items-center justify-center rounded-md bg-neutral-900 px-5 text-xs font-medium text-white dark:bg-white dark:text-neutral-900 hover:bg-neutral-800 dark:hover:bg-neutral-100 transition-colors w-full sm:w-auto"
               >
                 Register for Event
               </a>
@@ -539,11 +539,11 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
                 </p>
               </div>
 
-              <div>
+              <div className="w-full sm:w-auto">
                 {event.registrationOpen ? (
                   <a
                     href={event.registrationUrl || "#"}
-                    className="inline-flex h-9 items-center justify-center gap-2 rounded-md bg-neutral-900 px-5 text-xs font-medium text-white dark:bg-white dark:text-neutral-900 hover:bg-neutral-800 dark:hover:bg-neutral-100 transition-colors"
+                    className="inline-flex h-10 sm:h-9 items-center justify-center gap-2 rounded-md bg-neutral-900 px-5 text-xs font-medium text-white dark:bg-white dark:text-neutral-900 hover:bg-neutral-800 dark:hover:bg-neutral-100 transition-colors w-full sm:w-auto"
                   >
                     <GithubIcon className="h-4 w-4" />
                     <span>Register with GitHub</span>
@@ -553,7 +553,7 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
                     type="button"
                     disabled
                     aria-disabled="true"
-                    className="inline-flex h-9 items-center justify-center gap-2 rounded-md bg-neutral-900/40 dark:bg-white/20 px-5 text-xs font-medium text-muted-foreground cursor-not-allowed border border-border"
+                    className="inline-flex h-10 sm:h-9 items-center justify-center gap-2 rounded-md bg-neutral-900/40 dark:bg-white/20 px-5 text-xs font-medium text-muted-foreground cursor-not-allowed border border-border w-full sm:w-auto"
                   >
                     <GithubIcon className="h-4 w-4 opacity-60" />
                     <span>Register with GitHub</span>
@@ -562,7 +562,7 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
               </div>
             </div>
             {!event.registrationOpen && (
-              <p className="text-[11px] font-mono text-muted-foreground/80 border-t border-border pt-3">
+              <p className="text-xs font-mono text-muted-foreground/80 border-t border-border pt-3">
                 Notice: The registration button is currently disabled. Do not submit external forms. The registration button will activate automatically once the organizing committee opens registrations.
               </p>
             )}
@@ -579,17 +579,17 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
               {event.winners.map((winner, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center justify-between p-3 text-xs sm:text-sm"
+                  className="flex flex-col sm:flex-row sm:items-center justify-between p-3 text-xs sm:text-sm gap-1.5 sm:gap-3"
                 >
-                  <div className="flex items-center gap-3">
-                    <span className="font-mono text-xs font-semibold text-foreground">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <span className="font-mono text-xs font-semibold text-foreground shrink-0">
                       {winner.position}
                     </span>
-                    <span className="font-medium text-foreground">
+                    <span className="font-medium text-foreground min-w-0 break-words">
                       {winner.teamName}
                     </span>
                   </div>
-                  <span className="text-xs text-muted-foreground">
+                  <span className="text-xs text-muted-foreground sm:text-right break-words">
                     {winner.members.join(", ")}
                   </span>
                 </div>

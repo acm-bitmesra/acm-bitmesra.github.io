@@ -28,13 +28,13 @@ export default function HistoryPage() {
         </div>
 
         {/* Timeline Sequence */}
-        <div className="relative border-l-2 border-border/80 ml-4 sm:ml-8 space-y-12 pb-8">
+        <div className="relative border-l-2 border-border/80 ml-2 sm:ml-8 space-y-10 sm:space-y-12 pb-8">
           {chapterHistory.map((item, idx) => (
-            <div key={idx} className="relative pl-6 sm:pl-10 space-y-4 group">
+            <div key={idx} className="relative pl-4 sm:pl-10 space-y-4 group">
               {/* Dot marker */}
               <div className="absolute -left-[9px] top-1.5 h-4 w-4 rounded-full border-2 border-background bg-primary group-hover:scale-125 transition-transform" />
 
-              <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 space-y-4 shadow-sm hover:border-border/80 transition-colors">
+              <div className="rounded-2xl border border-border bg-card p-4 sm:p-6 lg:p-8 space-y-4 shadow-sm hover:border-border/80 transition-colors">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 border-b border-border/80 pb-3">
                   <div className="flex items-center gap-2">
                     <span className="font-mono text-xs font-bold text-primary px-2 py-0.5 rounded bg-primary/10 border border-primary/20">

@@ -32,7 +32,7 @@ export const siteConfig = {
   },
   social: {
     github: "https://github.com/acm-bitmesra",
-    linkedin: "https://www.linkedin.com/company/acm-bit-mesra",
+    linkedin: "https://www.linkedin.com/company/acmbitm/",
     instagram: "https://www.instagram.com/acmbitm?stkn=MXB1c3plOWYyeHFlZg==",
     email: "acm@bitmesra.ac.in",
   },

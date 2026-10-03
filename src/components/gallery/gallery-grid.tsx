@@ -27,7 +27,7 @@ export function GalleryGrid({ items }: GalleryGridProps) {
             key={cat}
             type="button"
             onClick={() => setSelectedCategory(cat)}
-            className={`px-3 py-1 rounded-md text-xs font-mono transition-colors ${
+            className={`px-3 py-1.5 min-h-[32px] rounded-md text-xs font-mono transition-colors ${
               selectedCategory === cat
                 ? "bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 font-medium"
                 : "text-muted-foreground hover:bg-neutral-100 dark:hover:bg-neutral-800 hover:text-foreground"

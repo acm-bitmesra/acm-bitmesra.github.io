@@ -85,7 +85,7 @@ export function EventsExplorer({ initialEvents }: EventsExplorerProps) {
             placeholder="Search events by title, topics, keywords..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full h-10 rounded-md border border-border bg-background pl-9 pr-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring"
+            className="w-full h-10 rounded-md border border-border bg-background pl-9 pr-4 text-base sm:text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring"
           />
         </div>
 
@@ -125,23 +125,25 @@ export function EventsExplorer({ initialEvents }: EventsExplorerProps) {
         </div>
 
         {/* Status Filter Sub-bar */}
-        <div className="flex items-center gap-4 text-xs font-mono text-muted-foreground pt-1 border-b border-border pb-3">
-          <span className="font-semibold text-foreground">Status:</span>
-          {["all", "upcoming", "completed"].map((st) => (
-            <button
-              key={st}
-              type="button"
-              onClick={() => setStatusFilter(st)}
-              className={`capitalize transition-colors ${
-                statusFilter === st
-                  ? "text-primary font-bold underline underline-offset-4"
-                  : "hover:text-foreground"
-              }`}
-            >
-              {st === "all" ? "All Statuses" : st}
-            </button>
-          ))}
-          <span className="ml-auto text-[11px]">
+        <div className="flex flex-wrap items-center justify-between gap-y-2 gap-x-3 text-xs font-mono text-muted-foreground pt-1 border-b border-border pb-3">
+          <div className="flex flex-wrap items-center gap-3">
+            <span className="font-semibold text-foreground">Status:</span>
+            {["all", "upcoming", "completed"].map((st) => (
+              <button
+                key={st}
+                type="button"
+                onClick={() => setStatusFilter(st)}
+                className={`capitalize transition-colors px-1 py-0.5 ${
+                  statusFilter === st
+                    ? "text-primary font-bold underline underline-offset-4"
+                    : "hover:text-foreground"
+                }`}
+              >
+                {st === "all" ? "All Statuses" : st}
+              </button>
+            ))}
+          </div>
+          <span className="text-xs text-muted-foreground/80">
             Showing {filteredEvents.length} event{filteredEvents.length === 1 ? "" : "s"}
           </span>
         </div>

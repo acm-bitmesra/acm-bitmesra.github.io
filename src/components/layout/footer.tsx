@@ -188,10 +188,10 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-border/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
+        <div className="mt-12 pt-8 border-t border-border/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground text-center sm:text-left">
           <p>© {currentYear} ACM Student&apos;s Chapter, BIT Mesra. Built by the ACM BIT Mesra community.</p>
-          <p className="font-mono text-[11px] text-muted-foreground/80">
-            {siteConfig.location.campus} • {siteConfig.location.city}, {siteConfig.location.state}, {siteConfig.location.country}
+          <p className="font-mono text-xs text-muted-foreground/80 text-center sm:text-right break-words">
+            {siteConfig.location.campus} • {siteConfig.location.city}, {siteConfig.location.state}
           </p>
         </div>
       </div>

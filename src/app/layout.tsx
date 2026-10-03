@@ -83,7 +83,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark scroll-smooth">
-      <body className="min-h-screen bg-background font-sans text-foreground antialiased selection:bg-red-500/20 selection:text-red-200">
+      <body className="min-h-screen w-full overflow-x-hidden bg-background font-sans text-foreground antialiased selection:bg-red-500/20 selection:text-red-200">
         <SiteLayout>{children}</SiteLayout>
       </body>
     </html>

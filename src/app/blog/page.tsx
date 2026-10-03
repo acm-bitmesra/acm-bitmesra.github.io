@@ -115,14 +115,14 @@ export default async function BlogIndexPage({ searchParams }: BlogIndexPageProps
 
         {/* Filter State Banner (if active filter) */}
         {(category || tag || q) && (
-          <div className="flex items-center justify-between p-3 rounded-md bg-secondary/30 border border-border/60 text-xs font-mono">
-            <span className="text-muted-foreground">
+          <div className="flex flex-wrap items-center justify-between gap-2 p-3 rounded-md bg-secondary/30 border border-border/60 text-xs font-mono">
+            <span className="text-muted-foreground break-words">
               Filtering by:{" "}
               {category && <span className="font-semibold text-foreground">Category: {category}</span>}
               {tag && <span className="font-semibold text-foreground">Tag: #{tag}</span>}
               {q && <span className="font-semibold text-foreground">Search: &quot;{q}&quot;</span>}
             </span>
-            <Link href="/blog" className="text-primary hover:underline">
+            <Link href="/blog" className="text-primary hover:underline shrink-0">
               Reset filters
             </Link>
           </div>
