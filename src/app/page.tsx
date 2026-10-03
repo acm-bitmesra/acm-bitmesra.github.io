@@ -4,6 +4,7 @@ import { PillarsSection } from "@/components/sections/pillars-section";
 import { FeaturedEventSection } from "@/components/sections/featured-event-section";
 import { UpcomingEventsSection } from "@/components/sections/upcoming-events-section";
 import { ImpactSection } from "@/components/sections/impact-section";
+import { HomepageBlogSection } from "@/components/sections/homepage-blog-section";
 import { ResourcesPreviewSection } from "@/components/sections/resources-preview-section";
 import { JoinCtaSection } from "@/components/sections/join-cta-section";
 import { events } from "@/data/events";
@@ -59,6 +60,7 @@ export default function HomePage() {
       {featuredEvent && <FeaturedEventSection event={featuredEvent} />}
       <UpcomingEventsSection events={otherEvents} />
       <ImpactSection />
+      <HomepageBlogSection />
       <ResourcesPreviewSection />
       <JoinCtaSection />
     </div>

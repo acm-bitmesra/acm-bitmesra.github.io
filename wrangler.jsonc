@@ -1,14 +1,12 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "acm-bitmesra",
-  "main": "src/worker.ts",
+  "main": ".open-next/worker.js",
   "compatibility_date": "2025-02-14",
   "compatibility_flags": ["nodejs_compat"],
   "assets": {
-    "directory": "./out",
-    "binding": "ASSETS",
-    "html_handling": "auto-trailing-slash",
-    "not_found_handling": "404-page"
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
   },
   "routes": [
     {

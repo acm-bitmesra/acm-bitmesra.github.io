@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { usePathname } from "next/navigation";
 import { Navbar } from "./navbar";
 import { Footer } from "./footer";
 import { SearchModal } from "@/components/search/search-modal";
@@ -11,9 +12,12 @@ interface SiteLayoutProps {
 
 export function SiteLayout({ children }: SiteLayoutProps) {
   const [searchOpen, setSearchOpen] = React.useState(false);
+  const pathname = usePathname();
+  const isAdmin = pathname?.startsWith("/admin");
 
   // Global keyboard shortcut: Cmd+K / Ctrl+K
   React.useEffect(() => {
+    if (isAdmin) return;
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
         e.preventDefault();
@@ -22,7 +26,15 @@ export function SiteLayout({ children }: SiteLayoutProps) {
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
+  }, [isAdmin]);
+
+  if (isAdmin) {
+    return (
+      <div className="relative min-h-screen bg-background text-foreground flex flex-col">
+        {children}
+      </div>
+    );
+  }
 
   return (
     <div className="relative flex min-h-screen flex-col bg-background text-foreground">

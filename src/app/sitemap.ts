@@ -4,10 +4,11 @@ import { events } from "@/data/events";
 import { activitiesData } from "@/data/activities";
 import { getPublishedBlogPosts } from "@/data/blog";
 import { getPublicTeamMembers } from "@/data/team";
+import { getPublishedPosts } from "@/db/queries/blog";
 
-export const dynamic = "force-static";
+export const revalidate = 3600; // Hourly sitemap cache revalidation
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = siteConfig.url;
   const now = new Date();
 
@@ -54,12 +55,30 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  // Dynamic Blog routes (published only)
-  const blogRoutes: MetadataRoute.Sitemap = getPublishedBlogPosts().map((post) => ({
+  // Dynamic Blog routes (published only from database with static fallback)
+  let blogItems: { slug: string; date: Date }[] = [];
+  try {
+    const livePosts = await getPublishedPosts({ limit: 100 });
+    blogItems = livePosts.map((p) => ({
+      slug: p.slug,
+      date: p.publishedAt || now,
+    }));
+  } catch (err) {
+    console.error("Sitemap: Failed to query database for blog posts:", err);
+  }
+
+  if (blogItems.length === 0) {
+    blogItems = getPublishedBlogPosts().map((post) => ({
+      slug: post.slug,
+      date: new Date(post.date),
+    }));
+  }
+
+  const blogRoutes: MetadataRoute.Sitemap = blogItems.map((post) => ({
     url: `${baseUrl}/blog/${post.slug}`,
-    lastModified: new Date(post.date),
-    changeFrequency: "monthly",
-    priority: 0.7,
+    lastModified: post.date,
+    changeFrequency: "weekly",
+    priority: 0.8,
   }));
 
   // Dynamic Team routes (verified only)

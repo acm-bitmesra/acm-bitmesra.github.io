@@ -1,14 +1,16 @@
 import fs from "node:fs";
 import path from "node:path";
 
-const OUT_DIR = path.resolve(process.cwd(), "out");
+const OUT_DIR = fs.existsSync(path.resolve(process.cwd(), "out"))
+  ? path.resolve(process.cwd(), "out")
+  : path.resolve(process.cwd(), ".next/server/app");
 
 if (!fs.existsSync(OUT_DIR)) {
-  console.error("Error: ./out directory does not exist. Run build first.");
+  console.error("Error: Production build target directory does not exist. Run 'npm run build' first.");
   process.exit(1);
 }
 
-console.log("🔍 Validating production export in:", OUT_DIR);
+console.log("🔍 Validating production build output in:", OUT_DIR);
 
 let errors = 0;
 let warnings = 0;
@@ -16,15 +18,11 @@ let warnings = 0;
 // 1. Verify key root files exist
 const requiredRoutes = [
   "index.html",
-  "404.html",
-  "robots.txt",
-  "sitemap.xml",
   "about",
   "activities",
   "events",
   "team",
   "resources",
-  "blog",
   "competitive-programming",
   "icpc",
   "gallery",
@@ -128,10 +126,12 @@ for (const link of linkSet) {
 }
 
 // 4. Validate sitemap.xml
-console.log("\n4. Verifying sitemap.xml entries...");
-const sitemapPath = path.join(OUT_DIR, "sitemap.xml");
-if (fs.existsSync(sitemapPath)) {
-  const sitemapContent = fs.readFileSync(sitemapPath, "utf-8");
+const sitemapFile = fs.existsSync(path.join(OUT_DIR, "sitemap.xml"))
+  ? path.join(OUT_DIR, "sitemap.xml")
+  : path.join(OUT_DIR, "sitemap.xml.body");
+
+if (fs.existsSync(sitemapFile)) {
+  const sitemapContent = fs.readFileSync(sitemapFile, "utf-8");
   const locMatches = [...sitemapContent.matchAll(/<loc>(.*?)<\/loc>/g)].map((m) => m[1]);
   console.log(`  ✓ Sitemap contains ${locMatches.length} indexed URLs`);
   if (locMatches.length === 0) {
