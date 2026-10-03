@@ -21,14 +21,18 @@ export function EventCard({ event }: EventCardProps) {
           </Badge>
           <Badge
             variant={
-              isUpcoming
+              event.registrationOpen === false
+                ? "warning"
+                : isUpcoming
                 ? "warning"
                 : isLive
                 ? "destructive"
                 : "secondary"
             }
           >
-            {isUpcoming
+            {event.registrationOpen === false
+              ? "Registration Opening Soon"
+              : isUpcoming
               ? "Upcoming"
               : isLive
               ? "Live"

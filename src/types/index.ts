@@ -56,18 +56,36 @@ export interface GalleryImage {
   category?: string;
 }
 
+export interface EventExpectation {
+  title: string;
+  description: string;
+}
+
+export interface EventTimelineItem {
+  date: string;
+  title: string;
+  status?: string;
+  description?: string;
+}
+
 export interface Event {
   slug: string;
   title: string;
   shortDescription: string;
   description: string;
-  category: "Hackathon" | "Coding Contest" | "Workshop" | "Talk" | "Competition" | "Community";
+  category: "Hackathon" | "Coding Contest" | "Workshop" | "Talk" | "Competition" | "Community" | "Open Source" | "Open Source / AI / Developer Community" | string;
   status: EventStatus;
   date: string; // ISO YYYY-MM-DD
   endDate?: string;
   time?: string;
   location?: string;
+  registrationOpen?: boolean;
+  registrationStatusText?: string;
+  registrationHelperText?: string;
+  registrationType?: "github" | "form" | "external";
   registrationUrl?: string;
+  tagline?: string;
+  theme?: string;
   poster?: string;
   coverImage?: string;
   organizers: string[];
@@ -75,6 +93,7 @@ export interface Event {
   judges?: Person[];
   sponsors?: Sponsor[];
   prizes?: Prize[];
+  prizesNotice?: string;
   schedule?: ScheduleItem[];
   faqs?: FAQ[];
   winners?: Winner[];
@@ -82,6 +101,13 @@ export interface Event {
   isFeatured?: boolean;
   tags?: string[];
   rules?: string[];
+  about?: string[];
+  expectations?: EventExpectation[];
+  challengeTitle?: string;
+  challengeDescription?: string;
+  timelineNotice?: string;
+  timelineItems?: EventTimelineItem[];
+  disclaimer?: string;
 }
 
 export interface TeamMember {

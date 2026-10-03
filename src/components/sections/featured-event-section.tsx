@@ -34,14 +34,18 @@ export function FeaturedEventSection({ event }: FeaturedEventProps) {
             <Badge variant="outline">{event.category}</Badge>
             <Badge
               variant={
-                event.status === "upcoming"
+                event.registrationOpen === false
+                  ? "warning"
+                  : event.status === "upcoming"
                   ? "warning"
                   : event.status === "live"
                   ? "destructive"
                   : "secondary"
               }
             >
-              {event.status === "upcoming"
+              {event.registrationOpen === false
+                ? "Registration Opening Soon"
+                : event.status === "upcoming"
                 ? "Registration Open"
                 : event.status === "live"
                 ? "Live Now"
@@ -81,7 +85,14 @@ export function FeaturedEventSection({ event }: FeaturedEventProps) {
 
             <div className="space-y-1 flex sm:flex-col sm:items-end justify-between items-center">
               <span className="text-muted-foreground font-mono">Registration</span>
-              {event.registrationUrl ? (
+              {event.registrationOpen === false ? (
+                <Link
+                  href={`/events/${event.slug}`}
+                  className="inline-flex h-8 items-center justify-center rounded-md border border-border px-3 text-xs font-medium text-foreground hover:bg-secondary transition-colors"
+                >
+                  Opening Soon →
+                </Link>
+              ) : event.registrationUrl ? (
                 <a
                   href={event.registrationUrl}
                   target="_blank"

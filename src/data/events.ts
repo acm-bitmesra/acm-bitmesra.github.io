@@ -2,6 +2,136 @@ import { Event } from "@/types";
 
 export const events: Event[] = [
   {
+    slug: "hacktoberfest-2026",
+    title: "Hacktoberfest 2026",
+    tagline: "Build. Experiment. Share.",
+    theme: "AI belongs to everyone.",
+    shortDescription:
+      "Hacktoberfest 2026 is here. This October, ACM BIT Mesra invites students and developers to explore open source, experiment with AI and open-weight models, and build something meaningful.",
+    description:
+      "Hacktoberfest 2026 is here. This October, ACM BIT Mesra invites students and developers to explore open source, experiment with AI and open-weight models, and build something meaningful.\n\nLearn, build, experiment, and showcase what you create throughout the month.\n\nMore challenge details, rules, timelines, judging information, and prizes will be announced on this event page.",
+    category: "Open Source / AI / Developer Community",
+    status: "upcoming",
+    date: "2026-10-01",
+    endDate: "2026-10-31",
+    time: "Month-long Celebration (October 2026)",
+    location: "Online & BIT Mesra Campus, Ranchi",
+    organizers: ["ACM BIT Mesra"],
+    isFeatured: true,
+    registrationOpen: false,
+    registrationStatusText: "Registration Opening Soon",
+    registrationHelperText:
+      "Registrations for the ACM Hacktoberfest Challenge will open soon. Stay tuned for the registration announcement.",
+    registrationType: "github",
+    registrationUrl: "/events/hacktoberfest-2026",
+    tags: [
+      "Open Source",
+      "Hacktoberfest",
+      "AI",
+      "Open-Weight Models",
+      "Developer Community",
+      "Building & Experimentation",
+    ],
+    about: [
+      "Hacktoberfest 2026 is a month-long celebration of open source throughout October 2026. The official 2026 focus is on learning and building with open-source AI and open-weight models, through online and in-person activities.",
+      "Pull requests and merge requests are no longer used as the official Hacktoberfest reward metric in 2026. Instead, the season centers on exploring, creating, and experimenting with community-driven computing.",
+      "ACM BIT Mesra is proud to host a dedicated challenge during this season to empower campus developers, researchers, and creators to build impactful software together.",
+    ],
+    expectations: [
+      {
+        title: "Explore open source",
+        description:
+          "Discover impactful repositories, open tools, and community-driven computing practices.",
+      },
+      {
+        title: "Experiment with AI",
+        description:
+          "Engage with open-weight models, local inference runtimes, and accessible intelligence.",
+      },
+      {
+        title: "Build meaningful projects",
+        description:
+          "Move from passive learning to shipping practical software and prototypes.",
+      },
+      {
+        title: "Learn with the community",
+        description:
+          "Collaborate alongside peers, mentors, and SIG leads across the chapter.",
+      },
+      {
+        title: "Showcase what you create",
+        description:
+          "Present your work, share insights, and get peer feedback by the end of October.",
+      },
+    ],
+    challengeTitle: "ACM Hacktoberfest Challenge",
+    challengeDescription:
+      "ACM BIT Mesra will host a dedicated challenge during Hacktoberfest. Challenge rules, submission requirements, judging criteria, timeline, and other details will be announced soon.",
+    timelineNotice: "October 2026 — Challenge Month",
+    timelineItems: [
+      {
+        date: "October 1 – 31, 2026",
+        title: "Challenge Month",
+        status: "Confirmed",
+        description: "Month-long building, exploration, and community experimentation.",
+      },
+      {
+        date: "To Be Announced",
+        title: "Challenge Rules & Submission Guidelines",
+        status: "Upcoming",
+        description: "Detailed problem tracks, constraints, and submission criteria.",
+      },
+      {
+        date: "To Be Announced",
+        title: "Workshops & Mentorship Check-Ins",
+        status: "Upcoming",
+        description: "Hands-on guidance from chapter leads and technical mentors.",
+      },
+      {
+        date: "To Be Announced",
+        title: "Submissions & Peer Showcase",
+        status: "Upcoming",
+        description: "Project review, project showcases, and community evaluations.",
+      },
+    ],
+    prizesNotice: "Prize and recognition details will be announced by the organizing team.",
+    prizes: [
+      {
+        title: "Prizes: To Be Decided",
+        reward: "To Be Decided",
+        description: "Prize and recognition details will be announced by the organizing team.",
+      },
+    ],
+    faqs: [
+      {
+        question: "What is Hacktoberfest?",
+        answer:
+          "A month-long celebration of open source throughout October. In 2026, its focus is on learning and building with open-source AI and open-weight models.",
+      },
+      {
+        question: "Do pull requests count toward Hacktoberfest rewards in 2026?",
+        answer:
+          "No. Pull requests and merge requests no longer count toward official Hacktoberfest rewards in 2026.",
+      },
+      {
+        question: "When will ACM BIT Mesra challenge registration open?",
+        answer:
+          "Registrations will open soon. The website should show the registration button as disabled until the organizing team activates it.",
+      },
+      {
+        question: "What are the prizes?",
+        answer: "To be decided. Details will be announced later.",
+      },
+      {
+        question: "Who can participate?",
+        answer:
+          "Participation eligibility will follow the official ACM BIT Mesra challenge guidelines once finalized. Specific criteria and team guidelines will be posted on this page.",
+      },
+    ],
+    disclaimer:
+      "Disclaimer: Hacktoberfest is a registered trademark. This event is an independent community challenge hosted by ACM BIT Mesra associated with the open-source season, and is not officially operated, sponsored, or endorsed by Hacktoberfest, DigitalOcean, MLH, or DEV.",
+  },
+  {
     slug: "hack-a-bit",
     title: "Hack-A-Bit",
     shortDescription: "Eastern India's premier student-led hackathon hosted annually by ACM BIT Mesra.",

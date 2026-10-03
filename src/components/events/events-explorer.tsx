@@ -11,6 +11,7 @@ interface EventsExplorerProps {
 
 const CATEGORIES = [
   "All",
+  "Open Source",
   "Hackathon",
   "Coding Contest",
   "Workshop",
@@ -42,7 +43,12 @@ export function EventsExplorer({ initialEvents }: EventsExplorerProps) {
 
     // Filter by Category
     if (selectedCategory !== "All") {
-      result = result.filter((e) => e.category === selectedCategory);
+      result = result.filter(
+        (e) =>
+          e.category === selectedCategory ||
+          (selectedCategory === "Open Source" &&
+            e.category.toLowerCase().includes("open source"))
+      );
     }
 
     // Filter by Status

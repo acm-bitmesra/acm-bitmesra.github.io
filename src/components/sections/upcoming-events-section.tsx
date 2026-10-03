@@ -61,14 +61,18 @@ export function UpcomingEventsSection({ events }: UpcomingEventsSectionProps) {
                   <div className="flex items-center gap-3 shrink-0 self-end sm:self-center">
                     <Badge
                       variant={
-                        isUpcoming
+                        event.registrationOpen === false
+                          ? "warning"
+                          : isUpcoming
                           ? "warning"
                           : event.status === "live"
                           ? "destructive"
                           : "secondary"
                       }
                     >
-                      {isUpcoming
+                      {event.registrationOpen === false
+                        ? "Opening Soon"
+                        : isUpcoming
                         ? "Upcoming"
                         : event.status === "live"
                         ? "Live"
