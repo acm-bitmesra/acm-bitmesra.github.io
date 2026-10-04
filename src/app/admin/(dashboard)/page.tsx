@@ -331,7 +331,7 @@ export default async function AdminDashboardPage() {
                     <div className="mt-1 flex flex-wrap items-center gap-2 text-[11px] text-zinc-500">
                       <span>{event.category}</span>
                       <span className="text-zinc-700">•</span>
-                      <span>{formatDate(event.startDate.toISOString())}</span>
+                      <span>{formatDate(event.startDate.toISOString().slice(0, 10))}</span>
                       <span className="text-zinc-700">•</span>
                       <span>{event.status}</span>
                     </div>
