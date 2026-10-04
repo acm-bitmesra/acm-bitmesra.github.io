@@ -143,15 +143,17 @@ export default async function MemberDetailPage({ params }: MemberDetailPageProps
               <h3 className="text-xs font-mono uppercase text-muted-foreground font-semibold">
                 Official Profiles
               </h3>
-              <div className="flex flex-wrap items-center gap-4 text-sm text-foreground">
+              <div className="flex flex-wrap items-center gap-2.5 text-sm text-foreground">
                 {member.github && (
                   <a
                     href={member.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 hover:text-primary transition-colors"
+                    aria-label={`${member.name} on GitHub (opens in new tab)`}
+                    className="inline-flex items-center gap-2 h-9 px-3.5 rounded-lg border border-border/80 bg-secondary/30 text-xs font-mono text-muted-foreground hover:bg-secondary hover:text-foreground transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 active:scale-95"
                   >
-                    <GithubIcon className="h-4 w-4" /> GitHub
+                    <GithubIcon className="h-4 w-4" />
+                    <span>GitHub</span>
                   </a>
                 )}
                 {member.linkedin && (
@@ -159,9 +161,11 @@ export default async function MemberDetailPage({ params }: MemberDetailPageProps
                     href={member.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 hover:text-primary transition-colors"
+                    aria-label={`${member.name} on LinkedIn (opens in new tab)`}
+                    className="inline-flex items-center gap-2 h-9 px-3.5 rounded-lg border border-border/80 bg-secondary/30 text-xs font-mono text-muted-foreground hover:bg-secondary hover:text-foreground transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 active:scale-95"
                   >
-                    <LinkedinIcon className="h-4 w-4" /> LinkedIn
+                    <LinkedinIcon className="h-4 w-4" />
+                    <span>LinkedIn</span>
                   </a>
                 )}
                 {member.website && (
@@ -169,9 +173,11 @@ export default async function MemberDetailPage({ params }: MemberDetailPageProps
                     href={member.website}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 hover:text-primary transition-colors"
+                    aria-label={`${member.name} Personal Website (opens in new tab)`}
+                    className="inline-flex items-center gap-2 h-9 px-3.5 rounded-lg border border-border/80 bg-secondary/30 text-xs font-mono text-muted-foreground hover:bg-secondary hover:text-foreground transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 active:scale-95"
                   >
-                    <Globe className="h-4 w-4" /> Personal Website
+                    <Globe className="h-4 w-4" />
+                    <span>Personal Website</span>
                   </a>
                 )}
               </div>

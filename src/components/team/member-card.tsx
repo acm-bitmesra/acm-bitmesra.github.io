@@ -58,16 +58,18 @@ export function MemberCard({ member }: MemberCardProps) {
       {/* Footer Actions */}
       <div className="pt-4 mt-5 border-t border-border/60 flex items-center justify-between">
         {/* Social Links */}
-        <div className="flex items-center gap-2.5 text-muted-foreground">
+        <div className="flex items-center gap-1.5 text-muted-foreground">
           {member.github && (
             <a
               href={member.github}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={`${member.name} GitHub`}
-              className="p-1.5 rounded-md hover:text-foreground hover:bg-secondary transition-colors"
+              aria-label={`${member.name} on GitHub (opens in new tab)`}
+              title={`${member.name} on GitHub`}
+              className="inline-flex items-center justify-center h-8 w-8 rounded-lg border border-border/60 bg-secondary/30 hover:text-foreground hover:bg-secondary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 active:scale-95"
             >
               <GithubIcon className="h-4 w-4" />
+              <span className="sr-only">{member.name} on GitHub</span>
             </a>
           )}
           {member.linkedin && (
@@ -75,10 +77,12 @@ export function MemberCard({ member }: MemberCardProps) {
               href={member.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={`${member.name} LinkedIn`}
-              className="p-1.5 rounded-md hover:text-foreground hover:bg-secondary transition-colors"
+              aria-label={`${member.name} on LinkedIn (opens in new tab)`}
+              title={`${member.name} on LinkedIn`}
+              className="inline-flex items-center justify-center h-8 w-8 rounded-lg border border-border/60 bg-secondary/30 hover:text-foreground hover:bg-secondary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 active:scale-95"
             >
               <LinkedinIcon className="h-4 w-4" />
+              <span className="sr-only">{member.name} on LinkedIn</span>
             </a>
           )}
           {member.website && (
@@ -86,10 +90,12 @@ export function MemberCard({ member }: MemberCardProps) {
               href={member.website}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={`${member.name} Website`}
-              className="p-1.5 rounded-md hover:text-foreground hover:bg-secondary transition-colors"
+              aria-label={`${member.name} Personal Website (opens in new tab)`}
+              title={`${member.name} Website`}
+              className="inline-flex items-center justify-center h-8 w-8 rounded-lg border border-border/60 bg-secondary/30 hover:text-foreground hover:bg-secondary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 active:scale-95"
             >
               <Globe className="h-4 w-4" />
+              <span className="sr-only">{member.name} Website</span>
             </a>
           )}
         </div>

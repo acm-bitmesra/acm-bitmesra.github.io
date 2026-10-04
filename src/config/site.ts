@@ -33,7 +33,8 @@ export const siteConfig = {
   social: {
     github: "https://github.com/acm-bitmesra",
     linkedin: "https://www.linkedin.com/company/acmbitm/",
-    instagram: "https://www.instagram.com/acmbitm?stkn=MXB1c3plOWYyeHFlZg==",
+    instagram: "https://www.instagram.com/acmbitm",
+    x: "https://x.com/acmbitmesra",
     email: "acm@bitmesra.ac.in",
   },
   nav: [

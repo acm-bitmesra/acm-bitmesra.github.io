@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { siteConfig } from "@/config/site";
 import { Mail, MapPin, ExternalLink } from "lucide-react";
-import { GithubIcon, LinkedinIcon, InstagramIcon } from "@/components/ui/icons";
+import { GithubIcon, LinkedinIcon, InstagramIcon, TwitterIcon } from "@/components/ui/icons";
 
 export const metadata: Metadata = {
   title: "Contact & Campus Location | ACM BIT Mesra",
@@ -102,17 +102,21 @@ export default function ContactPage() {
             Official Digital Channels
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <a
               href={siteConfig.social.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-4 p-5 rounded-xl border border-border/80 bg-card hover:bg-secondary/40 hover:border-foreground/30 transition-all group"
+              aria-label="ACM BIT Mesra on GitHub (opens in new tab)"
+              className="flex items-center gap-4 p-5 rounded-xl border border-border/80 bg-card hover:bg-secondary/40 hover:border-foreground/30 transition-all group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 active:scale-[0.98]"
             >
               <GithubIcon className="h-6 w-6 text-muted-foreground group-hover:text-foreground transition-colors shrink-0" />
-              <div>
-                <span className="font-bold text-base text-foreground block group-hover:underline">GitHub</span>
-                <span className="font-mono text-xs sm:text-sm text-muted-foreground">acm-bitmesra</span>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center justify-between gap-1">
+                  <span className="font-bold text-base text-foreground group-hover:underline">GitHub</span>
+                  <ExternalLink className="h-3.5 w-3.5 text-muted-foreground/60 group-hover:text-foreground transition-colors shrink-0" />
+                </div>
+                <span className="font-mono text-xs text-muted-foreground truncate block">acm-bitmesra</span>
               </div>
             </a>
 
@@ -120,12 +124,16 @@ export default function ContactPage() {
               href={siteConfig.social.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-4 p-5 rounded-xl border border-border/80 bg-card hover:bg-secondary/40 hover:border-foreground/30 transition-all group"
+              aria-label="ACM BIT Mesra on LinkedIn (opens in new tab)"
+              className="flex items-center gap-4 p-5 rounded-xl border border-border/80 bg-card hover:bg-secondary/40 hover:border-foreground/30 transition-all group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 active:scale-[0.98]"
             >
               <LinkedinIcon className="h-6 w-6 text-muted-foreground group-hover:text-foreground transition-colors shrink-0" />
-              <div>
-                <span className="font-bold text-base text-foreground block group-hover:underline">LinkedIn</span>
-                <span className="font-mono text-xs sm:text-sm text-muted-foreground">ACM BIT Mesra</span>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center justify-between gap-1">
+                  <span className="font-bold text-base text-foreground group-hover:underline">LinkedIn</span>
+                  <ExternalLink className="h-3.5 w-3.5 text-muted-foreground/60 group-hover:text-foreground transition-colors shrink-0" />
+                </div>
+                <span className="font-mono text-xs text-muted-foreground truncate block">ACM BIT Mesra</span>
               </div>
             </a>
 
@@ -133,12 +141,33 @@ export default function ContactPage() {
               href={siteConfig.social.instagram}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-4 p-5 rounded-xl border border-border/80 bg-card hover:bg-secondary/40 hover:border-foreground/30 transition-all group"
+              aria-label="ACM BIT Mesra on Instagram (opens in new tab)"
+              className="flex items-center gap-4 p-5 rounded-xl border border-border/80 bg-card hover:bg-secondary/40 hover:border-foreground/30 transition-all group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 active:scale-[0.98]"
             >
               <InstagramIcon className="h-6 w-6 text-muted-foreground group-hover:text-foreground transition-colors shrink-0" />
-              <div>
-                <span className="font-bold text-base text-foreground block group-hover:underline">Instagram</span>
-                <span className="font-mono text-xs sm:text-sm text-muted-foreground">@acmbitm</span>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center justify-between gap-1">
+                  <span className="font-bold text-base text-foreground group-hover:underline">Instagram</span>
+                  <ExternalLink className="h-3.5 w-3.5 text-muted-foreground/60 group-hover:text-foreground transition-colors shrink-0" />
+                </div>
+                <span className="font-mono text-xs text-muted-foreground truncate block">@acmbitm</span>
+              </div>
+            </a>
+
+            <a
+              href={siteConfig.social.x}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="ACM BIT Mesra on X (opens in new tab)"
+              className="flex items-center gap-4 p-5 rounded-xl border border-border/80 bg-card hover:bg-secondary/40 hover:border-foreground/30 transition-all group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 active:scale-[0.98]"
+            >
+              <TwitterIcon className="h-6 w-6 text-muted-foreground group-hover:text-foreground transition-colors shrink-0" />
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center justify-between gap-1">
+                  <span className="font-bold text-base text-foreground group-hover:underline">X</span>
+                  <ExternalLink className="h-3.5 w-3.5 text-muted-foreground/60 group-hover:text-foreground transition-colors shrink-0" />
+                </div>
+                <span className="font-mono text-xs text-muted-foreground truncate block">@acmbitmesra</span>
               </div>
             </a>
           </div>

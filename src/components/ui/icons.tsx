@@ -3,6 +3,7 @@ import * as React from "react";
 export function GithubIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
+      aria-hidden="true"
       viewBox="0 0 24 24"
       width="24"
       height="24"
@@ -22,6 +23,7 @@ export function GithubIcon(props: React.SVGProps<SVGSVGElement>) {
 export function LinkedinIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
+      aria-hidden="true"
       viewBox="0 0 24 24"
       width="24"
       height="24"
@@ -42,6 +44,7 @@ export function LinkedinIcon(props: React.SVGProps<SVGSVGElement>) {
 export function InstagramIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
+      aria-hidden="true"
       viewBox="0 0 24 24"
       width="24"
       height="24"
@@ -62,6 +65,7 @@ export function InstagramIcon(props: React.SVGProps<SVGSVGElement>) {
 export function TwitterIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
+      aria-hidden="true"
       viewBox="0 0 24 24"
       width="24"
       height="24"

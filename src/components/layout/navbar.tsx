@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
-import { Menu, X, Search } from "lucide-react";
+import { Menu, X, Search, Mail } from "lucide-react";
 import { GithubIcon, LinkedinIcon, InstagramIcon, AcmLogo } from "@/components/ui/icons";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 
@@ -136,24 +136,39 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
           </button>
 
           {/* External Socials (Visible on Large Desktop ≥ 1280px) */}
-          <div className="hidden xl:flex items-center border-l border-border/70 pl-2 gap-1 text-muted-foreground shrink-0">
+          <div className="hidden xl:flex items-center border-l border-border/70 pl-2 gap-0.5 text-muted-foreground shrink-0">
             <a
               href={siteConfig.social.github}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="GitHub Organization"
-              className="p-1.5 rounded-lg hover:text-foreground hover:bg-secondary transition-colors"
+              aria-label="ACM BIT Mesra on GitHub (opens in new tab)"
+              title="GitHub Organization"
+              className="inline-flex items-center justify-center h-9 w-9 rounded-lg hover:text-foreground hover:bg-secondary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 active:scale-95"
             >
               <GithubIcon className="h-4 w-4" />
+              <span className="sr-only">GitHub Organization</span>
             </a>
             <a
               href={siteConfig.social.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="LinkedIn Profile"
-              className="p-1.5 rounded-lg hover:text-foreground hover:bg-secondary transition-colors"
+              aria-label="ACM BIT Mesra on LinkedIn (opens in new tab)"
+              title="LinkedIn Profile"
+              className="inline-flex items-center justify-center h-9 w-9 rounded-lg hover:text-foreground hover:bg-secondary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 active:scale-95"
             >
               <LinkedinIcon className="h-4 w-4" />
+              <span className="sr-only">LinkedIn Profile</span>
+            </a>
+            <a
+              href={siteConfig.social.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="ACM BIT Mesra on Instagram (opens in new tab)"
+              title="Instagram Profile"
+              className="inline-flex items-center justify-center h-9 w-9 rounded-lg hover:text-foreground hover:bg-secondary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 active:scale-95"
+            >
+              <InstagramIcon className="h-4 w-4" />
+              <span className="sr-only">Instagram Profile</span>
             </a>
           </div>
 
@@ -237,36 +252,44 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
               Join ACM Chapter
             </Link>
 
-            <div className="flex flex-wrap items-center justify-around gap-2 pt-2 text-muted-foreground border-t border-border/40">
+            <div className="grid grid-cols-2 gap-2 pt-3 border-t border-border/50 text-muted-foreground">
               <a
                 href={siteConfig.social.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 text-xs hover:text-foreground p-2"
+                aria-label="ACM BIT Mesra on GitHub (opens in new tab)"
+                className="inline-flex items-center justify-center gap-2 h-10 px-3 rounded-lg border border-border/70 bg-secondary/30 text-xs font-mono text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-95"
               >
-                <GithubIcon className="h-4 w-4" /> GitHub
+                <GithubIcon className="h-4 w-4 shrink-0" />
+                <span>GitHub</span>
               </a>
               <a
                 href={siteConfig.social.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 text-xs hover:text-foreground p-2"
+                aria-label="ACM BIT Mesra on LinkedIn (opens in new tab)"
+                className="inline-flex items-center justify-center gap-2 h-10 px-3 rounded-lg border border-border/70 bg-secondary/30 text-xs font-mono text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-95"
               >
-                <LinkedinIcon className="h-4 w-4" /> LinkedIn
+                <LinkedinIcon className="h-4 w-4 shrink-0" />
+                <span>LinkedIn</span>
               </a>
               <a
                 href={siteConfig.social.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 text-xs hover:text-foreground p-2"
+                aria-label="ACM BIT Mesra on Instagram (opens in new tab)"
+                className="inline-flex items-center justify-center gap-2 h-10 px-3 rounded-lg border border-border/70 bg-secondary/30 text-xs font-mono text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-95"
               >
-                <InstagramIcon className="h-4 w-4" /> Instagram
+                <InstagramIcon className="h-4 w-4 shrink-0" />
+                <span>Instagram</span>
               </a>
               <a
                 href={`mailto:${siteConfig.social.email}`}
-                className="flex items-center gap-1.5 text-xs hover:text-foreground p-2"
+                aria-label={`Send email to ${siteConfig.social.email}`}
+                className="inline-flex items-center justify-center gap-2 h-10 px-3 rounded-lg border border-border/70 bg-secondary/30 text-xs font-mono text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-95"
               >
-                Email
+                <Mail className="h-4 w-4 shrink-0" />
+                <span>Email</span>
               </a>
             </div>
           </div>

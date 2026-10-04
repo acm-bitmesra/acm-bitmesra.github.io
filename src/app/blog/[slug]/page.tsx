@@ -6,6 +6,7 @@ import { formatDate } from "@/lib/date";
 import { siteConfig } from "@/config/site";
 import { ArticleCard } from "@/components/blog/article-card";
 import { MarkdownRenderer } from "@/components/blog/markdown-renderer";
+import { SocialShareActions } from "@/components/ui/social-share-actions";
 import { ArrowLeft, Calendar, Clock, Tag, User, ShieldCheck } from "lucide-react";
 
 export const dynamic = "force-dynamic";
@@ -106,6 +107,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     },
   };
 
+  const pageUrl = `${siteConfig.url}/blog/${post.slug}`;
+
   return (
     <article className="py-12 sm:py-20">
       <script
@@ -115,21 +118,25 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 space-y-12">
         {/* Back Link & Navigation */}
-        <div className="flex items-center justify-between border-b border-border/40 pb-4">
-          <Link
-            href="/blog"
-            className="inline-flex items-center gap-1.5 text-xs font-mono text-muted-foreground hover:text-foreground transition-colors group"
-          >
-            <ArrowLeft className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-1" />
-            Back to Journal
-          </Link>
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/40 pb-4">
+          <div className="flex items-center gap-3">
+            <Link
+              href="/blog"
+              className="inline-flex items-center gap-1.5 text-xs font-mono text-muted-foreground hover:text-foreground transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              <ArrowLeft className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-1" />
+              Back to Journal
+            </Link>
 
-          <Link
-            href={`/blog/category/${encodeURIComponent(post.category.toLowerCase())}`}
-            className="font-mono text-xs text-muted-foreground uppercase px-2.5 py-0.5 rounded bg-secondary/80 border border-border/60 hover:text-foreground transition-colors"
-          >
-            {post.category}
-          </Link>
+            <Link
+              href={`/blog/category/${encodeURIComponent(post.category.toLowerCase())}`}
+              className="font-mono text-xs text-muted-foreground uppercase px-2.5 py-0.5 rounded bg-secondary/80 border border-border/60 hover:text-foreground transition-colors"
+            >
+              {post.category}
+            </Link>
+          </div>
+
+          <SocialShareActions title={post.title} url={pageUrl} />
         </div>
 
         {/* Article Header (Section 23: Editorial Hierarchy) */}

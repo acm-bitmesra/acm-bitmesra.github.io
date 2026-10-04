@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
 import { ExternalLink, Mail } from "lucide-react";
-import { GithubIcon, LinkedinIcon, InstagramIcon, AcmLogo } from "@/components/ui/icons";
+import { GithubIcon, LinkedinIcon, InstagramIcon, TwitterIcon, AcmLogo } from "@/components/ui/icons";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 export function Footer() {
@@ -27,40 +27,59 @@ export function Footer() {
             <p className="text-sm text-muted-foreground max-w-sm leading-relaxed">
               Birla Institute of Technology, Mesra. A dedicated technical society empowering students through competitive programming, systems engineering, developer education, hackathons, and collaborative open source.
             </p>
-            <div className="pt-2 flex items-center gap-2.5 text-muted-foreground">
+            <div className="pt-2 flex flex-wrap items-center gap-2 text-muted-foreground">
               <a
                 href={siteConfig.social.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="GitHub Organization"
-                className="h-8 w-8 rounded-lg border border-border flex items-center justify-center hover:text-foreground hover:bg-secondary transition-colors"
+                aria-label="ACM BIT Mesra on GitHub (opens in new tab)"
+                title="GitHub Organization"
+                className="h-9 w-9 rounded-lg border border-border flex items-center justify-center hover:text-foreground hover:bg-secondary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card active:scale-95"
               >
                 <GithubIcon className="h-4 w-4" />
+                <span className="sr-only">GitHub</span>
               </a>
               <a
                 href={siteConfig.social.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="LinkedIn Profile"
-                className="h-8 w-8 rounded-lg border border-border flex items-center justify-center hover:text-foreground hover:bg-secondary transition-colors"
+                aria-label="ACM BIT Mesra on LinkedIn (opens in new tab)"
+                title="LinkedIn Profile"
+                className="h-9 w-9 rounded-lg border border-border flex items-center justify-center hover:text-foreground hover:bg-secondary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card active:scale-95"
               >
                 <LinkedinIcon className="h-4 w-4" />
+                <span className="sr-only">LinkedIn</span>
               </a>
               <a
                 href={siteConfig.social.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Instagram Profile"
-                className="h-8 w-8 rounded-lg border border-border flex items-center justify-center hover:text-foreground hover:bg-secondary transition-colors"
+                aria-label="ACM BIT Mesra on Instagram (opens in new tab)"
+                title="Instagram Profile"
+                className="h-9 w-9 rounded-lg border border-border flex items-center justify-center hover:text-foreground hover:bg-secondary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card active:scale-95"
               >
                 <InstagramIcon className="h-4 w-4" />
+                <span className="sr-only">Instagram</span>
+              </a>
+              <a
+                href={siteConfig.social.x}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="ACM BIT Mesra on X (opens in new tab)"
+                title="X (Twitter) Profile"
+                className="h-9 w-9 rounded-lg border border-border flex items-center justify-center hover:text-foreground hover:bg-secondary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card active:scale-95"
+              >
+                <TwitterIcon className="h-3.5 w-3.5" />
+                <span className="sr-only">X (formerly Twitter)</span>
               </a>
               <a
                 href={`mailto:${siteConfig.social.email}`}
-                aria-label="Contact Email"
-                className="h-8 w-8 rounded-lg border border-border flex items-center justify-center hover:text-foreground hover:bg-secondary transition-colors"
+                aria-label={`Send email to ${siteConfig.social.email}`}
+                title="Official Chapter Email"
+                className="h-9 w-9 rounded-lg border border-border flex items-center justify-center hover:text-foreground hover:bg-secondary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card active:scale-95"
               >
                 <Mail className="h-4 w-4" />
+                <span className="sr-only">Email</span>
               </a>
             </div>
           </div>

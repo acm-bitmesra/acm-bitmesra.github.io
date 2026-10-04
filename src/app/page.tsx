@@ -45,6 +45,7 @@ export default function HomePage() {
       siteConfig.social.github,
       siteConfig.social.linkedin,
       siteConfig.social.instagram,
+      siteConfig.social.x,
     ],
   };
 
