@@ -18,13 +18,11 @@ import {
   Bell,
   BookOpen,
   Calendar,
-  CheckCircle2,
-  Clock3,
   FileText,
+  Home,
   ImageIcon,
   Lock,
   PenSquare,
-  Plus,
   Server,
   ShieldCheck,
   Users,
@@ -279,7 +277,7 @@ export default async function AdminDashboardPage() {
               href="/admin/homepage"
               title="Edit homepage"
               description="Update featured sections, announcements, and calls to action."
-              icon={HomeIconFallback}
+              icon={Home}
             />
           )}
           {canMembers && (
@@ -333,7 +331,7 @@ export default async function AdminDashboardPage() {
                     <div className="mt-1 flex flex-wrap items-center gap-2 text-[11px] text-zinc-500">
                       <span>{event.category}</span>
                       <span className="text-zinc-700">•</span>
-                      <span>{formatDate(event.startAt?.toISOString?.() ?? String(event.date))}</span>
+                      <span>{formatDate(event.startDate.toISOString())}</span>
                       <span className="text-zinc-700">•</span>
                       <span>{event.status}</span>
                     </div>
@@ -404,7 +402,7 @@ export default async function AdminDashboardPage() {
           <div className="mt-5 space-y-3">
             <MetricRow label="Database latency" value={systemHealth.dbLatencyMs + " ms"} />
             <MetricRow label="Active sessions" value={String(systemHealth.metrics.activeSessions)} />
-            <MetricRow label="Allowlist accounts" value={String(systemHealth.allowlist.length)} />
+            <MetricRow label="Allowlist accounts" value={String(systemHealth.allowlist.size)} />
             <MetricRow label="Active members" value={String(systemHealth.metrics.activeMembers)} />
           </div>
           {isSuperAdmin && (
