@@ -419,6 +419,37 @@ export function AdminAppShell({ context, children }: AdminAppShellProps) {
         </main>
       </div>
 
+      <nav
+        aria-label="Mobile primary navigation"
+        className="fixed inset-x-0 bottom-0 z-40 border-t border-zinc-800 bg-[#090909]/95 px-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))] pt-1.5 backdrop-blur-xl lg:hidden"
+      >
+        <div className="mx-auto flex max-w-lg items-stretch justify-around gap-1">
+          {mobileBottomTabs.map((item) => {
+            const Icon = item.icon;
+            const active = isActivePath(pathname, item.href);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={active ? "page" : undefined}
+                className={"flex min-w-0 flex-1 flex-col items-center justify-center gap-0.5 rounded-lg px-1 py-1.5 font-mono text-[9px] transition " + (active ? "bg-zinc-800 text-white" : "text-zinc-500")}
+              >
+                <Icon className={"h-4 w-4 " + (active ? "text-red-500" : "")} />
+                <span className="truncate">{item.label}</span>
+              </Link>
+            );
+          })}
+          <button
+            type="button"
+            onClick={() => setMobileDrawerOpen(true)}
+            className="flex min-w-0 flex-1 flex-col items-center justify-center gap-0.5 rounded-lg px-1 py-1.5 font-mono text-[9px] text-zinc-500 transition hover:bg-zinc-900 hover:text-white"
+          >
+            <Menu className="h-4 w-4" />
+            <span>More</span>
+          </button>
+        </div>
+      </nav>
+
       {mobileDrawerOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
           <button
