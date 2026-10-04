@@ -163,3 +163,115 @@ acm-bitmesra.github.io/
 ## 📜 License
 
 Licensed under the [MIT License](LICENSE). Built with pride and precision by the ACM BIT Mesra student community.
+
+
+---
+
+## ACM BIT Mesra GitHub Organization
+
+This README is also intended as the public-facing introduction for the `acm-bitmesra` engineering organization.
+
+The organization exists to preserve, build, and share student-led computing work around ACM BIT Mesra: official web infrastructure, event systems, competitive-programming resources, learning projects, developer tools, open-source initiatives, and community software.
+
+### Repository expectations
+
+Every long-lived repository should aim to provide:
+
+- A clear project description
+- Setup and local-development instructions
+- A contribution guide when collaboration is expected
+- A license
+- Security guidance when the project handles credentials or user data
+- Deployment or operations documentation when applicable
+- Issues and pull requests that explain scope and expected behavior
+
+### Recommended repository layout
+
+```text
+project/
+├── README.md
+├── LICENSE
+├── CONTRIBUTING.md
+├── SECURITY.md
+├── src/
+├── tests/
+└── docs/
+```
+
+The exact structure should follow the project's framework rather than being forced into a template.
+
+### Pull-request checklist
+
+Before merging a change, maintainers should verify:
+
+- [ ] The change has a clear purpose
+- [ ] Existing functionality is not unintentionally broken
+- [ ] Tests or validation have been run
+- [ ] Documentation is updated where needed
+- [ ] No credentials or secrets are present
+- [ ] Accessibility and mobile behavior have been considered for UI changes
+- [ ] Security implications have been reviewed for auth/data changes
+- [ ] The PR description explains the important implementation decisions
+
+---
+
+## Security & Privacy
+
+Chapter software may process authentication information, member records, event registrations, contact information, and other user-provided content.
+
+Projects should therefore follow data-minimization principles:
+
+- Collect only information required for the feature.
+- Keep secrets out of source control.
+- Do not expose private administrative data through public APIs.
+- Use server-side authorization for privileged operations.
+- Log security-relevant administrative actions without logging passwords, tokens, cookies, or secrets.
+- Define retention periods for logs and user data.
+- Protect production credentials with the deployment platform's secret management system.
+
+For the official website, Better Auth + Google OAuth provide identity authentication while the chapter member/RBAC layer determines administrative authorization.
+
+---
+
+## Governance & Handover
+
+Student leadership changes from year to year. Technical infrastructure should be designed for that transition.
+
+When a new executive body takes responsibility:
+
+1. Preserve the previous term's content and ownership history.
+2. Create the new term rather than overwriting historical records.
+3. Review chapter members and roles.
+4. Review administrator access.
+5. Rotate credentials where appropriate.
+6. Confirm production domains and deployment access.
+7. Verify repository maintainers and organization permissions.
+8. Update documentation and emergency contacts.
+
+The goal is continuity without sacrificing accountability.
+
+---
+
+## Recognition & Institutional Context
+
+BIT Mesra institutional material identifies ACM as a technical student organization and describes activities including workshops, coding contests, competitions, and computing-skill development. It also records ACM-ICPC and GSoC among opportunities associated with the student community. 
+
+The organization should prefer primary institutional and chapter-maintained sources whenever publishing current claims about leadership, events, partnerships, statistics, or achievements.
+
+---
+
+## Official Links
+
+- 🌐 **Website:** https://acmbitm.campsy.app
+- 💻 **GitHub Organization:** https://github.com/acm-bitmesra
+- 💼 **LinkedIn:** https://www.linkedin.com/company/acmbitm/
+- 📸 **Instagram:** https://www.instagram.com/acmbitm
+- ✉️ **Email:** acm@bitmesra.ac.in
+- 🏫 **BIT Mesra:** https://www.bitmesra.ac.in
+
+---
+
+<p align="center">
+  <strong>ACM BIT Mesra</strong><br/>
+  <em>Build. Compete. Create.</em>
+</p>
