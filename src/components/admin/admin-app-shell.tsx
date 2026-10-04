@@ -306,41 +306,6 @@ export function AdminAppShell({ context, children }: AdminAppShellProps) {
           </div>
         </div>
 
-        <div className="border-t border-zinc-900 bg-zinc-950/70 px-3 py-1.5 lg:hidden">
-          <div className="flex items-center gap-2 overflow-x-auto">
-            <div className="flex shrink-0 items-center gap-1.5 rounded-md border border-zinc-800 bg-zinc-900/60 px-2.5 py-1.5 font-mono text-[10px] text-zinc-400">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-              Production
-            </div>
-            <div className="h-4 w-px shrink-0 bg-zinc-800" />
-            {mobileBottomTabs.map((item) => {
-              const Icon = item.icon;
-              const active = isActivePath(pathname, item.href);
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  aria-current={active ? "page" : undefined}
-                  className={\`flex shrink-0 items-center gap-1.5 rounded-md px-2.5 py-1.5 font-mono text-[10px] transition ${{
-                    active
-                      ? "bg-zinc-800 text-white"
-                      : "text-zinc-500 hover:bg-zinc-900 hover:text-zinc-200"
-                  }\`}
-                >
-                  <Icon className="h-3 w-3" />
-                  {item.label}
-                </Link>
-              );
-            })}
-            <button
-              onClick={() => setMobileDrawerOpen(true)}
-              className="ml-auto flex shrink-0 items-center gap-1.5 rounded-md px-2.5 py-1.5 font-mono text-[10px] text-zinc-500 transition hover:bg-zinc-900 hover:text-white"
-            >
-              <Menu className="h-3 w-3" />
-              More
-            </button>
-          </div>
-        </div>
       </header>
 
       <div className="flex min-h-[calc(100vh-3.5rem)]">
