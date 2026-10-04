@@ -3,21 +3,29 @@
 import * as React from "react";
 import Link from "next/link";
 import { authClient } from "@/lib/auth/auth-client";
-import { ShieldAlert, ArrowLeft, LogOut, HelpCircle } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { ShieldAlert, ArrowLeft, LogOut, HelpCircle, AlertCircle } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
 
-export default function AdminUnauthorizedPage() {
+function UnauthorizedContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const urlError = searchParams.get("error");
+  const urlErrorDesc = searchParams.get("error_description");
+
   const { data: session, isPending } = authClient.useSession();
   const [signingOut, setSigningOut] = React.useState(false);
 
   const handleSignOut = async () => {
     try {
       setSigningOut(true);
-      await authClient.signOut();
+      if (session) {
+        await authClient.signOut();
+      }
       router.push("/admin/login");
     } catch (err) {
       console.error("Sign out error:", err);
+      router.push("/admin/login");
+    } finally {
       setSigningOut(false);
     }
   };
@@ -56,20 +64,31 @@ export default function AdminUnauthorizedPage() {
             </div>
           </div>
 
+          {(urlErrorDesc || urlError) && (
+            <div className="rounded-lg bg-red-950/30 border border-red-800/40 p-3 text-xs text-red-300 flex items-start gap-2">
+              <AlertCircle className="h-4 w-4 shrink-0 mt-0.5 text-red-400" />
+              <span>{urlErrorDesc || `Reason: ${urlError}`}</span>
+            </div>
+          )}
+
           <div className="space-y-3 text-sm text-zinc-300 leading-relaxed border-t border-zinc-800/80 pt-4">
             <p>
-              Your Google identity is verified, but this email address is not registered in the active ACM BIT Mesra chapter roster.
+              Your Google identity was processed, but this account is not registered in the active ACM BIT Mesra chapter roster or administrator allowlist.
             </p>
 
             <div className="rounded-lg bg-zinc-900/80 border border-zinc-800 p-3.5 font-mono text-xs text-zinc-300 flex items-center justify-between">
-              <span className="text-zinc-500">Authenticated Email:</span>
+              <span className="text-zinc-500">Account Status:</span>
               <span className="font-semibold text-white truncate ml-2">
-                {isPending ? "Loading..." : session?.user?.email || "Unknown"}
+                {isPending
+                  ? "Verifying session..."
+                  : session?.user?.email
+                  ? session.user.email
+                  : "Unregistered Google Account"}
               </span>
             </div>
 
             <p className="text-xs text-zinc-400">
-              The editorial management portal is strictly limited to verified office bearers, SIG directors, and approved student writers.
+              The ACM BIT Mesra Command Center is strictly limited to verified office bearers, SIG directors, and approved student writers.
             </p>
           </div>
 
@@ -107,5 +126,13 @@ export default function AdminUnauthorizedPage() {
         ACM BIT Mesra Security & Audit System
       </div>
     </div>
+  );
+}
+
+export default function AdminUnauthorizedPage() {
+  return (
+    <React.Suspense fallback={<div className="min-h-screen bg-[#080808]" />}>
+      <UnauthorizedContent />
+    </React.Suspense>
   );
 }

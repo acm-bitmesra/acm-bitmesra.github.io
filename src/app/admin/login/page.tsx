@@ -5,9 +5,17 @@ import Link from "next/link";
 import { authClient } from "@/lib/auth/auth-client";
 import { ShieldCheck, Lock, ArrowLeft, Terminal, AlertCircle } from "lucide-react";
 
-export default function AdminLoginPage() {
+import { useSearchParams } from "next/navigation";
+
+function LoginForm() {
+  const searchParams = useSearchParams();
+  const urlError = searchParams.get("error");
+  const urlErrorDesc = searchParams.get("error_description");
+
   const [loading, setLoading] = React.useState(false);
-  const [error, setError] = React.useState<string | null>(null);
+  const [error, setError] = React.useState<string | null>(
+    urlErrorDesc || (urlError ? `Sign-in error: ${urlError}` : null)
+  );
 
   const handleGoogleSignIn = async () => {
     try {
@@ -16,6 +24,7 @@ export default function AdminLoginPage() {
       await authClient.signIn.social({
         provider: "google",
         callbackURL: "/admin",
+        errorCallbackURL: "/admin/unauthorized",
       });
     } catch (err: unknown) {
       console.error("Sign-in failed:", err);
@@ -123,5 +132,13 @@ export default function AdminLoginPage() {
         ACM Student Chapter, BIT Mesra · Ranchi, Jharkhand 835215
       </div>
     </div>
+  );
+}
+
+export default function AdminLoginPage() {
+  return (
+    <React.Suspense fallback={<div className="min-h-screen bg-[#080808]" />}>
+      <LoginForm />
+    </React.Suspense>
   );
 }
