@@ -498,9 +498,3 @@ function MetricRow({ label, value }: { label: string; value: string }) {
   );
 }
 
-function HomeIconFallback(props: React.ComponentProps<typeof HomeIcon>) {
-  return <HomeIcon {...props} />;
-}
-function HomeIcon(props: React.SVGProps<SVGSVGElement>) {
-  return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" {...props}><path strokeLinecap="round" strokeLinejoin="round" d="m3 10 9-7 9 7"/><path strokeLinecap="round" strokeLinejoin="round" d="M5 9v10h14V9"/><path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6h6v6"/></svg>;
-}
