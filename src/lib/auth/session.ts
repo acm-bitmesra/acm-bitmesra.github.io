@@ -1,15 +1,10 @@
 import { headers } from "next/headers";
 import { auth } from "./auth";
 import { db } from "@/db";
-import {
-  chapterMembers,
-  chapterRoles,
-  memberPermissions,
-  auditLogs,
-} from "@/db/schema";
+import { chapterMembers, chapterRoles, memberPermissions, auditLogs } from "@/db/schema";
 import { eq, and, gt, or, isNull } from "drizzle-orm";
-import { type Permission } from "../permissions/constants";
-import { isAdminEmailAllowed, normalizeEmail } from "./config";
+import { type Permission, DEFAULT_ROLES } from "../permissions/constants";
+import { normalizeEmail, isAdminEmailAllowed } from "./config";
 
 export interface AuthorizedMemberContext {
   user: {
@@ -39,15 +34,14 @@ export async function getAuthSession() {
 
 /**
  * Resolves current authenticated session and verifies ACM chapter authorization.
- *
- * Authentication and authorization are separate:
+ * Zero-Trust Principle: Authentication alone is NOT authorization.
  * 1. Better Auth verifies the Google identity.
- * 2. Google OAuth itself rejects accounts outside ADMIN_EMAIL_ALLOWLIST.
+ * 2. Google OAuth validates the exact administrator allowlist.
  * 3. The chapter member registry determines the user's chapter role and permissions.
  *
- * On the first successful login of an allowlisted admin, the member registry is
- * provisioned once with the existing highest-level PRESIDENT role. Existing
- * members are never role-escalated merely because their email remains allowlisted.
+ * On first login of an allowlisted administrator without an existing member record,
+ * the member is securely provisioned once with the Level 0 SUPER_ADMIN role.
+ * Existing members are never role-escalated on subsequent logins.
  */
 export async function getAuthorizedMember(): Promise<AuthorizedMemberContext | null> {
   try {
@@ -62,78 +56,92 @@ export async function getAuthorizedMember(): Promise<AuthorizedMemberContext | n
 
     const email = normalizeEmail(session.user.email);
 
-    // 1. Look up chapter member by Better Auth user ID or normalized email.
+    // 1. Look up chapter member by Better Auth user ID or normalized email
     let member = await db.query.chapterMembers.findFirst({
       where: or(
         eq(chapterMembers.authUserId, session.user.id),
-        eq(chapterMembers.email, email),
+        eq(chapterMembers.email, email)
       ),
     });
 
-    // 2. One-time provisioning for the explicit admin allowlist.
-    // This replaces the old single BOOTSTRAP_ADMIN_EMAIL mechanism.
+    // 2. Initial Bootstrap Check (Master Implementation Prompt v2, Sections 3 & 4)
+    // If the authenticated user matches ADMIN_EMAIL_ALLOWLIST and no member record exists yet,
+    // securely provision them with the SUPER_ADMIN role.
     if (!member && isAdminEmailAllowed(email)) {
-      const presidentRole = await db.query.chapterRoles.findFirst({
-        where: eq(chapterRoles.key, "PRESIDENT"),
+      let superAdminRole = await db.query.chapterRoles.findFirst({
+        where: eq(chapterRoles.key, "SUPER_ADMIN"),
       });
 
-      if (!presidentRole) {
-        console.error(
-          "Cannot provision allowlisted ACM administrator: PRESIDENT role is missing.",
-        );
-        return null;
-      }
-
-      try {
-        const [newMember] = await db
-          .insert(chapterMembers)
+      // If SUPER_ADMIN role does not exist in DB yet, create it dynamically
+      if (!superAdminRole) {
+        const superAdminDef = DEFAULT_ROLES.find((r) => r.key === "SUPER_ADMIN")!;
+        const [insertedRole] = await db
+          .insert(chapterRoles)
           .values({
-            id: "mem_" + crypto.randomUUID().replaceAll("-", "").slice(0, 12),
-            authUserId: session.user.id,
-            name: session.user.name || "ACM Chapter Administrator",
-            email,
-            avatarUrl: session.user.image,
-            roleId: presidentRole.id,
-            status: "ACTIVE",
-            termStart: "2026-27",
-            isActive: true,
+            id: "role_super_admin",
+            key: "SUPER_ADMIN",
+            displayName: superAdminDef.displayName,
+            description: superAdminDef.description,
+            permissionSet: superAdminDef.permissions,
+            hierarchyLevel: 0,
+            active: true,
           })
           .returning();
+        superAdminRole = insertedRole;
+      }
 
-        member = newMember;
+      if (superAdminRole) {
+        try {
+          const memberId = "mem_" + crypto.randomUUID().replaceAll("-", "").slice(0, 12);
+          const [newMember] = await db
+            .insert(chapterMembers)
+            .values({
+              id: memberId,
+              authUserId: session.user.id,
+              name: session.user.name || "ACM Chapter Administrator",
+              email,
+              avatarUrl: session.user.image,
+              roleId: superAdminRole.id,
+              status: "ACTIVE",
+              termStart: "2026-27",
+              isActive: true,
+            })
+            .returning();
 
-        const clientIp =
-          headerList.get("cf-connecting-ip") ??
-          headerList.get("x-real-ip") ??
-          null;
+          member = newMember;
 
-        await db.insert(auditLogs).values({
-          id: "audit_" + crypto.randomUUID().replaceAll("-", "").slice(0, 12),
-          memberId: newMember.id,
-          action: "ADMIN_INITIAL_PROVISION",
-          targetType: "CHAPTER_MEMBER",
-          targetId: newMember.id,
-          details: {
-            email,
-            role: presidentRole.key,
-            reason: "First successful login for an explicit admin allowlist entry",
-            ipAddress: clientIp,
-            userAgent: headerList.get("user-agent"),
-          },
-        });
-      } catch (provisioningError) {
-        // A second simultaneous login can race on the unique email constraint.
-        // Re-read the member before failing the authorization request.
-        member = await db.query.chapterMembers.findFirst({
-          where: eq(chapterMembers.email, email),
-        });
+          const clientIp =
+            headerList.get("cf-connecting-ip") ??
+            headerList.get("x-real-ip") ??
+            null;
 
-        if (!member) {
-          console.error(
-            "Failed to provision allowlisted ACM administrator:",
-            provisioningError,
-          );
-          return null;
+          await db.insert(auditLogs).values({
+            id: "audit_" + crypto.randomUUID().replaceAll("-", "").slice(0, 12),
+            memberId: newMember.id,
+            action: "SUPER_ADMIN_BOOTSTRAP",
+            targetType: "CHAPTER_MEMBER",
+            targetId: newMember.id,
+            details: {
+              email,
+              role: "SUPER_ADMIN",
+              reason: "Initial admin bootstrap via ADMIN_EMAIL_ALLOWLIST",
+              ipAddress: clientIp,
+              userAgent: headerList.get("user-agent"),
+            },
+          });
+        } catch (provisioningError) {
+          // Handle concurrent login race on unique email constraint
+          member = await db.query.chapterMembers.findFirst({
+            where: eq(chapterMembers.email, email),
+          });
+
+          if (!member) {
+            console.error(
+              "Failed to provision allowlisted ACM administrator:",
+              provisioningError
+            );
+            return null;
+          }
         }
       }
     }
@@ -142,20 +150,21 @@ export async function getAuthorizedMember(): Promise<AuthorizedMemberContext | n
       return null;
     }
 
-    // Link the Better Auth user ID if the chapter member existed before OAuth login.
+    // Link the Better Auth user ID if previously unlinked or update avatar
     if (!member.authUserId) {
       await db
         .update(chapterMembers)
         .set({
           authUserId: session.user.id,
           avatarUrl: session.user.image || member.avatarUrl,
+          updatedAt: new Date(),
         })
         .where(eq(chapterMembers.id, member.id));
 
       member.authUserId = session.user.id;
     }
 
-    // 3. Resolve role and its default permission bundle.
+    // 3. Resolve role and its default permission bundle
     const role = await db.query.chapterRoles.findFirst({
       where: eq(chapterRoles.id, member.roleId),
     });
@@ -164,14 +173,14 @@ export async function getAuthorizedMember(): Promise<AuthorizedMemberContext | n
       return null;
     }
 
-    // 4. Resolve explicit member permissions that have not expired.
+    // 4. Resolve explicit member permissions that have not expired
     const explicitPerms = await db.query.memberPermissions.findMany({
       where: and(
         eq(memberPermissions.memberId, member.id),
         or(
           isNull(memberPermissions.expiresAt),
-          gt(memberPermissions.expiresAt, new Date()),
-        ),
+          gt(memberPermissions.expiresAt, new Date())
+        )
       ),
     });
 
@@ -187,7 +196,7 @@ export async function getAuthorizedMember(): Promise<AuthorizedMemberContext | n
       permissions: Array.from(permissionSet),
     };
   } catch (error) {
-    console.error("Error resolving authorized member:", error);
+    console.error("Error resolving authorized member in getAuthorizedMember:", error);
     return null;
   }
 }
@@ -197,20 +206,37 @@ export async function getAuthorizedMember(): Promise<AuthorizedMemberContext | n
  * Throws an Error if unauthenticated/unauthorized or lacking the required permission.
  */
 export async function requirePermission(
-  permission: Permission,
+  permission: Permission
 ): Promise<AuthorizedMemberContext> {
   const context = await getAuthorizedMember();
 
   if (!context) {
     throw new Error(
-      "UNAUTHORIZED: You must be an active, authorized ACM BIT Mesra member to perform this action.",
+      "UNAUTHORIZED: You must be an active, authorized ACM BIT Mesra member to perform this action."
     );
   }
 
-  if (!context.permissions.includes(permission)) {
-    throw new Error(
-      "FORBIDDEN: Missing required chapter permission '" + permission + "'.",
-    );
+  // SUPER_ADMIN (hierarchy 0) or user holding the explicit permission
+  if (context.role.hierarchyLevel === 0 || context.permissions.includes(permission)) {
+    return context;
+  }
+
+  throw new Error(`FORBIDDEN: Missing required chapter permission '${permission}'.`);
+}
+
+/**
+ * Server-side Super Admin check.
+ * Throws an Error if unauthorized or not a SUPER_ADMIN.
+ */
+export async function requireSuperAdmin(): Promise<AuthorizedMemberContext> {
+  const context = await getAuthorizedMember();
+
+  if (!context) {
+    throw new Error("UNAUTHORIZED: Session expired or unauthenticated.");
+  }
+
+  if (context.role.hierarchyLevel !== 0 && context.role.key !== "SUPER_ADMIN") {
+    throw new Error("FORBIDDEN: This operation requires SUPER_ADMIN chapter governance authority.");
   }
 
   return context;

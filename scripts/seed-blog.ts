@@ -6,9 +6,13 @@ import { DEFAULT_ROLES } from "../src/lib/permissions/constants";
 import { slugify } from "../src/lib/blog/slugify";
 import { calculateReadingTime } from "../src/lib/blog/reading-time";
 
-const databaseUrl =
-  process.env.DATABASE_URL ||
-  "postgresql://neondb_owner:npg_TitzAVM6oSf7@ep-silent-math-b5nurzzp-pooler.c-7.us-east-2.aws.neon.tech/acmbitm?sslmode=require&channel_binding=require";
+import "dotenv/config";
+
+const databaseUrl = process.env.DATABASE_URL;
+
+if (!databaseUrl) {
+  throw new Error("DATABASE_URL is not set. Please provide a valid Neon PostgreSQL connection string in .env");
+}
 
 const sql = neon(databaseUrl);
 const db = drizzle(sql, { schema });
