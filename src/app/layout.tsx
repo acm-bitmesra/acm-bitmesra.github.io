@@ -12,7 +12,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: "ACM BIT Mesra — Computing, Coding & Innovation",
+    default: "ACM BIT Mesra — Official Website",
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
