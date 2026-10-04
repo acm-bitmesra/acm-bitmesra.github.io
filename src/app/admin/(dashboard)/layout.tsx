@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { getAuthorizedMember, getAuthSession } from "@/lib/auth/session";
-import { AdminNavbar } from "@/components/admin/admin-navbar";
+import { AdminAppShell } from "@/components/admin/admin-app-shell";
 
 export const dynamic = "force-dynamic";
 
@@ -20,12 +20,5 @@ export default async function AdminDashboardLayout({
     }
   }
 
-  return (
-    <div className="min-h-screen bg-[#080808] text-foreground flex flex-col">
-      <AdminNavbar context={context} />
-      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
-        {children}
-      </main>
-    </div>
-  );
+  return <AdminAppShell context={context}>{children}</AdminAppShell>;
 }

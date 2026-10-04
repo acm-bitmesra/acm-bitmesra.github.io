@@ -18,6 +18,8 @@ export interface AdminPostListItem {
   status: BlogPostStatus;
   featured: boolean;
   readingTimeMinutes: number;
+  excerpt?: string | null;
+  coverImage?: string | null;
   createdAt: Date;
   updatedAt: Date;
   publishedAt: Date | null;
@@ -40,6 +42,8 @@ export async function getAdminPosts(
       status: blogPosts.status,
       featured: blogPosts.featured,
       readingTimeMinutes: blogPosts.readingTimeMinutes,
+      excerpt: blogPosts.excerpt,
+      coverImage: blogPosts.coverImageUrl,
       createdAt: blogPosts.createdAt,
       updatedAt: blogPosts.updatedAt,
       publishedAt: blogPosts.publishedAt,
@@ -63,6 +67,8 @@ export async function getAdminPosts(
     status: r.status,
     featured: r.featured,
     readingTimeMinutes: r.readingTimeMinutes,
+    excerpt: r.excerpt,
+    coverImage: r.coverImage,
     createdAt: r.createdAt,
     updatedAt: r.updatedAt,
     publishedAt: r.publishedAt,

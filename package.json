@@ -12,7 +12,8 @@
     "typecheck": "tsc --noEmit",
     "test:prod": "node scripts/validate-production.mjs",
     "test:auth": "node scripts/test-auth-and-blog.mjs",
-    "test": "npm run typecheck && npm run lint && npm run test:auth && npm run test:prod",
+    "test:security": "node scripts/test-security-suite.mjs",
+    "test": "npm run typecheck && npm run lint && npm run test:auth && npm run test:security && npm run test:prod",
     "cf:build": "next build && opennextjs-cloudflare build",
     "cf:deploy": "opennextjs-cloudflare build && OPEN_NEXT_DEPLOY=true wrangler deploy",
     "deploy": "next build && opennextjs-cloudflare build && OPEN_NEXT_DEPLOY=true wrangler deploy"

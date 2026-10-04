@@ -6,3 +6,4 @@ export * from "./resources";
 export * from "./announcements";
 export * from "./sponsors";
 export * from "./gallery";
+export * from "./governance";
