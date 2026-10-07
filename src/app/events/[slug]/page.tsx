@@ -1,47 +1,32 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { events } from "@/data/events";
 import { formatDateRange } from "@/lib/date";
-import { Badge } from "@/components/ui/badge";
 import { EventCard } from "@/components/events/event-card";
 import { siteConfig } from "@/config/site";
 import { GithubIcon } from "@/components/ui/icons";
 import { EventShareActions } from "@/components/events/event-share-actions";
-import {
-  Trophy,
-  ArrowLeft,
-  CheckCircle2,
-  HelpCircle,
-  FileText,
-  AlertCircle,
-  Sparkles,
-  Clock,
-  Compass,
-  ShieldAlert,
-  Lock,
-} from "lucide-react";
+import { Calendar, Clock, Compass, FileText, HelpCircle, MapPin, ShieldAlert, Sparkles, Trophy, Users } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 interface EventDetailPageProps {
   params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
-  return events.map((event) => ({
-    slug: event.slug,
-  }));
+  return events.map((event) => ({ slug: event.slug }));
 }
 
 export async function generateMetadata({
   params,
 }: EventDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const event = events.find((e) => e.slug === slug);
+  const event = events.find((item) => item.slug === slug);
 
   if (!event) {
-    return {
-      title: "Event Not Found",
-    };
+    return { title: "Event Not Found" };
   }
 
   const pageUrl = `${siteConfig.url}/events/${event.slug}`;
@@ -57,19 +42,13 @@ export async function generateMetadata({
   return {
     title: `${event.title} | ${event.category}`,
     description: event.shortDescription,
+    alternates: { canonical: pageUrl },
     openGraph: {
       title: `${event.title} | ACM BIT Mesra`,
       description: event.shortDescription,
       url: pageUrl,
       type: "article",
-      images: [
-        {
-          url: ogImageUrl,
-          width: 1200,
-          height: 630,
-          alt: `${event.title} - ACM BIT Mesra`,
-        },
-      ],
+      images: [{ url: ogImageUrl, width: 1200, height: 630, alt: `${event.title} - ACM BIT Mesra` }],
     },
     twitter: {
       card: "summary_large_image",
@@ -80,9 +59,31 @@ export async function generateMetadata({
   };
 }
 
-export default async function EventDetailPage({ params }: EventDetailPageProps) {
+function Section({
+  title,
+  icon,
+  children,
+}: {
+  title: string;
+  icon: ReactNode;
+  children: ReactNode;
+}) {
+  return (
+    <section className="border-t border-border pt-8 sm:pt-10">
+      <h2 className="flex items-center gap-2.5 text-xl font-semibold tracking-[-0.025em] text-foreground sm:text-2xl">
+        <span className="text-primary">{icon}</span>
+        {title}
+      </h2>
+      <div className="mt-5 sm:mt-6">{children}</div>
+    </section>
+  );
+}
+
+export default async function EventDetailPage({
+  params,
+}: EventDetailPageProps) {
   const { slug } = await params;
-  const event = events.find((e) => e.slug === slug);
+  const event = events.find((item) => item.slug === slug);
 
   if (!event) {
     notFound();
@@ -91,11 +92,24 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
   const pageUrl = `${siteConfig.url}/events/${event.slug}`;
   const isUpcoming = event.status === "upcoming";
   const isLive = event.status === "live";
-  const isCompleted = event.status === "completed" || event.status === "archived";
+  const isCompleted =
+    event.status === "completed" || event.status === "archived";
   const isRegistrationClosed = event.registrationOpen === false;
-  const relatedEvents = events.filter((e) => e.slug !== event.slug).slice(0, 2);
+  const relatedEvents = events.filter((item) => item.slug !== event.slug).slice(0, 2);
 
-  // Structured Data (JSON-LD) for Events
+  const eventStatus =
+    event.status === "live"
+      ? "https://schema.org/EventLive"
+      : isCompleted
+      ? "https://schema.org/EventCompleted"
+      : "https://schema.org/EventScheduled";
+
+  const attendanceMode = event.location?.includes("Online")
+    ? event.location.includes("Campus")
+      ? "https://schema.org/MixedEventAttendanceMode"
+      : "https://schema.org/OnlineEventAttendanceMode"
+    : "https://schema.org/OfflineEventAttendanceMode";
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Event",
@@ -103,15 +117,8 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
     description: event.shortDescription,
     startDate: event.date,
     endDate: event.endDate || event.date,
-    eventStatus:
-      event.status === "upcoming"
-        ? "https://schema.org/EventScheduled"
-        : event.status === "live"
-        ? "https://schema.org/EventLive"
-        : "https://schema.org/EventMovedOnline",
-    eventAttendanceMode: event.location?.includes("Online")
-      ? "https://schema.org/OnlineEventAttendanceMode"
-      : "https://schema.org/OfflineEventAttendanceMode",
+    eventStatus,
+    eventAttendanceMode: attendanceMode,
     location: {
       "@type": "Place",
       name: event.location || siteConfig.location.campus,
@@ -132,517 +139,319 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
   };
 
   return (
-    <article className="py-10 sm:py-16">
-      {/* Insert JSON-LD */}
+    <article className="py-6 sm:py-10 lg:py-14">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 space-y-10">
-        {/* Navigation Breadcrumb */}
-        <div className="flex items-center justify-between">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border pb-4">
           <Link
             href="/events"
-            className="inline-flex items-center gap-1.5 text-xs font-mono text-muted-foreground hover:text-foreground transition-colors"
+            className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
           >
-            <ArrowLeft className="h-3.5 w-3.5" /> Back to All Events
+            <span aria-hidden="true">←</span>
+            All events
           </Link>
           <EventShareActions title={event.title} url={pageUrl} />
         </div>
 
-        {/* Notion-style Document Header & Properties Table */}
-        <header className="space-y-6 border-b border-border pb-8">
-          <div className="space-y-3">
-            <div className="flex flex-wrap items-center gap-2">
-              <Badge variant="outline" className="font-mono text-xs">
-                {event.category}
-              </Badge>
-              {event.theme && (
-                <Badge variant="secondary" className="font-mono text-xs flex items-center gap-1.5">
-                  <Sparkles className="h-3 w-3 text-amber-500" />
-                  Theme: {event.theme}
-                </Badge>
-              )}
-            </div>
+        <div className="grid gap-10 pt-8 lg:grid-cols-[minmax(0,1fr)_280px] lg:gap-16 lg:pt-12">
+          <main className="min-w-0">
+            <header className="max-w-4xl">
+              <h1 className="text-4xl font-semibold leading-[1.05] tracking-[-0.045em] text-foreground sm:text-5xl lg:text-6xl">
+                {event.title}
+              </h1>
 
-            <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-foreground">
-              {event.title}
-            </h1>
-
-            {event.tagline && (
-              <p className="text-sm sm:text-base font-mono font-medium text-foreground/80">
-                {event.tagline}
-              </p>
-            )}
-
-            <div className="text-base text-muted-foreground leading-relaxed max-w-3xl space-y-3">
-              {event.description.split("\n\n").map((para, i) => (
-                <p key={i}>{para}</p>
-              ))}
-            </div>
-          </div>
-
-          {/* Properties Table (Notion database view) */}
-          <div className="rounded-lg border border-border bg-card divide-y divide-border text-xs sm:text-sm">
-            <div className="flex flex-col sm:grid sm:grid-cols-4 p-3 gap-1 sm:gap-0 sm:items-center">
-              <span className="text-muted-foreground font-mono sm:col-span-1">Status</span>
-              <div className="sm:col-span-3 min-w-0">
-                <Badge
-                  variant={
-                    isRegistrationClosed
-                      ? "warning"
-                      : isUpcoming
-                      ? "warning"
-                      : isLive
-                      ? "destructive"
-                      : "secondary"
-                  }
-                >
-                  {event.registrationStatusText
-                    ? event.registrationStatusText
-                    : isUpcoming
-                    ? "Registration Open"
-                    : isLive
-                    ? "Live Now"
-                    : "Completed Edition"}
-                </Badge>
-              </div>
-            </div>
-
-            <div className="flex flex-col sm:grid sm:grid-cols-4 p-3 gap-1 sm:gap-0 sm:items-center">
-              <span className="text-muted-foreground font-mono sm:col-span-1">Category</span>
-              <div className="sm:col-span-3 min-w-0">
-                <Badge variant="outline" className="font-mono text-xs">
-                  {event.category}
-                </Badge>
-              </div>
-            </div>
-
-            <div className="flex flex-col sm:grid sm:grid-cols-4 p-3 gap-1 sm:gap-0 sm:items-center">
-              <span className="text-muted-foreground font-mono sm:col-span-1">Date</span>
-              <span className="sm:col-span-3 text-foreground font-medium min-w-0 break-words">
-                {formatDateRange(event.date, event.endDate)}
-              </span>
-            </div>
-
-            {event.time && (
-              <div className="flex flex-col sm:grid sm:grid-cols-4 p-3 gap-1 sm:gap-0 sm:items-center">
-                <span className="text-muted-foreground font-mono sm:col-span-1">Time</span>
-                <span className="sm:col-span-3 text-foreground min-w-0 break-words">
-                  {event.time}
-                </span>
-              </div>
-            )}
-
-            {event.location && (
-              <div className="flex flex-col sm:grid sm:grid-cols-4 p-3 gap-1 sm:gap-0 sm:items-center">
-                <span className="text-muted-foreground font-mono sm:col-span-1">Venue</span>
-                <span className="sm:col-span-3 text-foreground min-w-0 break-words">
-                  {event.location}
-                </span>
-              </div>
-            )}
-
-            {event.organizers && event.organizers.length > 0 && (
-              <div className="flex flex-col sm:grid sm:grid-cols-4 p-3 gap-1 sm:gap-0 sm:items-center">
-                <span className="text-muted-foreground font-mono sm:col-span-1">Organizers</span>
-                <span className="sm:col-span-3 text-muted-foreground min-w-0 break-words">
-                  {event.organizers.join(", ")}
-                </span>
-              </div>
-            )}
-
-            {event.theme && (
-              <div className="flex flex-col sm:grid sm:grid-cols-4 p-3 gap-1 sm:gap-0 sm:items-center">
-                <span className="text-muted-foreground font-mono sm:col-span-1">Theme</span>
-                <span className="sm:col-span-3 text-foreground font-medium min-w-0 break-words">
-                  {event.theme}
-                </span>
-              </div>
-            )}
-
-            {event.tags && event.tags.length > 0 && (
-              <div className="flex flex-col sm:grid sm:grid-cols-4 p-3 gap-1 sm:gap-0 sm:items-center">
-                <span className="text-muted-foreground font-mono sm:col-span-1">Focus</span>
-                <span className="sm:col-span-3 text-muted-foreground min-w-0 break-words">
-                  {event.tags.join(" • ")}
-                </span>
-              </div>
-            )}
-
-            {event.challengeTitle && (
-              <div className="flex flex-col sm:grid sm:grid-cols-4 p-3 gap-1 sm:gap-0 sm:items-center">
-                <span className="text-muted-foreground font-mono sm:col-span-1">Challenge</span>
-                <span className="sm:col-span-3 text-foreground font-medium min-w-0 break-words">
-                  {event.challengeTitle} (Details to be announced)
-                </span>
-              </div>
-            )}
-
-            {event.prizes && event.prizes.length > 0 && (
-              <div className="flex flex-col sm:grid sm:grid-cols-4 p-3 gap-1 sm:gap-0 sm:items-center">
-                <span className="text-muted-foreground font-mono sm:col-span-1">Prizes</span>
-                <span className="sm:col-span-3 text-foreground font-medium min-w-0 break-words">
-                  {event.prizes[0].reward}
-                </span>
-              </div>
-            )}
-          </div>
-
-          {/* Registration CTA */}
-          <div className="pt-2 flex flex-wrap items-center gap-3">
-            {isRegistrationClosed ? (
-              <div className="flex flex-col sm:flex-row sm:items-center gap-3.5 w-full sm:w-auto">
-                <button
-                  type="button"
-                  disabled
-                  aria-disabled="true"
-                  className="inline-flex h-11 items-center justify-center gap-2.5 rounded-lg bg-neutral-900/40 dark:bg-white/20 px-6 text-sm font-semibold text-muted-foreground cursor-not-allowed border border-border w-full sm:w-auto"
-                >
-                  <GithubIcon className="h-4 w-4 opacity-60" />
-                  <span>Register with GitHub</span>
-                  <span className="ml-1 rounded bg-secondary px-2 py-0.5 text-xs font-mono text-muted-foreground">
-                    Opening Soon
-                  </span>
-                </button>
-                <span className="text-xs sm:text-sm font-mono text-muted-foreground flex items-center gap-1.5">
-                  <Lock className="h-3.5 w-3.5 text-muted-foreground" />
-                  {event.registrationStatusText || "Registration Opening Soon"}
-                </span>
-              </div>
-            ) : isUpcoming && event.registrationUrl ? (
-              <a
-                href={event.registrationUrl}
-                className="inline-flex h-11 items-center justify-center rounded-lg bg-neutral-900 px-6 text-sm font-semibold text-white dark:bg-white dark:text-neutral-900 hover:bg-neutral-800 dark:hover:bg-neutral-100 transition-colors w-full sm:w-auto shadow-xs"
-              >
-                Register for Event →
-              </a>
-            ) : null}
-
-            {isCompleted && (
-              <div className="inline-flex items-center gap-2 rounded-md bg-secondary/60 px-3 py-1.5 text-xs text-muted-foreground border border-border">
-                <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
-                <span>This edition has concluded. Results are recorded below.</span>
-              </div>
-            )}
-          </div>
-        </header>
-
-        {/* Section: About */}
-        {event.about && event.about.length > 0 && (
-          <section className="space-y-3">
-            <h2 className="text-lg font-semibold tracking-tight text-foreground flex items-center gap-2">
-              <Compass className="h-4 w-4 text-neutral-500" />
-              About the Event
-            </h2>
-            <div className="rounded-lg border border-border bg-card p-5 sm:p-6 space-y-3 text-xs sm:text-sm text-muted-foreground leading-relaxed">
-              {event.about.map((paragraph, idx) => (
-                <p key={idx}>{paragraph}</p>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* Section: What to Expect */}
-        {event.expectations && event.expectations.length > 0 && (
-          <section className="space-y-3">
-            <h2 className="text-lg font-semibold tracking-tight text-foreground flex items-center gap-2">
-              <Sparkles className="h-4 w-4 text-neutral-500" />
-              What to Expect
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-              {event.expectations.map((item, idx) => (
-                <div
-                  key={idx}
-                  className="rounded-lg border border-border bg-card p-4 space-y-1.5"
-                >
-                  <div className="flex items-center gap-2">
-                    <span className="font-mono text-xs text-primary font-bold">
-                      0{idx + 1}.
-                    </span>
-                    <h3 className="text-sm font-semibold text-foreground">
-                      {item.title}
-                    </h3>
-                  </div>
-                  <p className="text-xs text-muted-foreground leading-relaxed">
-                    {item.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* Section: ACM Challenge */}
-        {event.challengeTitle && (
-          <section className="space-y-3">
-            <h2 className="text-lg font-semibold tracking-tight text-foreground flex items-center gap-2">
-              <FileText className="h-4 w-4 text-neutral-500" />
-              {event.challengeTitle}
-            </h2>
-            <div className="rounded-lg border border-border bg-card p-5 sm:p-6 space-y-3">
-              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                {event.challengeDescription}
-              </p>
-              <div className="pt-2 text-xs font-mono text-muted-foreground border-t border-border">
-                More challenge details, rules, timelines, judging information, and submission procedures will be announced on this event page.
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* Section: Timeline */}
-        {event.timelineItems && event.timelineItems.length > 0 && (
-          <section className="space-y-3">
-            <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold tracking-tight text-foreground flex items-center gap-2">
-                <Clock className="h-4 w-4 text-neutral-500" />
-                Timeline & Milestones
-              </h2>
-              {event.timelineNotice && (
-                <span className="text-xs font-mono text-muted-foreground">
-                  {event.timelineNotice}
-                </span>
-              )}
-            </div>
-            <div className="rounded-lg border border-border bg-card divide-y divide-border">
-              {event.timelineItems.map((item, idx) => (
-                <div
-                  key={idx}
-                  className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2"
-                >
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs font-mono font-semibold text-foreground">
-                        {item.date}
-                      </span>
-                      {item.status && (
-                        <Badge
-                          variant={item.status === "Confirmed" ? "secondary" : "outline"}
-                          className="text-[10px] font-mono"
-                        >
-                          {item.status}
-                        </Badge>
-                      )}
-                    </div>
-                    <p className="text-sm font-medium text-foreground">
-                      {item.title}
-                    </p>
-                    {item.description && (
-                      <p className="text-xs text-muted-foreground">
-                        {item.description}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* Section: Contest / Event Rules */}
-        {event.rules && event.rules.length > 0 && (
-          <section className="space-y-3">
-            <h2 className="text-lg font-semibold tracking-tight text-foreground flex items-center gap-2">
-              <FileText className="h-4 w-4 text-neutral-500" />
-              Rules & Guidelines
-            </h2>
-            <div className="rounded-lg border border-border bg-card p-5">
-              <ul className="space-y-2 text-xs sm:text-sm text-muted-foreground">
-                {event.rules.map((rule, idx) => (
-                  <li key={idx} className="flex items-start gap-2">
-                    <span className="font-mono text-neutral-400 text-xs mt-0.5">
-                      0{idx + 1}.
-                    </span>
-                    <span>{rule}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </section>
-        )}
-
-        {/* Section: Prizes & Honors */}
-        {event.prizes && event.prizes.length > 0 && (
-          <section className="space-y-3">
-            <h2 className="text-lg font-semibold tracking-tight text-foreground flex items-center gap-2">
-              <Trophy className="h-4 w-4 text-neutral-500" />
-              Prizes & Recognition
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-              {event.prizes.map((prize, idx) => (
-                <div
-                  key={idx}
-                  className="rounded-lg border border-border bg-card p-4 space-y-1"
-                >
-                  <span className="font-mono text-xs text-muted-foreground block">
-                    {prize.title}
-                  </span>
-                  <p className="text-sm font-semibold text-foreground">
-                    {prize.reward}
-                  </p>
-                  {prize.description && (
-                    <p className="text-xs text-muted-foreground">
-                      {prize.description}
-                    </p>
-                  )}
-                </div>
-              ))}
-            </div>
-            {event.prizesNotice && (
-              <p className="text-xs font-mono text-muted-foreground italic">
-                {event.prizesNotice}
-              </p>
-            )}
-          </section>
-        )}
-
-        {/* Section: Registration Status Callout */}
-        <section className="space-y-3">
-          <h2 className="text-lg font-semibold tracking-tight text-foreground flex items-center gap-2">
-            <Lock className="h-4 w-4 text-neutral-500" />
-            Registration
-          </h2>
-          <div className="rounded-lg border border-border bg-card p-6 space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div className="space-y-1">
-                <div className="flex items-center gap-2">
-                  <h3 className="text-base font-semibold text-foreground">
-                    {event.title} Registration
-                  </h3>
-                  <Badge
-                    variant={event.registrationOpen ? "secondary" : "warning"}
-                    className="text-xs font-mono"
-                  >
-                    {event.registrationStatusText ||
-                      (event.registrationOpen ? "Open" : "Opening Soon")}
-                  </Badge>
-                </div>
-                <p className="text-xs sm:text-sm text-muted-foreground">
-                  {event.registrationHelperText ||
-                    (event.registrationOpen
-                      ? "Register now to participate in this event."
-                      : "Registrations will open soon. Sign-ins will be handled securely via GitHub.")}
+              {event.tagline && (
+                <p className="mt-4 text-lg font-medium text-foreground/80 sm:text-xl">
+                  {event.tagline}
                 </p>
+              )}
+
+              <div className="mt-6 max-w-[72ch] space-y-4 text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
+                {event.description.split("\n\n").map((paragraph, index) => (
+                  <p key={index}>{paragraph}</p>
+                ))}
               </div>
 
-              <div className="w-full sm:w-auto">
-                {event.registrationOpen ? (
-                  <a
-                    href={event.registrationUrl || "#"}
-                    className="inline-flex h-10 sm:h-9 items-center justify-center gap-2 rounded-md bg-neutral-900 px-5 text-xs font-medium text-white dark:bg-white dark:text-neutral-900 hover:bg-neutral-800 dark:hover:bg-neutral-100 transition-colors w-full sm:w-auto"
-                  >
-                    <GithubIcon className="h-4 w-4" />
-                    <span>Register with GitHub</span>
-                  </a>
-                ) : (
-                  <button
-                    type="button"
-                    disabled
-                    aria-disabled="true"
-                    className="inline-flex h-10 sm:h-9 items-center justify-center gap-2 rounded-md bg-neutral-900/40 dark:bg-white/20 px-5 text-xs font-medium text-muted-foreground cursor-not-allowed border border-border w-full sm:w-auto"
-                  >
-                    <GithubIcon className="h-4 w-4 opacity-60" />
-                    <span>Register with GitHub</span>
-                  </button>
+              <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-muted-foreground">
+                <span className="font-medium text-foreground">{event.category}</span>
+                {event.theme && (
+                  <>
+                    <span aria-hidden="true" className="text-border">•</span>
+                    <span className="inline-flex items-center gap-1.5">
+                      <Sparkles className="h-4 w-4 text-amber-400" />
+                      {event.theme}
+                    </span>
+                  </>
                 )}
               </div>
-            </div>
-            {!event.registrationOpen && (
-              <p className="text-xs font-mono text-muted-foreground/80 border-t border-border pt-3">
-                Notice: The registration button is currently disabled. Do not submit external forms. The registration button will activate automatically once the organizing committee opens registrations.
-              </p>
-            )}
-          </div>
-        </section>
+            </header>
 
-        {/* Section: Historical Results / Winners */}
-        {event.winners && event.winners.length > 0 ? (
-          <section className="space-y-3">
-            <h2 className="text-lg font-semibold tracking-tight text-foreground">
-              Results & Podium
-            </h2>
-            <div className="rounded-lg border border-border bg-card divide-y divide-border">
-              {event.winners.map((winner, idx) => (
-                <div
-                  key={idx}
-                  className="flex flex-col sm:flex-row sm:items-center justify-between p-3 text-xs sm:text-sm gap-1.5 sm:gap-3"
-                >
-                  <div className="flex items-center gap-3 min-w-0">
-                    <span className="font-mono text-xs font-semibold text-foreground shrink-0">
-                      {winner.position}
-                    </span>
-                    <span className="font-medium text-foreground min-w-0 break-words">
-                      {winner.teamName}
-                    </span>
+            <div className="mt-10 lg:hidden">
+              <EventFacts event={event} isRegistrationClosed={isRegistrationClosed} isLive={isLive} isCompleted={isCompleted} />
+            </div>
+
+            <div className="mt-12 space-y-10 sm:mt-16 sm:space-y-12">
+              {event.about && event.about.length > 0 && (
+                <Section title="About the event" icon={<Compass className="h-5 w-5" />}>
+                  <div className="max-w-[72ch] space-y-4 text-base leading-7 text-muted-foreground">
+                    {event.about.map((paragraph, index) => (
+                      <p key={index}>{paragraph}</p>
+                    ))}
                   </div>
-                  <span className="text-xs text-muted-foreground sm:text-right break-words">
-                    {winner.members.join(", ")}
-                  </span>
-                </div>
-              ))}
+                </Section>
+              )}
+
+              {event.expectations && event.expectations.length > 0 && (
+                <Section title="What to expect" icon={<Sparkles className="h-5 w-5" />}>
+                  <div className="divide-y divide-border border-y border-border">
+                    {event.expectations.map((item, index) => (
+                      <div key={index} className="grid gap-2 py-5 sm:grid-cols-[10rem_minmax(0,1fr)] sm:gap-6">
+                        <h3 className="font-semibold text-foreground">{item.title}</h3>
+                        <p className="max-w-[65ch] text-sm leading-6 text-muted-foreground sm:text-base sm:leading-7">
+                          {item.description}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </Section>
+              )}
+
+              {event.challengeTitle && (
+                <Section title={event.challengeTitle} icon={<FileText className="h-5 w-5" />}>
+                  <div className="border border-primary/20 bg-primary/[0.06] px-5 py-5 sm:px-6 sm:py-6">
+                    <p className="max-w-[72ch] text-base leading-7 text-muted-foreground">
+                      {event.challengeDescription}
+                    </p>
+                    <p className="mt-4 border-t border-primary/15 pt-4 text-sm leading-6 text-foreground/75">
+                      More challenge details, rules, judging information, and submission procedures will be announced on this page.
+                    </p>
+                  </div>
+                </Section>
+              )}
+
+              {event.timelineItems && event.timelineItems.length > 0 && (
+                <Section title="Timeline & milestones" icon={<Clock className="h-5 w-5" />}>
+                  <ol className="border-y border-border">
+                    {event.timelineItems.map((item, index) => (
+                      <li key={index} className="grid gap-2 border-b border-border py-5 last:border-b-0 sm:grid-cols-[11rem_minmax(0,1fr)] sm:gap-8">
+                        <div className="text-sm font-medium text-foreground">{item.date}</div>
+                        <div>
+                          <div className="flex flex-wrap items-center gap-2">
+                            <h3 className="font-semibold text-foreground">{item.title}</h3>
+                            {item.status && <Badge variant={item.status === "Confirmed" ? "success" : "outline"}>{item.status}</Badge>}
+                          </div>
+                          {item.description && (
+                            <p className="mt-1.5 max-w-[65ch] text-sm leading-6 text-muted-foreground">
+                              {item.description}
+                            </p>
+                          )}
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
+                </Section>
+              )}
+
+              {event.rules && event.rules.length > 0 && (
+                <Section title="Rules & guidelines" icon={<FileText className="h-5 w-5" />}>
+                  <ul className="max-w-[72ch] space-y-4 text-base leading-7 text-muted-foreground">
+                    {event.rules.map((rule, index) => (
+                      <li key={index} className="relative pl-5">
+                        <span className="absolute left-0 top-[0.65em] h-1.5 w-1.5 rounded-full bg-primary" aria-hidden="true" />
+                        {rule}
+                      </li>
+                    ))}
+                  </ul>
+                </Section>
+              )}
+
+              {event.prizes && event.prizes.length > 0 && (
+                <Section title="Prizes & recognition" icon={<Trophy className="h-5 w-5" />}>
+                  <div className="divide-y divide-border border-y border-border">
+                    {event.prizes.map((prize, index) => (
+                      <div key={index} className="grid gap-2 py-5 sm:grid-cols-[12rem_minmax(0,1fr)_auto] sm:items-start sm:gap-6">
+                        <span className="text-sm font-semibold text-foreground">{prize.title}</span>
+                        <p className="text-sm leading-6 text-muted-foreground sm:text-base">{prize.description}</p>
+                        <span className="font-semibold text-foreground sm:text-right">{prize.reward}</span>
+                      </div>
+                    ))}
+                  </div>
+                  {event.prizesNotice && (
+                    <p className="mt-4 text-sm text-muted-foreground">{event.prizesNotice}</p>
+                  )}
+                </Section>
+              )}
+
+              {event.winners && event.winners.length > 0 && (
+                <Section title="Results & podium" icon={<Trophy className="h-5 w-5" />}>
+                  <div className="divide-y divide-border border-y border-border">
+                    {event.winners.map((winner, index) => (
+                      <div key={index} className="grid gap-2 py-5 sm:grid-cols-[5rem_12rem_minmax(0,1fr)] sm:gap-6">
+                        <span className="font-semibold text-foreground">{winner.position}</span>
+                        <span className="font-medium text-foreground">{winner.teamName}</span>
+                        <span className="text-sm leading-6 text-muted-foreground">{winner.members.join(", ")}</span>
+                      </div>
+                    ))}
+                  </div>
+                </Section>
+              )}
+
+              {event.faqs && event.faqs.length > 0 && (
+                <Section title="Frequently asked questions" icon={<HelpCircle className="h-5 w-5" />}>
+                  <div className="divide-y divide-border border-y border-border">
+                    {event.faqs.map((faq, index) => (
+                      <details key={index} className="group py-5">
+                        <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-6 font-semibold text-foreground marker:hidden">
+                          <span>{faq.question}</span>
+                          <span className="text-xl font-normal text-muted-foreground transition-transform group-open:rotate-45" aria-hidden="true">
+                            +
+                          </span>
+                        </summary>
+                        <p className="max-w-[72ch] pt-3 text-sm leading-6 text-muted-foreground sm:text-base sm:leading-7">
+                          {faq.answer}
+                        </p>
+                      </details>
+                    ))}
+                  </div>
+                </Section>
+              )}
+
+              {event.disclaimer && (
+                <section className="border-t border-border pt-8 sm:pt-10">
+                  <div className="flex items-start gap-3 text-sm leading-6 text-muted-foreground">
+                    <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
+                    <p className="max-w-[78ch]">{event.disclaimer}</p>
+                  </div>
+                </section>
+              )}
             </div>
-          </section>
-        ) : isCompleted ? (
-          <section className="rounded-lg border border-border bg-secondary/40 p-4 text-xs text-muted-foreground flex items-center gap-2">
-            <AlertCircle className="h-4 w-4 text-neutral-400 shrink-0" />
-            <span>Official standings are archived in the chapter repository. Contact organizers for certificate queries.</span>
-          </section>
-        ) : null}
+          </main>
 
-        {/* Section: Frequently Asked Questions */}
-        {event.faqs && event.faqs.length > 0 && (
-          <section className="space-y-3">
-            <h2 className="text-lg font-semibold tracking-tight text-foreground flex items-center gap-2">
-              <HelpCircle className="h-4 w-4 text-neutral-500" />
-              Frequently Asked Questions
-            </h2>
-            <div className="rounded-lg border border-border bg-card divide-y divide-border">
-              {event.faqs.map((faq, idx) => (
-                <div key={idx} className="p-4 space-y-1">
-                  <h3 className="text-sm font-medium text-foreground">
-                    {faq.question}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                    {faq.answer}
-                  </p>
-                </div>
-              ))}
+          <aside className="hidden lg:block">
+            <div className="sticky top-24">
+              <EventFacts event={event} isRegistrationClosed={isRegistrationClosed} isLive={isLive} isCompleted={isCompleted} />
             </div>
-          </section>
-        )}
+          </aside>
+        </div>
 
-        {/* Section: Community Disclaimer */}
-        {event.disclaimer && (
-          <section className="rounded-lg border border-border/80 bg-secondary/30 p-4 text-xs text-muted-foreground flex items-start gap-3">
-            <ShieldAlert className="h-4 w-4 text-muted-foreground shrink-0 mt-0.5" />
-            <p className="leading-relaxed font-sans">{event.disclaimer}</p>
-          </section>
-        )}
-
-        {/* Related Events Section */}
         {relatedEvents.length > 0 && (
-          <section className="space-y-4 pt-6 border-t border-border">
-            <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold tracking-tight text-foreground">
-                Other Chapter Events
-              </h2>
-              <Link
-                href="/events"
-                className="text-xs font-mono text-muted-foreground hover:text-foreground"
-              >
-                Browse all →
+          <section className="mt-16 border-t border-border pt-8 sm:mt-20 sm:pt-10">
+            <div className="flex flex-wrap items-baseline justify-between gap-3">
+              <h2 className="text-xl font-semibold tracking-[-0.025em] sm:text-2xl">More from ACM BIT Mesra</h2>
+              <Link href="/events" className="text-sm font-medium text-muted-foreground hover:text-primary">
+                Browse all events →
               </Link>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {relatedEvents.map((relEvent) => (
-                <EventCard key={relEvent.slug} event={relEvent} />
+            <div className="mt-4 grid gap-x-8 md:grid-cols-2">
+              {relatedEvents.map((item) => (
+                <EventCard key={item.slug} event={item} />
               ))}
             </div>
           </section>
         )}
       </div>
     </article>
+  );
+}
+
+function EventFacts({
+  event,
+  isRegistrationClosed,
+  isLive,
+  isCompleted,
+}: {
+  event: (typeof events)[number];
+  isRegistrationClosed: boolean;
+  isLive: boolean;
+  isCompleted: boolean;
+}) {
+  return (
+    <div className="border-y border-border py-5 sm:py-6 lg:border-y-0 lg:border-l lg:pl-6">
+      <div className="flex items-center justify-between gap-4">
+        <span className="text-xs font-semibold uppercase tracking-[0.08em] text-muted-foreground">
+          Event details
+        </span>
+        <span
+          className={
+            isLive
+              ? "text-xs font-semibold text-red-400"
+              : event.registrationOpen
+              ? "text-xs font-semibold text-emerald-400"
+              : isCompleted
+              ? "text-xs font-semibold text-muted-foreground"
+              : "text-xs font-semibold text-amber-400"
+          }
+        >
+          {isLive
+            ? "Live now"
+            : isCompleted
+            ? "Completed"
+            : event.registrationOpen
+            ? "Registration open"
+            : "Opening soon"}
+        </span>
+      </div>
+
+      <dl className="mt-5 divide-y divide-border border-y border-border">
+        <div className="grid grid-cols-[7rem_minmax(0,1fr)] gap-4 py-4">
+          <dt className="text-xs uppercase tracking-wide text-muted-foreground">Date</dt>
+          <dd className="text-sm font-medium text-foreground">{formatDateRange(event.date, event.endDate)}</dd>
+        </div>
+        {event.time && (
+          <div className="grid grid-cols-[7rem_minmax(0,1fr)] gap-4 py-4">
+            <dt className="text-xs uppercase tracking-wide text-muted-foreground">Time</dt>
+            <dd className="text-sm text-foreground">{event.time}</dd>
+          </div>
+        )}
+        {event.location && (
+          <div className="grid grid-cols-[7rem_minmax(0,1fr)] gap-4 py-4">
+            <dt className="text-xs uppercase tracking-wide text-muted-foreground">Venue</dt>
+            <dd className="inline-flex items-start gap-1.5 text-sm text-foreground">
+              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
+              <span>{event.location}</span>
+            </dd>
+          </div>
+        )}
+        {event.organizers.length > 0 && (
+          <div className="grid grid-cols-[7rem_minmax(0,1fr)] gap-4 py-4">
+            <dt className="text-xs uppercase tracking-wide text-muted-foreground">Organized by</dt>
+            <dd className="inline-flex items-start gap-1.5 text-sm text-foreground">
+              <Users className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
+              <span>{event.organizers.join(", ")}</span>
+            </dd>
+          </div>
+        )}
+      </dl>
+
+      {isRegistrationClosed ? (
+        <div className="mt-5 border border-amber-500/20 bg-amber-500/[0.06] p-4">
+          <p className="text-sm font-semibold text-foreground">Registration opening soon</p>
+          <p className="mt-1.5 text-xs leading-5 text-muted-foreground">
+            {event.registrationHelperText || "Registration details will be published here when confirmed."}
+          </p>
+          <button
+            type="button"
+            disabled
+            aria-disabled="true"
+            className="mt-4 inline-flex min-h-11 w-full items-center justify-center gap-2 border border-border bg-secondary px-4 text-sm font-semibold text-muted-foreground"
+          >
+            <GithubIcon className="h-4 w-4 opacity-60" />
+            Register with GitHub
+          </button>
+        </div>
+      ) : event.registrationUrl && isUpcoming ? (
+        <a
+          href={event.registrationUrl}
+          className="mt-5 inline-flex min-h-11 w-full items-center justify-center gap-2 bg-primary px-4 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+        >
+          Register for event
+          <span aria-hidden="true">→</span>
+        </a>
+      ) : null}
+    </div>
   );
 }

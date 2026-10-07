@@ -15,42 +15,35 @@ export function ThemeToggle({ showLabel = false, className = "" }: ThemeTogglePr
   React.useEffect(() => {
     setMounted(true);
     const stored = localStorage.getItem("theme");
+
     if (stored === "light" || stored === "dark") {
       setTheme(stored);
-      if (stored === "dark") {
-        document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.remove("dark");
-      }
-    } else {
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      const initial = prefersDark ? "dark" : "light";
-      setTheme(initial);
-      if (initial === "dark") {
-        document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.remove("dark");
-      }
+      document.documentElement.classList.toggle("dark", stored === "dark");
+      return;
     }
+
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const initial = prefersDark ? "dark" : "light";
+    setTheme(initial);
+    document.documentElement.classList.toggle("dark", initial === "dark");
   }, []);
 
   const toggleTheme = () => {
     const nextTheme = theme === "dark" ? "light" : "dark";
     setTheme(nextTheme);
     localStorage.setItem("theme", nextTheme);
-    if (nextTheme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
+    document.documentElement.classList.toggle("dark", nextTheme === "dark");
   };
+
+  const base =
+    "inline-flex items-center justify-center gap-2 min-h-11 rounded-md border border-border bg-background px-3 text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
 
   if (!mounted) {
     return (
       <button
         type="button"
         aria-label="Toggle theme"
-        className={`h-9 w-9 rounded-lg border border-border/80 bg-secondary/40 flex items-center justify-center text-muted-foreground opacity-60 ${className}`}
+        className={`h-11 w-11 rounded-md border border-border bg-background flex items-center justify-center text-muted-foreground opacity-60 ${className}`}
         disabled
       >
         <Moon className="h-4 w-4" />
@@ -64,16 +57,16 @@ export function ThemeToggle({ showLabel = false, className = "" }: ThemeTogglePr
       onClick={toggleTheme}
       aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
       title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-      className={`inline-flex items-center gap-2 h-9 px-2.5 rounded-lg border border-border/80 bg-secondary/40 text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${className}`}
+      className={`${base} ${showLabel ? "" : "w-11 px-0"} ${className}`}
     >
       {theme === "dark" ? (
-        <Sun className="h-4 w-4 text-amber-400 transition-transform duration-200 hover:rotate-45" />
+        <Sun className="h-4 w-4 text-amber-400" />
       ) : (
-        <Moon className="h-4 w-4 text-neutral-700 transition-transform duration-200 hover:-rotate-12" />
+        <Moon className="h-4 w-4" />
       )}
       {showLabel && (
-        <span className="text-xs font-mono font-medium">
-          {theme === "dark" ? "Light Mode" : "Dark Mode"}
+        <span className="text-sm font-medium">
+          {theme === "dark" ? "Light mode" : "Dark mode"}
         </span>
       )}
     </button>

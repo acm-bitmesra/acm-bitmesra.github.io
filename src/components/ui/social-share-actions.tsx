@@ -13,7 +13,7 @@ interface SocialShareActionsProps {
 export function SocialShareActions({
   title,
   url,
-  label = "Share:",
+  label = "Share",
 }: SocialShareActionsProps) {
   const [copied, setCopied] = React.useState(false);
 
@@ -21,7 +21,7 @@ export function SocialShareActions({
     try {
       await navigator.clipboard.writeText(url);
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      window.setTimeout(() => setCopied(false), 2000);
     } catch {
       setCopied(false);
     }
@@ -36,11 +36,12 @@ export function SocialShareActions({
           url,
         });
       } catch {
-        // User cancelled or unsupported
+        // User cancelled or share is unavailable.
       }
-    } else {
-      handleCopy();
+      return;
     }
+
+    await handleCopy();
   };
 
   const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
@@ -51,71 +52,63 @@ export function SocialShareActions({
     url
   )}`;
 
-  return (
-    <div className="flex items-center gap-1.5 sm:gap-2">
-      {label && (
-        <span className="font-mono text-xs text-muted-foreground hidden sm:inline">
-          {label}
-        </span>
-      )}
+  const iconButton =
+    "inline-flex h-11 w-11 items-center justify-center rounded-md border border-border bg-background text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.98]";
 
-      {/* Copy Link Button */}
+  return (
+    <div className="flex items-center gap-2">
+      <span className="sr-only">{label}</span>
+
       <button
         type="button"
         onClick={handleCopy}
-        title="Copy Link to Clipboard"
-        aria-label={`Copy link for ${title} to clipboard`}
-        className="inline-flex items-center gap-1.5 h-9 px-3 rounded-lg border border-border/80 bg-secondary/40 text-xs font-mono text-muted-foreground hover:bg-secondary hover:text-foreground transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 active:scale-95"
+        title="Copy event link"
+        aria-label={copied ? "Event link copied" : `Copy link for ${title}`}
+        className="inline-flex h-11 items-center gap-2 rounded-md border border-border bg-background px-3.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.98]"
       >
         {copied ? (
           <>
-            <Check className="h-3.5 w-3.5 text-emerald-500" />
-            <span className="text-emerald-500 font-medium">Copied</span>
+            <Check className="h-4 w-4 text-emerald-500" />
+            <span className="hidden sm:inline">Copied</span>
           </>
         ) : (
           <>
-            <Copy className="h-3.5 w-3.5" />
-            <span>Copy Link</span>
+            <Copy className="h-4 w-4" />
+            <span className="hidden sm:inline">Copy link</span>
           </>
         )}
       </button>
 
-      {/* Twitter / X Share */}
       <a
         href={twitterUrl}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label={`Share ${title} on X (opens in new tab)`}
+        aria-label={`Share ${title} on X`}
         title="Share on X"
-        className="inline-flex items-center justify-center h-9 w-9 rounded-lg border border-border/80 bg-secondary/40 text-muted-foreground hover:bg-secondary hover:text-foreground transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 active:scale-95"
+        className={iconButton}
       >
         <TwitterIcon className="h-4 w-4" />
-        <span className="sr-only">Share on X</span>
       </a>
 
-      {/* LinkedIn Share */}
       <a
         href={linkedinUrl}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label={`Share ${title} on LinkedIn (opens in new tab)`}
+        aria-label={`Share ${title} on LinkedIn`}
         title="Share on LinkedIn"
-        className="inline-flex items-center justify-center h-9 w-9 rounded-lg border border-border/80 bg-secondary/40 text-muted-foreground hover:bg-secondary hover:text-foreground transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 active:scale-95"
+        className={iconButton}
       >
         <LinkedinIcon className="h-4 w-4" />
-        <span className="sr-only">Share on LinkedIn</span>
       </a>
 
-      {/* Mobile Native Share Trigger (if supported) */}
       <button
         type="button"
         onClick={handleNativeShare}
-        aria-label="Share via device options"
-        title="Share via device options"
-        className="sm:hidden inline-flex items-center justify-center h-9 w-9 rounded-lg border border-border/80 bg-secondary/40 text-muted-foreground hover:bg-secondary hover:text-foreground transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 active:scale-95"
+        aria-label="Share event"
+        title="Share event"
+        className={`${iconButton} sm:hidden`}
       >
         <Share2 className="h-4 w-4" />
-        <span className="sr-only">Share via device options</span>
       </button>
     </div>
   );

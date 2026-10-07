@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Event } from "@/types";
 import { formatDateRange } from "@/lib/date";
-import { Badge } from "@/components/ui/badge";
 import { Calendar, MapPin, ArrowRight } from "lucide-react";
 
 interface FeaturedEventProps {
@@ -9,127 +8,69 @@ interface FeaturedEventProps {
 }
 
 export function FeaturedEventSection({ event }: FeaturedEventProps) {
-  const isUpcoming = event.status === "upcoming" || event.status === "live";
-
-  // Determine consistent status badge configuration
-  const getStatusBadge = () => {
-    if (event.registrationOpen === false) {
-      return { label: "Registration Opening Soon", variant: "warning" as const };
-    }
-    if (event.status === "live") {
-      return { label: "Live Now", variant: "destructive" as const };
-    }
-    if (event.status === "upcoming") {
-      return { label: "Registration Open", variant: "success" as const };
-    }
-    return { label: "Completed", variant: "secondary" as const };
-  };
-
-  const statusBadge = getStatusBadge();
+  const status =
+    event.status === "live"
+      ? "Live now"
+      : event.registrationOpen
+      ? "Registration open"
+      : "Registration opening soon";
 
   return (
-    <section className="py-14 sm:py-16 md:py-20 border-b border-border/80 bg-secondary/10">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 space-y-6">
-        <div className="flex items-center justify-between border-b border-border/60 pb-3">
-          <div className="flex items-center gap-2">
-            <span className="font-mono text-xs sm:text-sm font-semibold text-foreground uppercase tracking-wider">
-              {isUpcoming ? "Upcoming Highlight" : "Featured Edition"}
-            </span>
+    <section className="border-b border-border bg-secondary/10 py-14 sm:py-16 lg:py-20">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col gap-3 border-b border-border pb-6 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <h2 className="text-2xl font-semibold tracking-[-0.03em] text-foreground sm:text-3xl">
+              Featured event
+            </h2>
+            <p className="mt-2 max-w-[65ch] text-sm leading-6 text-muted-foreground sm:text-base">
+              The next opportunity to build and participate with the chapter.
+            </p>
           </div>
           <Link
             href={`/events/${event.slug}`}
-            className="text-xs sm:text-sm font-mono font-medium text-foreground hover:text-primary transition-colors inline-flex items-center gap-1.5 group"
+            className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-foreground hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
-            <span>Full Event Page</span>
-            <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+            Event details
+            <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
 
-        {/* Highlight Card */}
-        <div className="rounded-xl border border-border/80 bg-card p-5 sm:p-8 lg:p-10 space-y-6 shadow-xs">
-          <div className="flex flex-wrap items-center gap-2.5">
-            <Badge variant="outline" className="text-xs font-mono">
-              {event.category}
-            </Badge>
-            <Badge variant={statusBadge.variant} className="text-xs font-mono">
-              {statusBadge.label}
-            </Badge>
-          </div>
-
-          <div className="space-y-3">
-            <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-foreground">
+        <div className="grid gap-8 pt-8 lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-16">
+          <div>
+            <p className="text-sm font-medium text-primary">{status}</p>
+            <h3 className="mt-2 max-w-4xl text-3xl font-semibold leading-tight tracking-[-0.04em] text-foreground sm:text-4xl lg:text-5xl">
               {event.title}
             </h3>
-            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-3xl">
+            <p className="mt-5 max-w-[72ch] text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
               {event.shortDescription || event.description}
             </p>
+            <Link
+              href={`/events/${event.slug}`}
+              className="mt-7 inline-flex min-h-11 items-center gap-2 bg-primary px-5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            >
+              Explore event
+              <ArrowRight className="h-4 w-4" />
+            </Link>
           </div>
 
-          {/* Clean Property List (Date / Location / Registration) */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 pt-5 border-t border-border/60 text-sm">
-            <div className="space-y-1.5">
-              <span className="text-muted-foreground font-mono text-xs uppercase tracking-wider">
-                Date
-              </span>
-              <div className="flex items-center gap-2 font-medium text-foreground">
-                <Calendar className="h-4 w-4 text-muted-foreground shrink-0" />
-                <span>{formatDateRange(event.date, event.endDate)}</span>
-              </div>
+          <dl className="border-y border-border">
+            <div className="grid grid-cols-[6.5rem_minmax(0,1fr)] gap-4 border-b border-border py-4">
+              <dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Date</dt>
+              <dd className="text-sm font-medium text-foreground">{formatDateRange(event.date, event.endDate)}</dd>
             </div>
-
-            <div className="space-y-1.5">
-              <span className="text-muted-foreground font-mono text-xs uppercase tracking-wider">
-                Location
-              </span>
-              <div className="flex items-center gap-2 font-medium text-foreground">
-                <MapPin className="h-4 w-4 text-muted-foreground shrink-0" />
-                <span className="line-clamp-1">{event.location}</span>
-              </div>
+            <div className="grid grid-cols-[6.5rem_minmax(0,1fr)] gap-4 border-b border-border py-4">
+              <dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Location</dt>
+              <dd className="flex items-start gap-2 text-sm text-foreground">
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
+                <span>{event.location}</span>
+              </dd>
             </div>
-
-            <div className="space-y-1.5 sm:text-right">
-              <span className="text-muted-foreground font-mono text-xs uppercase tracking-wider">
-                Registration
-              </span>
-              <div className="font-medium text-foreground">
-                {event.registrationStatusText ||
-                  (event.registrationOpen ? "Open" : "Opening Soon")}
-              </div>
+            <div className="grid grid-cols-[6.5rem_minmax(0,1fr)] gap-4 py-4">
+              <dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Category</dt>
+              <dd className="text-sm font-medium text-foreground">{event.category}</dd>
             </div>
-          </div>
-
-          {/* Action Row */}
-          <div className="flex flex-wrap items-center gap-3 pt-3 border-t border-border/40">
-            {event.registrationOpen === false ? (
-              <>
-                <span className="inline-flex h-10 items-center justify-center rounded-lg border border-border/70 bg-secondary/40 px-4 text-xs sm:text-sm font-mono text-muted-foreground cursor-default select-none whitespace-nowrap">
-                  Registration opens soon
-                </span>
-                <Link
-                  href={`/events/${event.slug}`}
-                  className="inline-flex h-10 items-center justify-center rounded-lg border border-border bg-card px-4 text-xs sm:text-sm font-semibold text-foreground hover:bg-secondary transition-colors whitespace-nowrap"
-                >
-                  View Event Details →
-                </Link>
-              </>
-            ) : event.registrationUrl ? (
-              <a
-                href={event.registrationUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex h-10 items-center justify-center rounded-lg bg-primary px-5 text-xs sm:text-sm font-semibold text-primary-foreground shadow-xs hover:bg-primary/90 transition-colors gap-1.5 whitespace-nowrap"
-              >
-                Register Now →
-              </a>
-            ) : (
-              <Link
-                href={`/events/${event.slug}`}
-                className="inline-flex h-10 items-center justify-center rounded-lg border border-border bg-card px-4 text-xs sm:text-sm font-semibold text-foreground hover:bg-secondary transition-colors whitespace-nowrap"
-              >
-                View Details →
-              </Link>
-            )}
-          </div>
+          </dl>
         </div>
       </div>
     </section>

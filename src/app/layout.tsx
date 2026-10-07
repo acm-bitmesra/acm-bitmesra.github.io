@@ -1,7 +1,20 @@
 import type { Metadata, Viewport } from "next";
+import { JetBrains_Mono, Manrope } from "next/font/google";
 import "./globals.css";
 import { SiteLayout } from "@/components/layout/site-layout";
 import { siteConfig } from "@/config/site";
+
+const manrope = Manrope({
+  subsets: ["latin"],
+  variable: "--font-manrope",
+  display: "swap",
+});
+
+const jetBrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  display: "swap",
+});
 
 export const viewport: Viewport = {
   themeColor: "#121214",
@@ -82,7 +95,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark scroll-smooth" suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`dark scroll-smooth ${manrope.variable} ${jetBrainsMono.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -103,7 +120,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-screen w-full overflow-x-hidden bg-background font-sans text-foreground antialiased selection:bg-red-500/20 selection:text-red-200">
+      <body className="min-h-screen w-full bg-background font-sans text-foreground antialiased">
         <SiteLayout>{children}</SiteLayout>
       </body>
     </html>

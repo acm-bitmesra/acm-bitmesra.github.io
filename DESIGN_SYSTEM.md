@@ -1,61 +1,48 @@
-# ACM BIT Mesra — Design System Specification
+# ACM BIT Mesra — Design System
 
-This document details the visual language, design tokens, typography, component standards, and accessibility guidelines for the official ACM BIT Mesra platform.
+The public ACM BIT Mesra site uses an editorial institutional interface: clear typography, deliberate spacing, ACM red for action and emphasis, and border-led structure instead of a collection of floating cards.
 
----
+## Visual direction
 
-## 1. Core Visual Identity
+The interface should feel like a serious student computing chapter, not a generic SaaS dashboard or an AI-generated template.
 
-The design system merges **institutional prestige**, **academic precision**, and a **modern developer platform**. It avoids generic SaaS clichés (e.g. gratuitous glassmorphism, noisy neon gradients, AI glowing spheres).
+- **Base:** warm white in light mode and soft charcoal in dark mode.
+- **Brand accent:** ACM red (#E31B23), reserved for primary actions, active navigation, important states, and small emphasis.
+- **Supporting states:** emerald for open/confirmed, amber for upcoming, red for live/destructive.
+- **Structure:** 1px borders, rules, lists, definition rows, and editorial columns. Avoid decorative glass, gradients, oversized shadows, and nested containers.
+- **Hierarchy:** the page title starts the story. Avoid eyebrow/kicker badges above primary headings.
+- **Typography:** Manrope is the primary UI/display face; JetBrains Mono is reserved for code, technical values, and measurements.
 
-- **Foundational Neutrals:** Deep charcoal (`#121214`), dark slate borders, clean off-white / white typography.
-- **ACM Accent:** `#E31B23` (Official ACM Red, HSL `358 79% 50%`) used intentionally for primary CTAs, active states, key metrics, and branding accents.
-- **Semantic Accents:**
-  - Emerald (`#10B981`) for active registrations and completed milestones.
-  - Amber (`#F59E0B`) for upcoming timelines and announcements.
-  - Cyan / Blue (`#0077B5`) for external institutional links.
+## Layout
 
----
+Use the 4px/8px spacing rhythm while allowing larger editorial gaps around major sections.
 
-## 2. Spacing Scale
+- Content width: max-w-7xl for site surfaces; 65–75ch for long-form reading.
+- Mobile page padding: 16px at the smallest sizes, increasing to 24px at sm.
+- Desktop page padding: 32px at lg.
+- Desktop layouts may split into an editorial content column and a compact facts/navigation column.
+- Mobile layouts collapse to one column and preserve reading order.
 
-Strict 4px/8px baseline scale:
-- `space-1`: 4px
-- `space-2`: 8px
-- `space-3`: 12px
-- `space-4`: 16px
-- `space-6`: 24px
-- `space-8`: 32px
-- `space-12`: 48px
-- `space-16`: 64px
-- `space-24`: 96px
-- `space-32`: 128px
+## Controls
 
----
+Interactive controls should generally expose at least a 44px touch target on touch devices.
 
-## 3. Border Radii
+- **Primary button:** ACM red, solid, high contrast.
+- **Secondary button:** neutral border/background.
+- **Links:** use color/weight and a simple underline or active rule for emphasis.
+- **Status:** compact rounded badges are acceptable for state only; never use badges as decorative headings.
+- **Icon buttons:** 44px square, consistent icon weight, visible focus ring.
 
-- **Inputs / Form controls:** `8px` (`rounded-md`)
-- **Buttons:** `8px` (`rounded-md`)
-- **Cards / Containers:** `12px – 16px` (`rounded-xl`)
-- **Status Pills / Badges:** `9999px` (`rounded-full`)
+## Surface patterns
 
----
+Prefer one meaningful structure over many similarly styled cards.
 
-## 4. Typography Scale
+- Event archives: ruled lists and simple event rows.
+- Event detail: large editorial header, compact facts, ruled sections, disclosure-based FAQs.
+- Homepage focus areas: linked rows rather than a four-card icon grid.
+- Statistics: simple typographic strip with restrained dividers.
+- Calls to action: one clear primary action per decision point.
 
-- **Display Hero:** `clamp(2.75rem, 6vw, 5rem)` — Bold, tight tracking (`tracking-tight`)
-- **Section Heading:** `clamp(1.75rem, 3.5vw, 3rem)` — Semi-bold to bold
-- **Card Heading:** `1.125rem – 1.5rem` (`text-lg` to `text-xl`)
-- **Body Text:** `0.875rem – 1rem` (`text-sm` to `text-base`), leading relaxed (`leading-relaxed`)
-- **Metadata & Monospace:** `0.75rem – 0.8125rem` (`text-xs`), JetBrains Mono / UI Monospace
+## Accessibility and responsive quality
 
----
-
-## 5. UI Components
-
-- **`Button`:** Accessible semantic buttons with clear hover, active, and focus rings.
-- **`Badge`:** Monospace status indicator for event lifecycle (`Registration Open`, `Completed`, `Archived`).
-- **`Card`:** Border-first design (`border border-border bg-card`) rather than heavy drop shadows.
-- **`Navbar`:** Sticky header with backdrop blur, keyboard navigation, and mobile drawer.
-- **`Footer`:** Structured 4-column institutional layout with campus coordinates.
+Text must remain readable in both themes, focus states must remain visible, and controls must not become cramped or horizontally overflow at narrow widths. Keyboard interaction, reduced motion, selection colors, and form control sizing are part of the shipped design rather than afterthoughts.

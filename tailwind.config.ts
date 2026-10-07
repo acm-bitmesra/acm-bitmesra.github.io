@@ -57,16 +57,16 @@ const config: Config = {
       },
       fontFamily: {
         sans: [
+          "var(--font-manrope)",
           "system-ui",
           "-apple-system",
           "BlinkMacSystemFont",
           '"Segoe UI"',
-          "Roboto",
-          '"Helvetica Neue"',
           "Arial",
           "sans-serif",
         ],
         mono: [
+          "var(--font-mono)",
           "ui-monospace",
           "SFMono-Regular",
           "Menlo",
