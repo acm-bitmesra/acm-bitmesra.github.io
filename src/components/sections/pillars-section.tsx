@@ -32,7 +32,7 @@ export function PillarsSection() {
             return (
               <Link
                 key={pillar.number}
-                href={`/activities/${pillar.slug ?? pillar.number}`}
+                href={pillar.href}
                 className="group border-b border-border py-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:py-7"
               >
                 <div className="flex items-start gap-4">
