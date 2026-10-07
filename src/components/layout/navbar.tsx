@@ -21,7 +21,6 @@ interface NavbarProps {
 export function Navbar({ onOpenSearch }: NavbarProps) {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
-  const isHome = pathname === "/";
 
   React.useEffect(() => {
     document.body.style.overflow = mobileMenuOpen ? "hidden" : "";
