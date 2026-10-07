@@ -2,26 +2,24 @@ import { chapterStats } from "@/data/stats";
 
 export function StatsStrip() {
   return (
-    <section className="border-b border-border/80 bg-secondary/15 py-10 sm:py-12">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-          {chapterStats.map((stat, idx) => (
-            <div
-              key={idx}
-              className="flex flex-col space-y-1.5 lg:border-l lg:first:border-l-0 lg:pl-6 lg:first:pl-0 border-border/60"
-            >
-              <div className="font-mono text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
-                {stat.value}
-              </div>
-              <div className="text-sm sm:text-base font-semibold text-foreground tracking-tight">
-                {stat.label}
-              </div>
-              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                {stat.description}
-              </p>
+    <section className="border-b border-border bg-secondary/10">
+      <div className="mx-auto grid max-w-7xl grid-cols-2 px-4 py-9 sm:px-6 sm:py-10 lg:grid-cols-4 lg:px-8">
+        {chapterStats.map((stat, index) => (
+          <div
+            key={index}
+            className={`py-2 ${index > 0 ? "border-l border-border pl-5 sm:pl-7" : ""} ${index % 2 === 1 ? "max-sm:border-l-0 max-sm:pl-0" : ""}`}
+          >
+            <div className="text-3xl font-semibold tracking-[-0.03em] text-foreground sm:text-4xl">
+              {stat.value}
             </div>
-          ))}
-        </div>
+            <div className="mt-1 text-sm font-semibold text-foreground">
+              {stat.label}
+            </div>
+            <p className="mt-1.5 max-w-[28ch] text-xs leading-5 text-muted-foreground sm:text-sm">
+              {stat.description}
+            </p>
+          </div>
+        ))}
       </div>
     </section>
   );
