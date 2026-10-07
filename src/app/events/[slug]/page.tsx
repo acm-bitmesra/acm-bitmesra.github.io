@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { events } from "@/data/events";
@@ -64,8 +65,8 @@ function Section({
   children,
 }: {
   title: string;
-  icon: React.ReactNode;
-  children: React.ReactNode;
+  icon: ReactNode;
+  children: ReactNode;
 }) {
   return (
     <section className="border-t border-border pt-8 sm:pt-10">
@@ -369,7 +370,7 @@ function EventFacts({
   isCompleted: boolean;
 }) {
   return (
-    <aside className="border-y border-border py-5 sm:py-6 lg:border-y-0 lg:border-l lg:pl-6">
+    <div className="border-y border-border py-5 sm:py-6 lg:border-y-0 lg:border-l lg:pl-6">
       <div className="flex items-center justify-between gap-4">
         <span className="text-xs font-semibold uppercase tracking-[0.08em] text-muted-foreground">
           Event details
@@ -451,6 +452,6 @@ function EventFacts({
           <span aria-hidden="true">→</span>
         </a>
       ) : null}
-    </aside>
+    </div>
   );
 }
