@@ -35,7 +35,7 @@ export function ThemeToggle({ showLabel = false, className = "" }: ThemeTogglePr
     document.documentElement.classList.toggle("dark", nextTheme === "dark");
   };
 
-  const common =
+  const base =
     "inline-flex items-center justify-center gap-2 min-h-11 rounded-md border border-border bg-background px-3 text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
 
   if (!mounted) {
@@ -57,12 +57,12 @@ export function ThemeToggle({ showLabel = false, className = "" }: ThemeTogglePr
       onClick={toggleTheme}
       aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
       title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-      className={`${common} ${showLabel ? "" : "w-11 px-0"} ${className}`}
+      className={`${base} ${showLabel ? "" : "w-11 px-0"} ${className}`}
     >
       {theme === "dark" ? (
-        <Sun className="h-4.5 w-4.5 text-amber-400" />
+        <Sun className="h-4 w-4 text-amber-400" />
       ) : (
-        <Moon className="h-4.5 w-4.5" />
+        <Moon className="h-4 w-4" />
       )}
       {showLabel && (
         <span className="text-sm font-medium">
