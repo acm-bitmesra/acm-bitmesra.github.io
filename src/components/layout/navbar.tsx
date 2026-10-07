@@ -3,10 +3,15 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Menu, X, Search, Mail } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
-import { Menu, X, Search, Mail } from "lucide-react";
-import { GithubIcon, LinkedinIcon, InstagramIcon, AcmLogo } from "@/components/ui/icons";
+import {
+  GithubIcon,
+  LinkedinIcon,
+  InstagramIcon,
+  AcmLogo,
+} from "@/components/ui/icons";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 interface NavbarProps {
@@ -16,88 +21,64 @@ interface NavbarProps {
 export function Navbar({ onOpenSearch }: NavbarProps) {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
-  const [scrolled, setScrolled] = React.useState(false);
+  const isHome = pathname === "/";
 
   React.useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 15);
+    document.body.style.overflow = mobileMenuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
     };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // Lock body scroll when mobile menu is open
-  React.useEffect(() => {
-    if (mobileMenuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
   }, [mobileMenuOpen]);
 
-  // Close mobile menu on Escape key
   React.useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && mobileMenuOpen) {
-        setMobileMenuOpen(false);
-      }
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMobileMenuOpen(false);
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [mobileMenuOpen]);
+  }, []);
 
-  // Close mobile menu on route change
   React.useEffect(() => {
     setMobileMenuOpen(false);
   }, [pathname]);
 
+  const isActive = (href: string) =>
+    pathname === href || (href !== "/" && pathname.startsWith(href));
+
   return (
-    <header
-      className={cn(
-        "sticky top-0 z-40 w-full transition-all duration-200 border-b",
-        scrolled
-          ? "border-border/80 bg-background/95 backdrop-blur-md shadow-xs"
-          : "border-border/40 bg-background/80 backdrop-blur-sm"
-      )}
-    >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8 gap-2 sm:gap-4">
-        {/* Brand / Logo */}
+    <header className="sticky top-0 z-40 w-full border-b border-border bg-background">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         <Link
           href="/"
-          className="flex items-center gap-2.5 sm:gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-lg shrink-0"
-          aria-label="ACM BIT Mesra Homepage"
+          aria-label="ACM BIT Mesra homepage"
+          className="group flex min-w-0 items-center gap-2.5 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
-          <AcmLogo className="h-9 w-9 sm:h-10 sm:w-10 group-hover:scale-105 transition-transform shrink-0" />
-          <div className="flex flex-col justify-center">
-            <span className="text-base sm:text-lg font-bold tracking-tight text-foreground leading-none group-hover:text-primary transition-colors whitespace-nowrap">
+          <AcmLogo className="h-9 w-9 shrink-0 transition-transform group-hover:scale-[1.02]" />
+          <span className="min-w-0">
+            <span className="block truncate text-[15px] font-bold leading-5 tracking-[-0.015em] text-foreground sm:text-base">
               ACM BIT Mesra
             </span>
-            <span className="text-[10px] sm:text-[11px] font-mono uppercase tracking-widest text-muted-foreground leading-none mt-1 whitespace-nowrap">
+            <span className="block text-[9px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
               Student Chapter
             </span>
-          </div>
+          </span>
         </Link>
 
-        {/* Desktop Navigation Links */}
         <nav
-          className="hidden md:flex items-center gap-0.5 lg:gap-1 shrink min-w-0"
-          aria-label="Main Navigation"
+          className="hidden items-center gap-1 lg:flex"
+          aria-label="Main navigation"
         >
           {siteConfig.nav.map((item) => {
-            const isActive =
-              pathname === item.href ||
-              (item.href !== "/" && pathname.startsWith(item.href));
+            const active = isActive(item.href);
             return (
               <Link
                 key={item.href}
                 href={item.href}
+                aria-current={active ? "page" : undefined}
                 className={cn(
-                  "px-2.5 lg:px-3 py-1.5 text-xs lg:text-sm font-medium rounded-md whitespace-nowrap transition-colors select-none",
-                  isActive
-                    ? "text-foreground bg-secondary font-semibold"
-                    : "text-muted-foreground hover:text-foreground hover:bg-secondary/60"
+                  "relative min-h-11 px-3.5 text-sm font-medium text-muted-foreground transition-colors after:absolute after:inset-x-3.5 after:bottom-1 after:h-px after:origin-left after:scale-x-0 after:bg-primary after:transition-transform hover:text-foreground hover:after:scale-x-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                  active && "font-semibold text-foreground after:scale-x-100"
                 )}
-                aria-current={isActive ? "page" : undefined}
               >
                 {item.title}
               </Link>
@@ -105,131 +86,58 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
           })}
         </nav>
 
-        {/* Right CTA + Search + Utility Actions */}
-        <div className="hidden md:flex items-center gap-2 lg:gap-2.5 shrink-0">
-          {/* Search Trigger: Desktop with input style and shortcut */}
-          <button
-            type="button"
-            onClick={onOpenSearch}
-            className="hidden lg:flex items-center justify-between w-36 xl:w-44 h-9 px-2.5 rounded-lg border border-border/80 bg-secondary/30 text-xs font-mono text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring shrink-0"
-            title="Search site (Cmd+K)"
-            aria-label="Search site"
-          >
-            <span className="flex items-center gap-2 truncate">
-              <Search className="h-3.5 w-3.5 shrink-0" />
-              <span className="truncate">Search...</span>
-            </span>
-            <kbd className="pointer-events-none inline-flex h-5 select-none items-center gap-0.5 rounded border border-border bg-muted/80 px-1.5 font-mono text-[10px] font-medium text-muted-foreground shrink-0">
-              ⌘K
-            </kbd>
-          </button>
-
-          {/* Search Trigger: Tablet icon button (768px to 1023px) */}
-          <button
-            type="button"
-            onClick={onOpenSearch}
-            className="flex lg:hidden items-center justify-center h-9 w-9 rounded-lg border border-border/80 bg-secondary/30 text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring shrink-0"
-            title="Search site (Cmd+K)"
-            aria-label="Search site"
-          >
-            <Search className="h-4 w-4" />
-          </button>
-
-          {/* External Socials (Visible on Large Desktop ≥ 1280px) */}
-          <div className="hidden xl:flex items-center border-l border-border/70 pl-2 gap-0.5 text-muted-foreground shrink-0">
-            <a
-              href={siteConfig.social.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="ACM BIT Mesra on GitHub (opens in new tab)"
-              title="GitHub Organization"
-              className="inline-flex items-center justify-center h-9 w-9 rounded-lg hover:text-foreground hover:bg-secondary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 active:scale-95"
-            >
-              <GithubIcon className="h-4 w-4" />
-              <span className="sr-only">GitHub Organization</span>
-            </a>
-            <a
-              href={siteConfig.social.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="ACM BIT Mesra on LinkedIn (opens in new tab)"
-              title="LinkedIn Profile"
-              className="inline-flex items-center justify-center h-9 w-9 rounded-lg hover:text-foreground hover:bg-secondary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 active:scale-95"
-            >
-              <LinkedinIcon className="h-4 w-4" />
-              <span className="sr-only">LinkedIn Profile</span>
-            </a>
-            <a
-              href={siteConfig.social.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="ACM BIT Mesra on Instagram (opens in new tab)"
-              title="Instagram Profile"
-              className="inline-flex items-center justify-center h-9 w-9 rounded-lg hover:text-foreground hover:bg-secondary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 active:scale-95"
-            >
-              <InstagramIcon className="h-4 w-4" />
-              <span className="sr-only">Instagram Profile</span>
-            </a>
-          </div>
-
-          {/* Theme Toggle */}
-          <ThemeToggle />
-
-          {/* Primary Action Button (Whitespace nowrap strictly enforced) */}
-          <Link
-            href="/join"
-            className="inline-flex h-9 items-center justify-center rounded-lg bg-primary px-3.5 text-xs sm:text-sm font-semibold text-primary-foreground shadow-xs transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring whitespace-nowrap shrink-0"
-          >
-            Join ACM
-          </Link>
-        </div>
-
-        {/* Mobile Hamburger & Quick Search Button (< 768px) */}
-        <div className="flex md:hidden items-center gap-1 shrink-0">
+        <div className="ml-auto flex items-center gap-1.5">
           <button
             type="button"
             onClick={onOpenSearch}
             aria-label="Search site"
-            className="flex items-center justify-center h-10 w-10 rounded-lg text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            title="Search site (⌘K)"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             <Search className="h-5 w-5" />
           </button>
+
+          <div className="hidden sm:block">
+            <ThemeToggle />
+          </div>
+
+          <Link
+            href="/join"
+            className="hidden min-h-11 items-center justify-center rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:inline-flex"
+          >
+            Join ACM
+          </Link>
+
           <button
             type="button"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            onClick={() => setMobileMenuOpen((open) => !open)}
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileMenuOpen}
-            className="flex items-center justify-center h-10 w-10 rounded-lg text-foreground hover:bg-secondary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-md text-foreground transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring lg:hidden"
           >
-            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {mobileMenuOpen ? (
+              <X className="h-5 w-5" />
+            ) : (
+              <Menu className="h-5 w-5" />
+            )}
           </button>
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div
-          role="dialog"
-          aria-label="Mobile Navigation Menu"
-          aria-modal="true"
-          className="md:hidden border-b border-border bg-background/98 backdrop-blur-xl px-4 pt-3 pb-6 space-y-4"
-        >
-          <nav className="flex flex-col space-y-1">
+        <div className="border-t border-border bg-background lg:hidden">
+          <nav className="mx-auto max-w-7xl px-4 sm:px-6" aria-label="Mobile navigation">
             {siteConfig.nav.map((item) => {
-              const isActive =
-                pathname === item.href ||
-                (item.href !== "/" && pathname.startsWith(item.href));
+              const active = isActive(item.href);
               return (
                 <Link
                   key={item.href}
                   href={item.href}
+                  aria-current={active ? "page" : undefined}
                   className={cn(
-                    "flex items-center min-h-[44px] px-3.5 py-2.5 text-base font-medium rounded-lg transition-colors whitespace-nowrap",
-                    isActive
-                      ? "text-primary bg-primary/10 font-semibold"
-                      : "text-muted-foreground hover:text-foreground hover:bg-secondary"
+                    "flex min-h-12 items-center border-b border-border text-base font-medium text-muted-foreground transition-colors hover:text-foreground",
+                    active && "font-semibold text-primary"
                   )}
-                  aria-current={isActive ? "page" : undefined}
                 >
                   {item.title}
                 </Link>
@@ -237,59 +145,55 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
             })}
           </nav>
 
-          <div className="pt-3 border-t border-border flex flex-col gap-3">
-            <div className="flex items-center justify-between px-1">
-              <span className="text-xs font-mono text-muted-foreground uppercase tracking-wider">
+          <div className="mx-auto max-w-7xl px-4 pb-6 pt-4 sm:px-6">
+            <div className="flex items-center justify-between gap-4 border-b border-border pb-4">
+              <span className="text-sm font-medium text-muted-foreground">
                 Appearance
               </span>
-              <ThemeToggle showLabel={true} />
+              <ThemeToggle showLabel />
             </div>
 
             <Link
               href="/join"
-              className="w-full inline-flex h-11 items-center justify-center rounded-lg bg-primary text-sm font-semibold text-primary-foreground shadow hover:bg-primary/90 transition-colors whitespace-nowrap"
+              className="mt-4 inline-flex min-h-11 w-full items-center justify-center rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
             >
-              Join ACM Chapter
+              Join ACM
             </Link>
 
-            <div className="grid grid-cols-2 gap-2 pt-3 border-t border-border/50 text-muted-foreground">
+            <div className="mt-5 flex items-center gap-4 text-muted-foreground">
               <a
                 href={siteConfig.social.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="ACM BIT Mesra on GitHub (opens in new tab)"
-                className="inline-flex items-center justify-center gap-2 h-10 px-3 rounded-lg border border-border/70 bg-secondary/30 text-xs font-mono text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-95"
+                aria-label="ACM BIT Mesra on GitHub"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-md hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
-                <GithubIcon className="h-4 w-4 shrink-0" />
-                <span>GitHub</span>
+                <GithubIcon className="h-4 w-4" />
               </a>
               <a
                 href={siteConfig.social.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="ACM BIT Mesra on LinkedIn (opens in new tab)"
-                className="inline-flex items-center justify-center gap-2 h-10 px-3 rounded-lg border border-border/70 bg-secondary/30 text-xs font-mono text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-95"
+                aria-label="ACM BIT Mesra on LinkedIn"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-md hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
-                <LinkedinIcon className="h-4 w-4 shrink-0" />
-                <span>LinkedIn</span>
+                <LinkedinIcon className="h-4 w-4" />
               </a>
               <a
                 href={siteConfig.social.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="ACM BIT Mesra on Instagram (opens in new tab)"
-                className="inline-flex items-center justify-center gap-2 h-10 px-3 rounded-lg border border-border/70 bg-secondary/30 text-xs font-mono text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-95"
+                aria-label="ACM BIT Mesra on Instagram"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-md hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
-                <InstagramIcon className="h-4 w-4 shrink-0" />
-                <span>Instagram</span>
+                <InstagramIcon className="h-4 w-4" />
               </a>
               <a
                 href={`mailto:${siteConfig.social.email}`}
-                aria-label={`Send email to ${siteConfig.social.email}`}
-                className="inline-flex items-center justify-center gap-2 h-10 px-3 rounded-lg border border-border/70 bg-secondary/30 text-xs font-mono text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring active:scale-95"
+                aria-label={`Email ${siteConfig.social.email}`}
+                className="inline-flex h-11 w-11 items-center justify-center rounded-md hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
-                <Mail className="h-4 w-4 shrink-0" />
-                <span>Email</span>
+                <Mail className="h-4 w-4" />
               </a>
             </div>
           </div>
