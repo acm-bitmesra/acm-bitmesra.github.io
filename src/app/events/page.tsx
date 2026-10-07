@@ -10,23 +10,20 @@ export const metadata: Metadata = {
 
 export default function EventsPage() {
   return (
-    <div className="py-10 sm:py-16">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 space-y-8">
-        {/* Document Header */}
-        <div className="space-y-2 border-b border-border/60 pb-6">
-          <div className="text-xs font-mono text-muted-foreground">
-            Archive / Events & Contests
-          </div>
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
-            Events & Contests
+    <div className="py-8 sm:py-12 lg:py-16">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <header className="max-w-3xl border-b border-border pb-7 sm:pb-9">
+          <h1 className="text-4xl font-semibold tracking-[-0.035em] text-foreground sm:text-5xl">
+            Events & contests
           </h1>
-          <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">
-            Official record of student hackathons, CodeZilla tournaments, monthly CQM rounds, and developer workshops at BIT Mesra.
+          <p className="mt-4 max-w-[68ch] text-base leading-7 text-muted-foreground sm:text-lg">
+            A living archive of hackathons, coding contests, workshops, and developer activities hosted by ACM BIT Mesra.
           </p>
-        </div>
+        </header>
 
-        {/* Events Explorer */}
-        <EventsExplorer initialEvents={events} />
+        <div className="mt-8 sm:mt-10">
+          <EventsExplorer initialEvents={events} />
+        </div>
       </div>
     </div>
   );
