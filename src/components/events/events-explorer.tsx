@@ -3,7 +3,7 @@
 import * as React from "react";
 import { Event } from "@/types";
 import { EventCard } from "./event-card";
-import { Search, SlidersHorizontal } from "lucide-react";
+import { Search, SlidersHorizontal, X } from "lucide-react";
 
 interface EventsExplorerProps {
   initialEvents: Event[];
@@ -24,156 +24,184 @@ type SortOption = "newest" | "oldest" | "upcoming";
 export function EventsExplorer({ initialEvents }: EventsExplorerProps) {
   const [selectedCategory, setSelectedCategory] = React.useState<string>("All");
   const [statusFilter, setStatusFilter] = React.useState<string>("all");
-  const [searchQuery, setSearchQuery] = React.useState<string>("");
+  const [searchQuery, setSearchQuery] = React.useState("");
   const [sortBy, setSortBy] = React.useState<SortOption>("newest");
 
   const filteredEvents = React.useMemo(() => {
     let result = [...initialEvents];
 
-    // Filter by search query
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase().trim();
       result = result.filter(
-        (e) =>
-          e.title.toLowerCase().includes(q) ||
-          e.shortDescription.toLowerCase().includes(q) ||
-          e.tags?.some((t) => t.toLowerCase().includes(q))
+        (event) =>
+          event.title.toLowerCase().includes(q) ||
+          event.shortDescription.toLowerCase().includes(q) ||
+          event.tags?.some((tag) => tag.toLowerCase().includes(q))
       );
     }
 
-    // Filter by Category
     if (selectedCategory !== "All") {
       result = result.filter(
-        (e) =>
-          e.category === selectedCategory ||
+        (event) =>
+          event.category === selectedCategory ||
           (selectedCategory === "Open Source" &&
-            e.category.toLowerCase().includes("open source"))
+            event.category.toLowerCase().includes("open source"))
       );
     }
 
-    // Filter by Status
     if (statusFilter !== "all") {
-      result = result.filter((e) => e.status === statusFilter);
+      result = result.filter((event) => event.status === statusFilter);
     }
 
-    // Sort
     result.sort((a, b) => {
+      const aTime = new Date(a.date).getTime();
+      const bTime = new Date(b.date).getTime();
+
+      if (sortBy === "oldest") return aTime - bTime;
+
       if (sortBy === "upcoming") {
         if (a.status === "upcoming" && b.status !== "upcoming") return -1;
         if (b.status === "upcoming" && a.status !== "upcoming") return 1;
-        return new Date(b.date).getTime() - new Date(a.date).getTime();
       }
-      if (sortBy === "oldest") {
-        return new Date(a.date).getTime() - new Date(b.date).getTime();
-      }
-      // default: newest
-      return new Date(b.date).getTime() - new Date(a.date).getTime();
+
+      return bTime - aTime;
     });
 
     return result;
   }, [initialEvents, searchQuery, selectedCategory, statusFilter, sortBy]);
 
-  return (
-    <div className="space-y-8">
-      {/* Search and Sort Toolbar */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 p-4 sm:p-5 rounded-xl border border-border bg-card">
-        {/* Search Input */}
-        <div className="relative flex-1">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <input
-            type="text"
-            placeholder="Search events by title, topics, keywords..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full h-11 rounded-lg border border-border bg-background pl-10 pr-4 text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow"
-          />
-        </div>
+  const hasFilters =
+    Boolean(searchQuery.trim()) ||
+    selectedCategory !== "All" ||
+    statusFilter !== "all" ||
+    sortBy !== "newest";
 
-        {/* Sort Selector */}
-        <div className="flex items-center gap-2">
-          <SlidersHorizontal className="h-4 w-4 text-muted-foreground" />
-          <select
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value as SortOption)}
-            className="h-11 rounded-lg border border-border bg-background px-3 text-xs sm:text-sm font-mono text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-          >
-            <option value="newest">Sort: Newest First</option>
-            <option value="oldest">Sort: Oldest First</option>
-            <option value="upcoming">Sort: Upcoming First</option>
-          </select>
+  const reset = () => {
+    setSelectedCategory("All");
+    setStatusFilter("all");
+    setSearchQuery("");
+    setSortBy("newest");
+  };
+
+  return (
+    <div className="space-y-7 sm:space-y-9">
+      <div className="border-y border-border py-4 sm:py-5">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+          <label className="relative block min-w-0 flex-1">
+            <span className="sr-only">Search events</span>
+            <Search className="pointer-events-none absolute left-0 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
+            <input
+              type="search"
+              placeholder="Search events, topics, or keywords"
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.target.value)}
+              className="h-11 w-full border-0 bg-transparent pl-8 pr-2 text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-0 sm:max-w-2xl"
+            />
+          </label>
+
+          <div className="flex items-center gap-2">
+            <SlidersHorizontal className="h-4 w-4 text-muted-foreground" />
+            <label className="sr-only" htmlFor="event-sort">
+              Sort events
+            </label>
+            <select
+              id="event-sort"
+              value={sortBy}
+              onChange={(event) => setSortBy(event.target.value as SortOption)}
+              className="h-11 min-w-0 bg-transparent pr-8 text-sm font-medium text-foreground focus:outline-none focus:ring-0"
+            >
+              <option value="newest">Newest first</option>
+              <option value="oldest">Oldest first</option>
+              <option value="upcoming">Upcoming first</option>
+            </select>
+          </div>
         </div>
       </div>
 
-      {/* Category Pills & Status Tabs */}
       <div className="space-y-4">
-        {/* Category Pills */}
-        <div className="flex flex-wrap items-center gap-2">
-          {CATEGORIES.map((cat) => (
+        <div
+          className="-mx-1 flex gap-1 overflow-x-auto px-1 pb-1 scrollbar-none"
+          aria-label="Event categories"
+        >
+          {CATEGORIES.map((category) => (
             <button
-              key={cat}
+              key={category}
               type="button"
-              onClick={() => setSelectedCategory(cat)}
-              className={`px-3.5 py-1.5 min-h-[36px] rounded-lg text-xs sm:text-sm font-mono transition-colors ${
-                selectedCategory === cat
-                  ? "bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900 font-semibold shadow-xs"
-                  : "border border-border/80 bg-card text-muted-foreground hover:bg-secondary hover:text-foreground"
-              }`}
+              onClick={() => setSelectedCategory(category)}
+              aria-pressed={selectedCategory === category}
+              className={
+                selectedCategory === category
+                  ? "min-h-11 shrink-0 border-b-2 border-primary px-3 text-sm font-semibold text-foreground"
+                  : "min-h-11 shrink-0 border-b-2 border-transparent px-3 text-sm text-muted-foreground transition-colors hover:text-foreground"
+              }
             >
-              {cat}
+              {category}
             </button>
           ))}
         </div>
 
-        {/* Status Filter Sub-bar */}
-        <div className="flex flex-wrap items-center justify-between gap-y-2 gap-x-3 text-xs sm:text-sm font-mono text-muted-foreground pt-1 border-b border-border/60 pb-3">
-          <div className="flex flex-wrap items-center gap-3">
-            <span className="font-semibold text-foreground">Status:</span>
-            {["all", "upcoming", "completed"].map((st) => (
+        <div className="flex flex-col gap-2 border-b border-border pb-3 text-sm sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-1 overflow-x-auto" aria-label="Event status">
+            {[
+              ["all", "All"],
+              ["upcoming", "Upcoming"],
+              ["live", "Live"],
+              ["completed", "Completed"],
+            ].map(([value, label]) => (
               <button
-                key={st}
+                key={value}
                 type="button"
-                onClick={() => setStatusFilter(st)}
-                className={`capitalize transition-colors px-1 py-0.5 ${
-                  statusFilter === st
-                    ? "text-primary font-bold underline underline-offset-4"
-                    : "hover:text-foreground"
-                }`}
+                onClick={() => setStatusFilter(value)}
+                aria-pressed={statusFilter === value}
+                className={
+                  statusFilter === value
+                    ? "min-h-10 rounded-md bg-secondary px-3 font-semibold text-foreground"
+                    : "min-h-10 rounded-md px-3 text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+                }
               >
-                {st === "all" ? "All Statuses" : st}
+                {label}
               </button>
             ))}
           </div>
-          <span>
-            Showing <span className="font-semibold text-foreground">{filteredEvents.length}</span> event{filteredEvents.length === 1 ? "" : "s"}
-          </span>
+
+          <div className="flex items-center gap-3 text-xs text-muted-foreground">
+            <span>
+              {filteredEvents.length} event{filteredEvents.length === 1 ? "" : "s"}
+            </span>
+            {hasFilters && (
+              <button
+                type="button"
+                onClick={reset}
+                className="inline-flex min-h-10 items-center gap-1.5 font-medium text-foreground hover:text-primary"
+              >
+                <X className="h-3.5 w-3.5" />
+                Clear
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
-      {/* Event Cards Grid */}
       {filteredEvents.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-x-8 md:grid-cols-2 lg:grid-cols-3">
           {filteredEvents.map((event) => (
             <EventCard key={event.slug} event={event} />
           ))}
         </div>
       ) : (
-        <div className="rounded-xl border border-dashed border-border p-12 text-center space-y-4">
-          <p className="font-mono text-base text-foreground font-semibold">
-            No events match your current filter parameters.
+        <div className="border-y border-dashed border-border py-14 text-center">
+          <p className="text-base font-semibold text-foreground">
+            No events found
           </p>
-          <p className="text-sm text-muted-foreground max-w-md mx-auto">
-            Try resetting your search query or selecting &quot;All&quot; categories.
+          <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-muted-foreground">
+            Try another search or clear the current filters.
           </p>
           <button
             type="button"
-            onClick={() => {
-              setSelectedCategory("All");
-              setStatusFilter("all");
-              setSearchQuery("");
-            }}
-            className="inline-flex h-9 items-center rounded-lg border border-border px-4 text-xs sm:text-sm font-mono font-medium hover:bg-secondary transition-colors"
+            onClick={reset}
+            className="mt-5 min-h-11 rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground"
           >
-            Reset Filters
+            Clear filters
           </button>
         </div>
       )}
