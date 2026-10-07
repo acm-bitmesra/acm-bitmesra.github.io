@@ -7,7 +7,11 @@ export function StatsStrip() {
         {chapterStats.map((stat, index) => (
           <div
             key={index}
-            className={`py-2 ${index > 0 ? "border-l border-border pl-5 sm:pl-7" : ""} ${index % 2 === 1 ? "max-sm:border-l-0 max-sm:pl-0" : ""}`}
+            className={[
+              "py-2",
+              index % 2 === 1 ? "border-l border-border pl-5 sm:pl-7" : "",
+              index > 0 ? "lg:border-l lg:border-border lg:pl-7" : "",
+            ].join(" ")}
           >
             <div className="text-3xl font-semibold tracking-[-0.03em] text-foreground sm:text-4xl">
               {stat.value}
