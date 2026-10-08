@@ -15,6 +15,7 @@ import {
   Layers,
   Code,
   CircleCheck as CheckCircle2,
+  X,
 } from "@animateicons/react/lucide";
 import { GithubIcon } from "@/components/ui/icons";
 
@@ -62,6 +63,19 @@ export function ResourcesExplorer({ initialResources }: ResourcesExplorerProps) 
   const [selectedLevel, setSelectedLevel] = React.useState<string>("All Levels");
   const [searchQuery, setSearchQuery] = React.useState<string>("");
   const [onlyFeatured, setOnlyFeatured] = React.useState<boolean>(false);
+  const searchInputRef = React.useRef<HTMLInputElement>(null);
+
+  // Keyboard shortcut: '/' to focus search
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "/" && document.activeElement !== searchInputRef.current) {
+        e.preventDefault();
+        searchInputRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   const filteredResources = React.useMemo(() => {
     let result = [...initialResources];
@@ -100,18 +114,31 @@ export function ResourcesExplorer({ initialResources }: ResourcesExplorerProps) 
     return result;
   }, [initialResources, searchQuery, selectedCategory, selectedLevel, onlyFeatured]);
 
-  // Featured flagship items for quick highlights
+  // Featured flagship items for hero banner
   const featuredHighlights = React.useMemo(() => {
     return initialResources.filter((r) => r.featured);
   }, [initialResources]);
 
+  const hasActiveFilters =
+    selectedCategory !== "All" ||
+    selectedLevel !== "All Levels" ||
+    searchQuery.trim().length > 0 ||
+    onlyFeatured;
+
+  const resetAllFilters = () => {
+    setSelectedCategory("All");
+    setSelectedLevel("All Levels");
+    setSearchQuery("");
+    setOnlyFeatured(false);
+  };
+
   return (
-    <div className="space-y-10">
+    <div className="space-y-12">
       {/* Featured Masterclasses Banner / Curated Hero Grid */}
-      <section className="space-y-4">
+      <section className="space-y-5">
         <div className="flex items-center justify-between border-b border-border/60 pb-3">
-          <div className="flex items-center gap-2">
-            <Sparkles className="h-4 w-4 text-foreground" />
+          <div className="flex items-center gap-2.5">
+            <Sparkles className="h-4 w-4 text-amber-400" />
             <h2 className="text-sm font-mono font-semibold uppercase tracking-wider text-foreground">
               Core Engineering Masterclasses & Benchmark Curricula
             </h2>
@@ -121,40 +148,44 @@ export function ResourcesExplorer({ initialResources }: ResourcesExplorerProps) 
           </span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {featuredHighlights.slice(0, 3).map((feat, idx) => (
             <a
               key={idx}
               href={feat.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-xl border border-border/80 bg-card p-5 sm:p-6 flex flex-col justify-between hover:border-foreground/30 hover:bg-secondary/20 transition-all group"
+              className="card-hover rounded-2xl border border-border/80 bg-card/85 p-6 flex flex-col justify-between hover:border-foreground/30 hover:bg-card transition-all duration-300 group shadow-sm"
             >
-              <div className="space-y-3">
+              <div className="space-y-3.5">
+                {/* Meta Header */}
                 <div className="flex items-center justify-between gap-2">
-                  <span className="font-mono text-xs font-medium uppercase tracking-wider px-2 py-0.5 rounded-md bg-secondary text-foreground border border-border/70">
+                  <span className="font-mono text-xs font-medium uppercase tracking-wider px-2.5 py-0.5 rounded-md bg-secondary text-foreground border border-border/70">
                     {feat.category}
                   </span>
-                  <span className="font-mono text-xs text-muted-foreground flex items-center gap-1">
-                    <Sparkles className="h-3 w-3 text-acm-red" />
+                  <span className="font-mono text-xs text-amber-400 flex items-center gap-1 bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/20 font-medium">
+                    <Sparkles className="h-3 w-3" />
                     Featured
                   </span>
                 </div>
 
+                {/* Title */}
                 <h3 className="text-lg sm:text-xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors">
                   {feat.title}
                 </h3>
 
+                {/* Description */}
                 <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
                   {feat.description}
                 </p>
 
+                {/* Tags */}
                 {feat.tags && feat.tags.length > 0 && (
                   <div className="flex flex-wrap gap-1.5 pt-1">
                     {feat.tags.slice(0, 3).map((tag, tIdx) => (
                       <span
                         key={tIdx}
-                        className="text-xs font-mono px-2 py-0.5 rounded bg-secondary/70 text-muted-foreground"
+                        className="text-xs font-mono px-2 py-0.5 rounded bg-secondary/80 text-muted-foreground border border-border/60"
                       >
                         {tag}
                       </span>
@@ -163,10 +194,14 @@ export function ResourcesExplorer({ initialResources }: ResourcesExplorerProps) 
                 )}
               </div>
 
-              <div className="pt-4 mt-6 border-t border-border/60 flex items-center justify-between text-xs font-mono text-muted-foreground">
-                <span className="truncate max-w-[170px]">{feat.author || "Curated"}</span>
-                <span className="inline-flex items-center gap-1.5 font-medium text-foreground group-hover:text-primary transition-colors">
-                  Open Guide <ExternalLink className="h-3.5 w-3.5" />
+              {/* Robust, Un-cramped Card Footer */}
+              <div className="pt-4 mt-6 border-t border-border/60 flex items-center justify-between gap-3 text-xs font-mono">
+                <span className="truncate min-w-0 flex-1 text-muted-foreground font-medium" title={feat.author}>
+                  {feat.author || "Curated"}
+                </span>
+                <span className="btn-press whitespace-nowrap shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-secondary/80 text-foreground text-xs font-medium group-hover:bg-foreground group-hover:text-background transition-colors">
+                  <span>Open Guide</span>
+                  <ExternalLink className="h-3.5 w-3.5" />
                 </span>
               </div>
             </a>
@@ -175,99 +210,110 @@ export function ResourcesExplorer({ initialResources }: ResourcesExplorerProps) 
       </section>
 
       {/* Explorer Controls: Search + Filters */}
-      <div className="space-y-5 rounded-xl border border-border/80 bg-secondary/20 p-5 sm:p-6">
+      <div className="space-y-6 rounded-2xl border border-border/80 bg-secondary/20 p-6 sm:p-7 backdrop-blur-xs">
         {/* Search Input */}
         <div className="relative">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
           <input
+            ref={searchInputRef}
             type="text"
             placeholder="Search roadmaps, algorithms, authors (e.g. roadmap.sh, AlgoForge, Striver, OSTEP)..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full h-12 rounded-lg border border-border bg-card pl-10 pr-4 text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow"
+            className="w-full h-12 rounded-xl border border-border bg-card/90 pl-10 pr-20 text-sm sm:text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-shadow"
           />
-          {searchQuery && (
-            <button
-              type="button"
-              onClick={() => setSearchQuery("")}
-              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-mono text-muted-foreground hover:text-foreground"
-            >
-              Clear
-            </button>
-          )}
+          <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
+            {searchQuery ? (
+              <button
+                type="button"
+                onClick={() => setSearchQuery("")}
+                className="btn-press p-1 text-muted-foreground hover:text-foreground rounded transition-colors"
+                title="Clear search"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            ) : (
+              <span className="hidden sm:inline-block text-[11px] font-mono text-muted-foreground/70 border border-border/80 bg-secondary/50 px-1.5 py-0.5 rounded">
+                /
+              </span>
+            )}
+          </div>
         </div>
 
         {/* Category Tabs */}
-        <div className="space-y-2">
+        <div className="space-y-2.5">
           <div className="flex items-center justify-between text-xs font-mono text-muted-foreground">
             <span>Filter by Domain / Track:</span>
-            <span className="hidden sm:inline">Keyboard friendly</span>
+            <span className="hidden sm:inline">Interactive filters</span>
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            {CATEGORIES.map((cat) => (
-              <button
-                key={cat}
-                type="button"
-                onClick={() => setSelectedCategory(cat)}
-                className={`px-3.5 py-1.5 min-h-[36px] rounded-lg text-xs sm:text-sm font-mono transition-colors ${
-                  selectedCategory === cat
-                    ? "bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900 font-semibold shadow-xs"
-                    : "border border-border/80 bg-card text-muted-foreground hover:bg-secondary hover:text-foreground"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
+            {CATEGORIES.map((cat) => {
+              const isSelected = selectedCategory === cat;
+              return (
+                <button
+                  key={cat}
+                  type="button"
+                  onClick={() => setSelectedCategory(cat)}
+                  className={`btn-press px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-mono transition-all ${
+                    isSelected
+                      ? "bg-foreground text-background font-semibold shadow-xs"
+                      : "border border-border/70 bg-card/80 text-muted-foreground hover:bg-secondary hover:text-foreground"
+                  }`}
+                >
+                  {cat}
+                </button>
+              );
+            })}
           </div>
         </div>
 
         {/* Level and Feature Filter Row */}
-        <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-border/60">
+        <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-border/60">
           <div className="flex flex-wrap items-center gap-2">
             <span className="text-xs font-mono text-muted-foreground mr-1 flex items-center gap-1">
-              <SlidersHorizontal className="h-3 w-3" />
+              <SlidersHorizontal className="h-3.5 w-3.5" />
               Difficulty:
             </span>
-            {LEVELS.map((lvl) => (
-              <button
-                key={lvl}
-                type="button"
-                onClick={() => setSelectedLevel(lvl)}
-                className={`px-2.5 py-1 text-xs font-mono rounded-md transition-colors ${
-                  selectedLevel === lvl
-                    ? "bg-primary text-primary-foreground font-medium"
-                    : "border border-border/60 bg-card/60 text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                {lvl}
-              </button>
-            ))}
+            {LEVELS.map((lvl) => {
+              const isSelected = selectedLevel === lvl;
+              return (
+                <button
+                  key={lvl}
+                  type="button"
+                  onClick={() => setSelectedLevel(lvl)}
+                  className={`btn-press px-3 py-1 text-xs font-mono rounded-lg transition-all ${
+                    isSelected
+                      ? "bg-foreground text-background font-semibold shadow-xs"
+                      : "border border-border/60 bg-card/60 text-muted-foreground hover:bg-secondary hover:text-foreground"
+                  }`}
+                >
+                  {lvl}
+                </button>
+              );
+            })}
           </div>
 
-          <div className="flex items-center gap-4 text-xs font-mono">
-            <label className="flex items-center gap-2 cursor-pointer select-none text-muted-foreground hover:text-foreground">
-              <input
-                type="checkbox"
-                checked={onlyFeatured}
-                onChange={(e) => setOnlyFeatured(e.target.checked)}
-                className="h-3.5 w-3.5 rounded border-border"
-              />
+          <div className="flex items-center gap-3 text-xs font-mono">
+            {/* Featured Only Pill Button */}
+            <button
+              type="button"
+              onClick={() => setOnlyFeatured(!onlyFeatured)}
+              className={`btn-press inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all border ${
+                onlyFeatured
+                  ? "bg-amber-400/15 border-amber-400/40 text-amber-300 font-semibold"
+                  : "border-border/70 bg-card/60 text-muted-foreground hover:bg-secondary hover:text-foreground"
+              }`}
+            >
+              <Sparkles className="h-3 w-3" />
               <span>Featured Only</span>
-            </label>
+            </button>
 
-            {(selectedCategory !== "All" ||
-              selectedLevel !== "All Levels" ||
-              searchQuery ||
-              onlyFeatured) && (
+            {/* Reset All Filters Button */}
+            {hasActiveFilters && (
               <button
                 type="button"
-                onClick={() => {
-                  setSelectedCategory("All");
-                  setSelectedLevel("All Levels");
-                  setSearchQuery("");
-                  setOnlyFeatured(false);
-                }}
-                className="text-muted-foreground hover:underline text-xs font-mono"
+                onClick={resetAllFilters}
+                className="btn-press text-xs font-mono text-muted-foreground hover:text-foreground hover:underline transition-colors px-2 py-1"
               >
                 Reset All
               </button>
@@ -283,13 +329,14 @@ export function ResourcesExplorer({ initialResources }: ResourcesExplorerProps) 
           vetted resource{filteredResources.length === 1 ? "" : "s"}
           {selectedCategory !== "All" && ` in ${selectedCategory}`}
           {selectedLevel !== "All Levels" && ` (${selectedLevel})`}
+          {onlyFeatured && " (Featured only)"}
         </span>
 
         {selectedCategory !== "All" && (
           <button
             type="button"
             onClick={() => setSelectedCategory("All")}
-            className="hover:underline transition-colors hidden sm:inline"
+            className="hover:text-foreground hover:underline transition-colors hidden sm:inline"
           >
             Show All Tracks
           </button>
@@ -298,7 +345,7 @@ export function ResourcesExplorer({ initialResources }: ResourcesExplorerProps) 
 
       {/* Resource Cards Grid */}
       {filteredResources.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredResources.map((res, idx) => {
             const TypeIcon = typeIcons[res.type] || FileText;
             const typeLabel = typeLabels[res.type] || res.type;
@@ -306,15 +353,15 @@ export function ResourcesExplorer({ initialResources }: ResourcesExplorerProps) 
             return (
               <div
                 key={idx}
-                className="rounded-xl border border-border/80 bg-card p-5 sm:p-6 flex flex-col justify-between hover:border-foreground/30 hover:bg-secondary/15 transition-all group"
+                className="card-hover rounded-2xl border border-border/80 bg-card/85 p-6 flex flex-col justify-between hover:border-foreground/30 hover:bg-card transition-all duration-300 group shadow-sm"
               >
                 <div className="space-y-4">
                   {/* Top Badges */}
                   <div className="flex items-center justify-between gap-2">
-                    <span className="font-mono text-xs text-muted-foreground uppercase px-2 py-0.5 rounded-md bg-secondary border border-border/60">
+                    <span className="font-mono text-xs text-foreground/80 uppercase px-2.5 py-0.5 rounded-md bg-secondary border border-border/70">
                       {res.category}
                     </span>
-                    <span className="flex items-center gap-1 font-mono text-xs text-muted-foreground">
+                    <span className="flex items-center gap-1.5 font-mono text-xs text-muted-foreground">
                       <TypeIcon className="h-3.5 w-3.5" />
                       {typeLabel}
                     </span>
@@ -326,20 +373,20 @@ export function ResourcesExplorer({ initialResources }: ResourcesExplorerProps) 
                       href={res.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="hover:underline inline-flex items-baseline gap-1"
+                      className="hover:underline inline-flex items-baseline gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                     >
                       <span>{res.title}</span>
                     </a>
                   </h3>
 
                   {/* Description */}
-                  <p className="text-sm text-muted-foreground leading-relaxed">
+                  <p className="text-sm text-muted-foreground leading-relaxed line-clamp-3">
                     {res.description}
                   </p>
 
                   {/* Highlights Bullet List (if available) */}
                   {res.highlights && res.highlights.length > 0 && (
-                    <ul className="space-y-1 pt-1 border-t border-border/50 text-xs text-muted-foreground">
+                    <ul className="space-y-1.5 pt-2 border-t border-border/50 text-xs text-muted-foreground">
                       {res.highlights.map((h, hIdx) => (
                         <li key={hIdx} className="flex items-start gap-1.5">
                           <CheckCircle2 className="h-3.5 w-3.5 text-muted-foreground/70 shrink-0 mt-0.5" />
@@ -355,7 +402,7 @@ export function ResourcesExplorer({ initialResources }: ResourcesExplorerProps) 
                       {res.tags.map((tag, tIdx) => (
                         <span
                           key={tIdx}
-                          className="text-[11px] font-mono px-2 py-0.5 rounded bg-secondary/80 text-foreground/80"
+                          className="text-[11px] font-mono px-2 py-0.5 rounded bg-secondary/80 text-foreground/80 border border-border/60"
                         >
                           {tag}
                         </span>
@@ -365,13 +412,13 @@ export function ResourcesExplorer({ initialResources }: ResourcesExplorerProps) 
                 </div>
 
                 {/* Card Footer */}
-                <div className="pt-4 mt-6 border-t border-border/60 flex items-center justify-between text-xs font-mono text-muted-foreground">
-                  <div className="flex flex-col">
-                    <span className="truncate max-w-[160px] text-foreground/90 font-medium">
+                <div className="pt-4 mt-6 border-t border-border/60 flex items-center justify-between gap-3 text-xs font-mono text-muted-foreground">
+                  <div className="flex flex-col min-w-0 flex-1 mr-2">
+                    <span className="truncate text-foreground/90 font-medium" title={res.author}>
                       {res.author || "Curated"}
                     </span>
                     {res.level && (
-                      <span className="text-[11px] text-muted-foreground">
+                      <span className="text-[11px] text-muted-foreground truncate">
                         {res.level}
                       </span>
                     )}
@@ -381,7 +428,7 @@ export function ResourcesExplorer({ initialResources }: ResourcesExplorerProps) 
                     href={res.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex h-9 items-center justify-center rounded-md bg-neutral-900 px-3.5 text-xs font-medium text-white hover:bg-neutral-800 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-white transition-colors gap-1.5 shadow-xs"
+                    className="btn-press whitespace-nowrap shrink-0 inline-flex h-9 items-center justify-center rounded-lg bg-foreground text-background px-3.5 text-xs font-semibold hover:bg-foreground/90 transition-colors gap-1.5 shadow-xs"
                   >
                     <span>Launch</span>
                     <ExternalLink className="h-3 w-3" />
@@ -392,22 +439,18 @@ export function ResourcesExplorer({ initialResources }: ResourcesExplorerProps) 
           })}
         </div>
       ) : (
-        <div className="rounded-xl border border-dashed border-border p-12 text-center space-y-4">
+        <div className="rounded-2xl border border-dashed border-border p-12 text-center space-y-4 bg-secondary/10">
+          <BookOpen className="mx-auto h-8 w-8 text-muted-foreground/60" />
           <p className="font-mono text-base text-foreground font-semibold">
             No resources match your search criteria.
           </p>
           <p className="text-sm text-muted-foreground max-w-md mx-auto">
-            Try broadening your search term or resetting the category and level filters.
+            Try broadening your search term or resetting the category and difficulty filters.
           </p>
           <button
             type="button"
-            onClick={() => {
-              setSelectedCategory("All");
-              setSelectedLevel("All Levels");
-              setSearchQuery("");
-              setOnlyFeatured(false);
-            }}
-            className="inline-flex h-9 items-center rounded-md border border-border px-4 text-xs font-mono font-medium hover:bg-secondary transition-colors"
+            onClick={resetAllFilters}
+            className="btn-press inline-flex h-9 items-center rounded-lg border border-border bg-card px-4 text-xs font-mono font-medium hover:bg-secondary transition-colors"
           >
             Clear All Filters
           </button>
@@ -415,22 +458,22 @@ export function ResourcesExplorer({ initialResources }: ResourcesExplorerProps) 
       )}
 
       {/* Community Contribution Box */}
-      <section className="rounded-xl border border-border/80 bg-secondary/20 p-6 sm:p-8 space-y-3">
-        <div className="flex items-center gap-2">
-          <Code className="h-4 w-4 text-muted-foreground" />
-          <h3 className="text-base sm:text-lg font-bold tracking-tight text-foreground">
+      <section className="rounded-2xl border border-border/80 bg-secondary/20 p-6 sm:p-8 md:p-10 space-y-4">
+        <div className="flex items-center gap-2.5">
+          <Code className="h-5 w-5 text-primary" />
+          <h3 className="text-lg sm:text-xl font-bold tracking-tight text-foreground">
             Suggest or Curate a Learning Material
           </h3>
         </div>
-        <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">
-          Found an exceptional book, interactive playground, algorithm visualizer, or benchmark sheet that helped your engineering journey at BIT Mesra? Submit a pull request on the ACM GitHub repository or message the Technical Lead.
+        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-2xl">
+          Found an exceptional book, interactive playground, algorithm visualizer, or benchmark sheet that helped your engineering journey at BIT Mesra? Submit a pull request on the ACM GitHub repository or reach out to chapter leads.
         </p>
         <div className="pt-2 flex flex-wrap items-center gap-3">
           <a
             href="https://github.com/acm-bitmesra/acm-bitmesra.github.io"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex h-9 items-center justify-center rounded-md border border-border bg-card px-4 text-xs font-mono font-medium text-foreground hover:bg-secondary transition-colors gap-1.5"
+            className="btn-press inline-flex h-9 items-center justify-center rounded-lg border border-border bg-card px-4 text-xs font-mono font-medium text-foreground hover:bg-secondary transition-colors gap-1.5 shadow-xs"
           >
             <GithubIcon className="h-3.5 w-3.5" />
             <span>Open Pull Request</span>

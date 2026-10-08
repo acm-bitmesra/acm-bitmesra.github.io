@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export default function ResourcesPage() {
   return (
     <div className="py-12 sm:py-16 md:py-20">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 space-y-10">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 space-y-12">
         {/* Document Header */}
         <div className="space-y-4 border-b border-border/70 pb-8">
           <div className="flex items-center gap-2 text-xs sm:text-sm font-mono text-muted-foreground">
