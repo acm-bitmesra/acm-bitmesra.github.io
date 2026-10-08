@@ -10,6 +10,7 @@ import { GithubIcon } from "@/components/ui/icons";
 import { EventShareActions } from "@/components/events/event-share-actions";
 import { Clock, Compass, FileText, CircleQuestionMark as HelpCircle, MapPin, ShieldAlert, Sparkles, Trophy, Users } from "@animateicons/react/lucide";
 import { Badge } from "@/components/ui/badge";
+import { RecommendedReposSection } from "@/components/events/recommended-repos-section";
 
 interface EventDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -235,6 +236,10 @@ export default async function EventDetailPage({
                     </p>
                   </div>
                 </Section>
+              )}
+
+              {event.recommendedRepos && event.recommendedRepos.length > 0 && (
+                <RecommendedReposSection repos={event.recommendedRepos} />
               )}
 
               {event.timelineItems && event.timelineItems.length > 0 && (

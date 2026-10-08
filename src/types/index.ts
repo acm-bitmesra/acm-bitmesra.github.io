@@ -68,6 +68,18 @@ export interface EventTimelineItem {
   description?: string;
 }
 
+export interface RecommendedRepo {
+  name: string;
+  url: string;
+  description: string;
+  category: "AI & Open-Weight Models" | "Developer Tools & Full-Stack" | "Algorithms & First Contributions" | string;
+  stars?: string;
+  language?: string;
+  goodFor?: string;
+  issuesUrl?: string;
+  tags?: string[];
+}
+
 export interface Event {
   slug: string;
   title: string;
@@ -107,6 +119,7 @@ export interface Event {
   challengeDescription?: string;
   timelineNotice?: string;
   timelineItems?: EventTimelineItem[];
+  recommendedRepos?: RecommendedRepo[];
   disclaimer?: string;
 }
 
