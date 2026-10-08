@@ -454,7 +454,7 @@ function EventFacts({
             aria-disabled="true"
             className="mt-4 inline-flex min-h-11 w-full items-center justify-center gap-2 border border-border bg-secondary px-4 text-sm font-semibold text-muted-foreground"
           >
-            <GithubIcon className="h-4 w-4 opacity-60" />
+            <GithubIcon className="h-4 w-4 shrink-0 opacity-60" />
             Register with GitHub
           </button>
         </div>

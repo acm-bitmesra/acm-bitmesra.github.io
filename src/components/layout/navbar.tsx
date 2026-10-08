@@ -167,7 +167,7 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                 aria-label="ACM BIT Mesra on GitHub"
                 className="inline-flex h-11 w-11 items-center justify-center rounded-md hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
-                <GithubIcon className="h-4 w-4" />
+                <GithubIcon className="h-4 w-4 shrink-0" />
               </a>
               <a
                 href={siteConfig.social.linkedin}
@@ -176,7 +176,7 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                 aria-label="ACM BIT Mesra on LinkedIn"
                 className="inline-flex h-11 w-11 items-center justify-center rounded-md hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
-                <LinkedinIcon className="h-4 w-4" />
+                <LinkedinIcon className="h-4 w-4 shrink-0" />
               </a>
               <a
                 href={siteConfig.social.instagram}
@@ -185,14 +185,14 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
                 aria-label="ACM BIT Mesra on Instagram"
                 className="inline-flex h-11 w-11 items-center justify-center rounded-md hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
-                <InstagramIcon className="h-4 w-4" />
+                <InstagramIcon className="h-4 w-4 shrink-0" />
               </a>
               <a
                 href={`mailto:${siteConfig.social.email}`}
                 aria-label={`Email ${siteConfig.social.email}`}
                 className="inline-flex h-11 w-11 items-center justify-center rounded-md hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
-                <Mail className="h-4 w-4" />
+                <Mail className="h-4 w-4 shrink-0" />
               </a>
             </div>
           </div>

@@ -46,7 +46,7 @@ export function ThemeToggle({ showLabel = false, className = "" }: ThemeTogglePr
         className={`h-11 w-11 rounded-md border border-border bg-background flex items-center justify-center text-muted-foreground opacity-60 ${className}`}
         disabled
       >
-        <Moon className="h-4 w-4" />
+        <Moon className="h-4 w-4 shrink-0" />
       </button>
     );
   }
@@ -60,9 +60,9 @@ export function ThemeToggle({ showLabel = false, className = "" }: ThemeTogglePr
       className={`${base} ${showLabel ? "" : "w-11 px-0"} ${className}`}
     >
       {theme === "dark" ? (
-        <Sun className="h-4 w-4 text-amber-400" />
+        <Sun className="h-4 w-4 shrink-0 text-amber-400" />
       ) : (
-        <Moon className="h-4 w-4" />
+        <Moon className="h-4 w-4 shrink-0" />
       )}
       {showLabel && (
         <span className="text-sm font-medium">

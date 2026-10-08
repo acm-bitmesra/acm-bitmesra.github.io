@@ -68,12 +68,12 @@ export function SocialShareActions({
       >
         {copied ? (
           <>
-            <Check className="h-4 w-4 text-emerald-500" />
+            <Check className="h-4 w-4 shrink-0 text-emerald-500" />
             <span className="hidden sm:inline">Copied</span>
           </>
         ) : (
           <>
-            <Copy className="h-4 w-4" />
+            <Copy className="h-4 w-4 shrink-0" />
             <span className="hidden sm:inline">Copy link</span>
           </>
         )}
@@ -87,7 +87,7 @@ export function SocialShareActions({
         title="Share on X"
         className={iconButton}
       >
-        <TwitterIcon className="h-4 w-4" />
+        <TwitterIcon className="h-4 w-4 shrink-0" />
       </a>
 
       <a
@@ -98,7 +98,7 @@ export function SocialShareActions({
         title="Share on LinkedIn"
         className={iconButton}
       >
-        <LinkedinIcon className="h-4 w-4" />
+        <LinkedinIcon className="h-4 w-4 shrink-0" />
       </a>
 
       <button

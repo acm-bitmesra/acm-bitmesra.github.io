@@ -36,7 +36,7 @@ export function Footer() {
                 title="GitHub Organization"
                 className="h-9 w-9 rounded-lg border border-border flex items-center justify-center hover:text-foreground hover:bg-secondary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card active:scale-95"
               >
-                <GithubIcon className="h-4 w-4" />
+                <GithubIcon className="h-4 w-4 shrink-0" />
                 <span className="sr-only">GitHub</span>
               </a>
               <a
@@ -47,7 +47,7 @@ export function Footer() {
                 title="LinkedIn Profile"
                 className="h-9 w-9 rounded-lg border border-border flex items-center justify-center hover:text-foreground hover:bg-secondary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card active:scale-95"
               >
-                <LinkedinIcon className="h-4 w-4" />
+                <LinkedinIcon className="h-4 w-4 shrink-0" />
                 <span className="sr-only">LinkedIn</span>
               </a>
               <a
@@ -58,7 +58,7 @@ export function Footer() {
                 title="Instagram Profile"
                 className="h-9 w-9 rounded-lg border border-border flex items-center justify-center hover:text-foreground hover:bg-secondary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card active:scale-95"
               >
-                <InstagramIcon className="h-4 w-4" />
+                <InstagramIcon className="h-4 w-4 shrink-0" />
                 <span className="sr-only">Instagram</span>
               </a>
               <a
@@ -69,7 +69,7 @@ export function Footer() {
                 title="X (Twitter) Profile"
                 className="h-9 w-9 rounded-lg border border-border flex items-center justify-center hover:text-foreground hover:bg-secondary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-card active:scale-95"
               >
-                <TwitterIcon className="h-3.5 w-3.5" />
+                <TwitterIcon className="h-3.5 w-3.5 shrink-0" />
                 <span className="sr-only">X (formerly Twitter)</span>
               </a>
               <a
