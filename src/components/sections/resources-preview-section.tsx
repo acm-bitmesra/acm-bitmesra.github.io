@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { studentResources } from "@/data/resources";
-import { ArrowRight, ArrowUpRight, BookMarked } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Bookmark as BookMarked } from "@animateicons/react/lucide";
 
 export function ResourcesPreviewSection() {
   return (

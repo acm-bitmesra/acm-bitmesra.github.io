@@ -3,7 +3,7 @@
 import * as React from "react";
 import { Event } from "@/types";
 import { EventCard } from "./event-card";
-import { Search, SlidersHorizontal, X } from "lucide-react";
+import { Search, SlidersHorizontal, X } from "@animateicons/react/lucide";
 
 interface EventsExplorerProps {
   initialEvents: Event[];

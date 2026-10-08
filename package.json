@@ -13,12 +13,13 @@
     "test:prod": "node scripts/validate-production.mjs",
     "test:auth": "node scripts/test-auth-and-blog.mjs",
     "test:security": "node scripts/test-security-suite.mjs",
-    "test": "npm run typecheck && npm run lint && npm run test:auth && npm run test:security && npm run test:prod",
+    "test": "bun run typecheck && bun run lint && bun run test:auth && bun run test:security && bun run test:prod",
     "cf:build": "next build && opennextjs-cloudflare build",
     "cf:deploy": "opennextjs-cloudflare build && OPEN_NEXT_DEPLOY=true wrangler deploy",
     "deploy": "next build && opennextjs-cloudflare build && OPEN_NEXT_DEPLOY=true wrangler deploy"
   },
   "dependencies": {
+    "@animateicons/react": "^0.12.0",
     "@neondatabase/serverless": "^1.2.0",
     "better-auth": "^1.7.7",
     "clsx": "^2.1.1",

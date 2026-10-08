@@ -3,7 +3,8 @@
 import * as React from "react";
 import { createRedirectAction, deleteRedirectAction } from "@/db/mutations/governance";
 import { formatDate } from "@/lib/date";
-import { ArrowRightLeft, Plus, Trash2, ExternalLink, AlertCircle } from "lucide-react";
+import { ArrowRightLeft } from "lucide-react";
+import { Plus, Trash2, ExternalLink, CircleAlert as AlertCircle } from "@animateicons/react/lucide";
 
 interface RedirectItem {
   id: string;

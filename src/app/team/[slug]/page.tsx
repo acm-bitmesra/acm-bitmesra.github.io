@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPublicTeamMembers } from "@/data/team";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/icons";
-import { ArrowLeft, Globe, ShieldCheck, User } from "lucide-react";
+import { ArrowLeft, Globe, ShieldCheck, User } from "@animateicons/react/lucide";
 
 interface MemberDetailPageProps {
   params: Promise<{ slug: string }>;

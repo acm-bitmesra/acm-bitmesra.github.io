@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getPublishedPosts, getPublishedCategories, getPublishedTags } from "@/db/queries/blog";
+import { getPublishedPosts, getPublishedCategories, getPublishedTags, PublishedPostListItem } from "@/db/queries/blog";
+import { getPublishedBlogPosts } from "@/data/blog";
 import { ArticleCard } from "@/components/blog/article-card";
 import { BlogSearch } from "@/components/blog/blog-search";
 import { siteConfig } from "@/config/site";
-import { Rss, BookOpen, Tag } from "lucide-react";
+import { Rss, BookOpen, Tag } from "@animateicons/react/lucide";
 
 export const dynamic = "force-dynamic";
 
@@ -37,16 +38,81 @@ interface BlogIndexPageProps {
 export default async function BlogIndexPage({ searchParams }: BlogIndexPageProps) {
   const { q, category, tag } = await searchParams;
 
-  const [posts, categories, tags] = await Promise.all([
-    getPublishedPosts({
-      search: q,
-      category,
-      tag,
-      limit: 30,
-    }),
-    getPublishedCategories(),
-    getPublishedTags(),
-  ]);
+  let posts: PublishedPostListItem[] = [];
+  let categories: { category: string; count: number }[] = [];
+  let tags: { name: string; slug: string; count: number }[] = [];
+
+  try {
+    const [fetchedPosts, fetchedCategories, fetchedTags] = await Promise.all([
+      getPublishedPosts({
+        search: q,
+        category,
+        tag,
+        limit: 30,
+      }),
+      getPublishedCategories(),
+      getPublishedTags(),
+    ]);
+    posts = fetchedPosts;
+    categories = fetchedCategories;
+    tags = fetchedTags;
+  } catch (error) {
+    console.error("Failed to query live blog posts for /blog, falling back to static:", error);
+  }
+
+  // Fallback to static articles if database is offline or empty
+  if (!posts || posts.length === 0) {
+    let staticPosts = getPublishedBlogPosts();
+    if (q) {
+      const query = q.toLowerCase();
+      staticPosts = staticPosts.filter(
+        (p) => p.title.toLowerCase().includes(query) || p.description.toLowerCase().includes(query)
+      );
+    }
+    if (category) {
+      staticPosts = staticPosts.filter((p) => p.category.toLowerCase() === category.toLowerCase());
+    }
+    if (tag) {
+      staticPosts = staticPosts.filter((p) => p.tags.some((t) => t.toLowerCase() === tag.toLowerCase()));
+    }
+    posts = staticPosts.map((p) => ({
+      id: p.slug,
+      title: p.title,
+      slug: p.slug,
+      excerpt: p.description,
+      category: p.category,
+      featured: false,
+      readingTimeMinutes: parseInt(p.readingTime) || 5,
+      publishedAt: new Date(p.date),
+      authors: [
+        {
+          name: p.author,
+          role: "ACM Student Chapter",
+        },
+      ],
+      tags: p.tags.map((t) => ({ name: t, slug: t.toLowerCase() })),
+    }));
+
+    if (categories.length === 0) {
+      const allStatic = getPublishedBlogPosts();
+      const catCount = new Map<string, number>();
+      const tagCount = new Map<string, { name: string; slug: string; count: number }>();
+      for (const p of allStatic) {
+        catCount.set(p.category, (catCount.get(p.category) || 0) + 1);
+        for (const t of p.tags) {
+          const s = t.toLowerCase();
+          const existing = tagCount.get(s);
+          if (existing) {
+            existing.count += 1;
+          } else {
+            tagCount.set(s, { name: t, slug: s, count: 1 });
+          }
+        }
+      }
+      categories = Array.from(catCount.entries()).map(([c, count]) => ({ category: c, count }));
+      tags = Array.from(tagCount.values());
+    }
+  }
 
   // JSON-LD Breadcrumb List
   const breadcrumbJsonLd = {

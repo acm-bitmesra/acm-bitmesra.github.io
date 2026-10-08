@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import { getPublishedPostBySlug, getRelatedPosts } from "@/db/queries/blog";
+import { getPublishedPostBySlug, getRelatedPosts, PublishedPostDetail, PublishedPostListItem } from "@/db/queries/blog";
+import { getPublishedBlogPosts } from "@/data/blog";
 import { formatDate } from "@/lib/date";
 import { siteConfig } from "@/config/site";
 import { ArticleCard } from "@/components/blog/article-card";
 import { MarkdownRenderer } from "@/components/blog/markdown-renderer";
 import { SocialShareActions } from "@/components/ui/social-share-actions";
-import { ArrowLeft, Calendar, Clock, Tag, User, ShieldCheck } from "lucide-react";
+import { ArrowLeft, Calendar, Clock, Tag, User, ShieldCheck } from "@animateicons/react/lucide";
 
 export const dynamic = "force-dynamic";
 
@@ -15,14 +16,48 @@ interface BlogPostPageProps {
   params: Promise<{ slug: string }>;
 }
 
+function resolveStaticFallback(slug: string): PublishedPostDetail | null {
+  const staticPost = getPublishedBlogPosts().find((p) => p.slug === slug);
+  if (!staticPost) return null;
+  return {
+    id: staticPost.slug,
+    title: staticPost.title,
+    slug: staticPost.slug,
+    excerpt: staticPost.description,
+    contentMarkdown: staticPost.content,
+    category: staticPost.category,
+    featured: false,
+    readingTimeMinutes: parseInt(staticPost.readingTime) || 5,
+    publishedAt: new Date(staticPost.date),
+    updatedAt: new Date(staticPost.date),
+    coverImageUrl: null,
+    coverImageAlt: null,
+    authors: [{ name: staticPost.author, role: "ACM Student Chapter" }],
+    tags: staticPost.tags.map((t) => ({ name: t, slug: t.toLowerCase() })),
+  };
+}
+
 export async function generateMetadata({
   params,
 }: BlogPostPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const { post, redirectSlug } = await getPublishedPostBySlug(slug);
+  let post: PublishedPostDetail | null = null;
+  let redirectSlug: string | undefined;
+
+  try {
+    const res = await getPublishedPostBySlug(slug);
+    post = res.post || null;
+    redirectSlug = res.redirectSlug;
+  } catch (error) {
+    console.error("Failed to query live blog post for metadata, checking static fallback:", error);
+  }
 
   if (redirectSlug) {
     redirect(`/blog/${redirectSlug}`);
+  }
+
+  if (!post) {
+    post = resolveStaticFallback(slug);
   }
 
   if (!post) {
@@ -44,7 +79,7 @@ export async function generateMetadata({
       type: "article",
       publishedTime: post.publishedAt ? post.publishedAt.toISOString() : undefined,
       modifiedTime: post.updatedAt ? post.updatedAt.toISOString() : undefined,
-      authors: post.authors.map((a) => a.name),
+      authors: post.authors.map((a: { name: string }) => a.name),
       images: post.coverImageUrl ? [{ url: post.coverImageUrl, alt: post.coverImageAlt || post.title }] : undefined,
     },
     twitter: {
@@ -58,10 +93,23 @@ export async function generateMetadata({
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
-  const { post, redirectSlug } = await getPublishedPostBySlug(slug);
+  let post: PublishedPostDetail | null = null;
+  let redirectSlug: string | undefined;
+
+  try {
+    const res = await getPublishedPostBySlug(slug);
+    post = res.post || null;
+    redirectSlug = res.redirectSlug;
+  } catch (error) {
+    console.error("Failed to query live blog post by slug, checking static fallback:", error);
+  }
 
   if (redirectSlug) {
     redirect(`/blog/${redirectSlug}`);
+  }
+
+  if (!post) {
+    post = resolveStaticFallback(slug);
   }
 
   // Strictly return 404 for unapproved drafts or non-existent articles
@@ -69,7 +117,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     notFound();
   }
 
-  const relatedPosts = await getRelatedPosts(post.id, post.category, 3);
+  let relatedPosts: PublishedPostListItem[] = [];
+  try {
+    relatedPosts = await getRelatedPosts(post.id, post.category, 3);
+  } catch {
+    // Graceful fallback for related posts
+  }
   const postUrl = `${siteConfig.url}/blog/${post.slug}`;
 
   // JSON-LD BlogPosting Structured Data (Section 24)
@@ -86,7 +139,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       "@type": "WebPage",
       "@id": postUrl,
     },
-    author: post.authors.map((a) => ({
+    author: post.authors.map((a: { name: string; role: string }) => ({
       "@type": "Person",
       name: a.name,
       jobTitle: a.role,
@@ -152,7 +205,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           {/* Author Byline with Immutable Role Snapshot (Section 14 & 15) */}
           <div className="pt-4 border-t border-border/60 flex flex-wrap items-center justify-between gap-4 text-xs font-mono">
             <div className="flex flex-wrap items-center gap-4">
-              {post.authors.map((author, idx) => (
+              {post.authors.map((author: { name: string; role: string }, idx: number) => (
                 <div key={idx} className="flex items-center gap-2.5">
                   <div className="h-8 w-8 rounded-full bg-secondary border border-border/80 flex items-center justify-center text-muted-foreground">
                     <User className="h-4 w-4" />
@@ -210,7 +263,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               Article Tags
             </div>
             <div className="flex flex-wrap gap-1.5">
-              {post.tags.map((t) => (
+              {post.tags.map((t: { name: string; slug: string }) => (
                 <Link
                   key={t.slug}
                   href={`/blog/tag/${t.slug}`}

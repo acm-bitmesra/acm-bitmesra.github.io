@@ -4,6 +4,7 @@ import { execSync } from "child_process";
 import fs from "fs";
 import path from "path";
 
+dotenv.config({ path: ".env.local" });
 dotenv.config();
 
 const DATABASE_URL = process.env.DATABASE_URL;

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Code2, Trophy, Terminal, BookOpen } from "lucide-react";
+import { ArrowRight, Code as Code2, Trophy, Terminal, BookOpen } from "@animateicons/react/lucide";
 
 const focusAreas = [
   {
@@ -32,7 +32,7 @@ export function HeroSection() {
   return (
     <section className="border-b border-border bg-background">
       <div className="mx-auto grid max-w-7xl gap-12 px-4 py-14 sm:px-6 sm:py-18 lg:grid-cols-[minmax(0,1.35fr)_minmax(18rem,0.65fr)] lg:gap-20 lg:px-8 lg:py-24">
-        <div className="min-w-0">
+        <div className="min-w-0 animate-fade-in-up">
           <h1 className="max-w-4xl text-5xl font-semibold leading-[0.98] tracking-[-0.05em] text-foreground sm:text-6xl lg:text-7xl">
             Build. Compete. Ship.
           </h1>
@@ -44,20 +44,20 @@ export function HeroSection() {
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <Link
               href="/events"
-              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-primary px-5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="btn-press inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-primary px-5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               Upcoming events
               <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
               href="/resources"
-              className="inline-flex min-h-11 items-center justify-center rounded-md border border-border bg-background px-5 text-sm font-medium text-foreground transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="btn-press inline-flex min-h-11 items-center justify-center rounded-md border border-border bg-background px-5 text-sm font-medium text-foreground transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               Browse resources
             </Link>
             <Link
               href="/join"
-              className="inline-flex min-h-11 items-center px-2 text-sm font-medium text-muted-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="inline-flex min-h-11 items-center px-2 text-sm font-medium text-muted-foreground transition-all hover:text-primary hover:translate-x-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               Join the chapter →
             </Link>

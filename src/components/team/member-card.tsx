@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { TeamMember } from "@/types";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/icons";
-import { Globe, ArrowRight, User } from "lucide-react";
+import { Globe, ArrowRight, User } from "@animateicons/react/lucide";
 
 interface MemberCardProps {
   member: TeamMember;
@@ -9,7 +9,7 @@ interface MemberCardProps {
 
 export function MemberCard({ member }: MemberCardProps) {
   return (
-    <div className="rounded-xl border border-border/80 bg-card p-6 flex flex-col justify-between transition-all hover:border-foreground/30 hover:bg-secondary/20 group">
+    <div className="card-hover rounded-xl border border-border/80 bg-card p-6 flex flex-col justify-between transition-all hover:border-foreground/30 hover:bg-secondary/20 group">
       <div className="space-y-4">
         {/* Avatar Placeholder or Image */}
         <div className="flex items-center gap-4">

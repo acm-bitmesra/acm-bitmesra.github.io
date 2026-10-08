@@ -74,16 +74,12 @@ cd acm-bitmesra.github.io
 
 # Install dependencies using Bun
 bun install
-# or using npm
-npm install
 ```
 
 ### 2. Run Local Development Server
 
 ```bash
 bun run dev
-# or
-npm run dev
 ```
 
 Visit [http://localhost:3000](http://localhost:3000) in your browser.

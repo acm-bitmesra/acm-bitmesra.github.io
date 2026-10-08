@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, BookOpen } from "lucide-react";
+import { ArrowRight, BookOpen } from "@animateicons/react/lucide";
 import { getPublishedPosts, PublishedPostListItem } from "@/db/queries/blog";
 import { getPublishedBlogPosts } from "@/data/blog";
 import { ArticleCard } from "@/components/blog/article-card";

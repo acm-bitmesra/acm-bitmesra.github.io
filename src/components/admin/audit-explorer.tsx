@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { User, Calendar, Search } from "lucide-react";
+import { User, Calendar, Search } from "@animateicons/react/lucide";
 import { formatDate } from "@/lib/date";
 
 interface AuditLogItem {

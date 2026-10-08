@@ -13,7 +13,7 @@ import {
   ExternalLink,
   Activity,
   Server,
-} from "lucide-react";
+} from "@animateicons/react/lucide";
 
 interface AdminNavbarProps {
   context: AuthorizedMemberContext;

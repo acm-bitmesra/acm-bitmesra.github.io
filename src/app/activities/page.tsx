@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { activitiesData } from "@/data/activities";
-import { ArrowRight, Code2, Cpu, Laptop, Users, Presentation } from "lucide-react";
+import { ArrowRight, Code as Code2, Cpu, Laptop, Users, Presentation } from "@animateicons/react/lucide";
 
 export const metadata: Metadata = {
   title: "Activities & Focus Areas",

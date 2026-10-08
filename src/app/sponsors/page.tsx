@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { institutionalPartners, sponsorBenefits } from "@/data/sponsors";
 import { siteConfig } from "@/config/site";
-import { ExternalLink, ShieldCheck, CheckCircle2 } from "lucide-react";
+import { ExternalLink, ShieldCheck, CircleCheck as CheckCircle2 } from "@animateicons/react/lucide";
 
 export const metadata: Metadata = {
   title: "Sponsors & Institutional Partners",

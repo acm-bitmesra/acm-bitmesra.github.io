@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { authClient } from "@/lib/auth/auth-client";
-import { LogOut } from "lucide-react";
+import { LogOut } from "@animateicons/react/lucide";
 import { useRouter } from "next/navigation";
 
 export function AdminSignOutButton() {

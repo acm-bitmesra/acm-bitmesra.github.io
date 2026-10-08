@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
-import { ExternalLink, Mail } from "lucide-react";
+import { ExternalLink, Mail } from "@animateicons/react/lucide";
 import { GithubIcon, LinkedinIcon, InstagramIcon, TwitterIcon, AcmLogo } from "@/components/ui/icons";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 

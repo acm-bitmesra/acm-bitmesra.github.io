@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Event } from "@/types";
 import { formatDateRange } from "@/lib/date";
-import { Calendar, MapPin, ArrowUpRight } from "lucide-react";
+import { Calendar, MapPin, ArrowUpRight } from "@animateicons/react/lucide";
 import { cn } from "@/lib/utils";
 
 interface EventCardProps {
@@ -29,7 +29,7 @@ export function EventCard({ event }: EventCardProps) {
         </span>
         <span
           className={cn(
-            "shrink-0 text-xs font-medium",
+            "shrink-0 inline-flex items-center gap-1.5 text-xs font-medium",
             isLive
               ? "text-red-400"
               : isUpcoming && event.registrationOpen
@@ -39,6 +39,7 @@ export function EventCard({ event }: EventCardProps) {
               : "text-muted-foreground"
           )}
         >
+          {isLive && <span className="h-1.5 w-1.5 rounded-full bg-red-400 live-beacon" />}
           {statusLabel}
         </span>
       </div>

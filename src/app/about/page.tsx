@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { siteConfig } from "@/config/site";
-import { CheckCircle2, ExternalLink, ShieldCheck } from "lucide-react";
+import { CircleCheck as CheckCircle2, ExternalLink, ShieldCheck } from "@animateicons/react/lucide";
 
 export const metadata: Metadata = {
   title: "About Chapter | ACM BIT Mesra",

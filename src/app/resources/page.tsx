@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { studentResources } from "@/data/resources";
 import { ResourcesExplorer } from "@/components/resources/resources-explorer";
-import { BookOpen } from "lucide-react";
+import { BookOpen } from "@animateicons/react/lucide";
 
 export const metadata: Metadata = {
   title: "Engineering & Programming Resources | ACM BIT Mesra",

@@ -8,7 +8,7 @@ import { EventCard } from "@/components/events/event-card";
 import { siteConfig } from "@/config/site";
 import { GithubIcon } from "@/components/ui/icons";
 import { EventShareActions } from "@/components/events/event-share-actions";
-import { Clock, Compass, FileText, HelpCircle, MapPin, ShieldAlert, Sparkles, Trophy, Users } from "lucide-react";
+import { Clock, Compass, FileText, CircleQuestionMark as HelpCircle, MapPin, ShieldAlert, Sparkles, Trophy, Users } from "@animateicons/react/lucide";
 import { Badge } from "@/components/ui/badge";
 
 interface EventDetailPageProps {
@@ -90,7 +90,6 @@ export default async function EventDetailPage({
   }
 
   const pageUrl = `${siteConfig.url}/events/${event.slug}`;
-  const isUpcoming = event.status === "upcoming";
   const isLive = event.status === "live";
   const isCompleted =
     event.status === "completed" || event.status === "archived";
@@ -196,7 +195,6 @@ export default async function EventDetailPage({
                 isRegistrationClosed={isRegistrationClosed}
                 isLive={isLive}
                 isCompleted={isCompleted}
-                isUpcoming={isUpcoming}
               />
             </div>
 
@@ -344,7 +342,6 @@ export default async function EventDetailPage({
                 isRegistrationClosed={isRegistrationClosed}
                 isLive={isLive}
                 isCompleted={isCompleted}
-                isUpcoming={isUpcoming}
               />
             </div>
           </aside>
@@ -375,14 +372,13 @@ function EventFacts({
   isRegistrationClosed,
   isLive,
   isCompleted,
-  isUpcoming,
 }: {
   event: (typeof events)[number];
   isRegistrationClosed: boolean;
   isLive: boolean;
   isCompleted: boolean;
-  isUpcoming: boolean;
 }) {
+  const isUpcoming = event.status === "upcoming";
   return (
     <div className="border-y border-border py-5 sm:py-6 lg:border-y-0 lg:border-l lg:pl-6">
       <div className="flex items-center justify-between gap-4">

@@ -66,16 +66,12 @@ npx wrangler whoami
 Ensure the build compiles cleanly with zero type errors, lint warnings, or broken links:
 
 ```bash
-npm run test
-# or
 bun run test
 ```
 
 ### Step 3: Compile Static Production Assets
 
 ```bash
-npm run build
-# or
 bun run build
 ```
 
@@ -84,11 +80,7 @@ This generates all 38+ static HTML pages, sitemap, robots, and SVG vectors in th
 ### Step 4: Deploy to Cloudflare Workers
 
 ```bash
-npm run cf:deploy
-# or
 bun run cf:deploy
-# or
-npx wrangler deploy
 ```
 
 Wrangler uploads the static assets, deploys the edge worker script (`src/worker.ts`), and configures the route `acmbitm.campsy.app`.
@@ -138,20 +130,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          node-version: 20
-          cache: 'npm'
+          bun-version: latest
 
       - name: Install dependencies
-        run: npm ci
+        run: bun install --frozen-lockfile
 
       - name: Run Test Suite
-        run: npm run test
+        run: bun run test
 
       - name: Build Next.js Static Export
-        run: npm run build
+        run: bun run build
 
       - name: Deploy to Cloudflare Workers
         uses: cloudflare/wrangler-action@v3

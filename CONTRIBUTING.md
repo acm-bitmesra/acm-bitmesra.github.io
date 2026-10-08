@@ -28,13 +28,9 @@ cd acm-bitmesra.github.io
 
 # 2. Install dependencies
 bun install
-# or
-npm install
 
 # 3. Start local development server
 bun run dev
-# or
-npm run dev
 ```
 
 Visit [http://localhost:3000](http://localhost:3000) to see your changes live.
@@ -77,7 +73,7 @@ Always run the full test suite locally before pushing:
 
 ```bash
 # Runs typecheck, linting, build, and production route validation
-npm run test
+bun run test
 ```
 
 All checks must pass with **0 errors and 0 warnings**.

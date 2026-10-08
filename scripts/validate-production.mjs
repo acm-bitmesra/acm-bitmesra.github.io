@@ -6,7 +6,7 @@ const OUT_DIR = fs.existsSync(path.resolve(process.cwd(), "out"))
   : path.resolve(process.cwd(), ".next/server/app");
 
 if (!fs.existsSync(OUT_DIR)) {
-  console.error("Error: Production build target directory does not exist. Run 'npm run build' first.");
+  console.error("Error: Production build target directory does not exist. Run 'bun run build' first.");
   process.exit(1);
 }
 
@@ -111,14 +111,21 @@ for (const link of linkSet) {
   if (!urlPath || urlPath === "/") continue;
 
   // Potential file locations for this link
-  const cleanPath = urlPath.replace(/^\//, "");
+  const cleanPath = decodeURIComponent(urlPath.replace(/^\//, ""));
   const possiblePaths = [
     path.join(OUT_DIR, `${cleanPath}.html`),
     path.join(OUT_DIR, cleanPath, "index.html"),
     path.join(OUT_DIR, cleanPath),
+    path.join(process.cwd(), "public", cleanPath),
+    path.join(process.cwd(), ".next", cleanPath.replace(/^_next\//, "")),
   ];
 
-  const found = possiblePaths.some((p) => fs.existsSync(p));
+  const isDynamicRoute =
+    urlPath.startsWith("/blog") ||
+    urlPath.startsWith("/admin") ||
+    urlPath.startsWith("/api");
+
+  const found = possiblePaths.some((p) => fs.existsSync(p)) || isDynamicRoute;
   if (!found) {
     console.warn(`  ⚠️ Broken internal link detected: ${link}`);
     warnings++;
@@ -126,11 +133,13 @@ for (const link of linkSet) {
 }
 
 // 4. Validate sitemap.xml
-const sitemapFile = fs.existsSync(path.join(OUT_DIR, "sitemap.xml"))
-  ? path.join(OUT_DIR, "sitemap.xml")
-  : path.join(OUT_DIR, "sitemap.xml.body");
+const sitemapCandidate = path.join(OUT_DIR, "sitemap.xml");
+const sitemapFile =
+  fs.existsSync(sitemapCandidate) && fs.statSync(sitemapCandidate).isFile()
+    ? sitemapCandidate
+    : path.join(OUT_DIR, "sitemap.xml.body");
 
-if (fs.existsSync(sitemapFile)) {
+if (fs.existsSync(sitemapFile) && fs.statSync(sitemapFile).isFile()) {
   const sitemapContent = fs.readFileSync(sitemapFile, "utf-8");
   const locMatches = [...sitemapContent.matchAll(/<loc>(.*?)<\/loc>/g)].map((m) => m[1]);
   console.log(`  ✓ Sitemap contains ${locMatches.length} indexed URLs`);

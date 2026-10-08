@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Event } from "@/types";
 import { formatDate } from "@/lib/date";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "@animateicons/react/lucide";
 
 interface UpcomingEventsSectionProps {
   events: Event[];

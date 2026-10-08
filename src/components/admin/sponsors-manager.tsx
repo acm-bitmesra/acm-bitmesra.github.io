@@ -3,7 +3,8 @@
 import * as React from "react";
 import { chapterSponsors, SponsorTier } from "@/db/schema";
 import { createSponsorAction, deleteSponsorAction } from "@/db/mutations/sponsors";
-import { Award, Plus, Trash2, ExternalLink, Sparkles } from "lucide-react";
+import { Award } from "lucide-react";
+import { Plus, Trash2, ExternalLink, Sparkles } from "@animateicons/react/lucide";
 
 type Sponsor = typeof chapterSponsors.$inferSelect;
 

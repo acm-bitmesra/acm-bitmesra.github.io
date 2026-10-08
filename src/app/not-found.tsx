@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowLeft, Calendar, Terminal } from "lucide-react";
+import { ArrowLeft, Calendar, Terminal } from "@animateicons/react/lucide";
 
 export default function NotFound() {
   return (

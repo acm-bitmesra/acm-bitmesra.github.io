@@ -3,7 +3,7 @@
 import * as React from "react";
 import { chapterGallery } from "@/db/schema";
 import { createGalleryItemAction, deleteGalleryItemAction } from "@/db/mutations/gallery";
-import { Image as ImageIcon, Plus, Trash2, Sparkles } from "lucide-react";
+import { Image as ImageIcon, Plus, Trash2, Sparkles } from "@animateicons/react/lucide";
 
 type GalleryItem = typeof chapterGallery.$inferSelect;
 

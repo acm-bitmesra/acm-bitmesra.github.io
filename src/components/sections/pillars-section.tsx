@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { corePillars } from "@/data/pillars";
-import { ArrowRight, Code2, Laptop, Cpu, Users } from "lucide-react";
+import { ArrowRight, Code as Code2, Laptop, Cpu, Users } from "@animateicons/react/lucide";
 
 export function PillarsSection() {
   const pillarIcons = [Code2, Laptop, Cpu, Users];

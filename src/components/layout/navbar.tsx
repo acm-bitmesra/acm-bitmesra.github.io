@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Search, Mail } from "lucide-react";
+import { Menu, X, Search, Mail } from "@animateicons/react/lucide";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 import {

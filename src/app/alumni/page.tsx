@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { alumniBatches, alumniEngagementPaths } from "@/data/alumni";
-import { GraduationCap, ShieldCheck } from "lucide-react";
+import { GraduationCap, ShieldCheck } from "@animateicons/react/lucide";
 
 export const metadata: Metadata = {
   title: "Alumni Network & History",

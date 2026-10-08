@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Image as ImageIcon, Copy, Check, ExternalLink, Search, Filter } from "lucide-react";
+import { Image as ImageIcon, Copy, Check, ExternalLink, Search, Filter } from "@animateicons/react/lucide";
 
 export interface MediaItem {
   id: string;

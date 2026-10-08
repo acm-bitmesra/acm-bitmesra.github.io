@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { GalleryItem } from "@/data/gallery";
-import { Camera, Calendar } from "lucide-react";
+import { Camera, Calendar } from "@animateicons/react/lucide";
 
 interface GalleryGridProps {
   items: GalleryItem[];

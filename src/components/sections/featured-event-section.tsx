@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Event } from "@/types";
 import { formatDateRange } from "@/lib/date";
-import { MapPin, ArrowRight } from "lucide-react";
+import { MapPin, ArrowRight } from "@animateicons/react/lucide";
 
 interface FeaturedEventProps {
   event: Event;

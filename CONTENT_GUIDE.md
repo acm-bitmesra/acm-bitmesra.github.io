@@ -154,8 +154,8 @@ Open `src/data/resources.ts` and add an entry to the `studentResources` array:
 
 ## 7. Verification Checklist Before Submitting a PR
 
-- [ ] Does `npm run test` pass with 0 errors?
+- [ ] Does `bun run test` pass with 0 errors?
 - [ ] Are all dates formatted in ISO 8601 strings (`YYYY-MM-DDTHH:mm:ssZ`)?
 - [ ] Are any unverified members or dates flagged with `verified: false`?
 - [ ] Do external URLs use HTTPS?
-- [ ] Is `npm run build` completing cleanly?
+- [ ] Is `bun run build` completing cleanly?

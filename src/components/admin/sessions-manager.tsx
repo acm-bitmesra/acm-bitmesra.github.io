@@ -4,7 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { revokeSessionAction } from "@/db/mutations/governance";
 import { formatDate } from "@/lib/date";
-import { KeyRound, ShieldCheck, ArrowLeft, Globe, Laptop, Clock, Trash2 } from "lucide-react";
+import { KeyRound, ShieldCheck, ArrowLeft, Globe, Laptop, Clock, Trash2 } from "@animateicons/react/lucide";
 
 interface SessionItem {
   id: string;

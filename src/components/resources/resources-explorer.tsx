@@ -14,8 +14,8 @@ import {
   Compass,
   Layers,
   Code,
-  CheckCircle2,
-} from "lucide-react";
+  CircleCheck as CheckCircle2,
+} from "@animateicons/react/lucide";
 import { GithubIcon } from "@/components/ui/icons";
 
 interface ResourcesExplorerProps {

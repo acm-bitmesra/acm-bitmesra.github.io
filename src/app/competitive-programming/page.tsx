@@ -3,7 +3,7 @@ import Link from "next/link";
 import { studentResources } from "@/data/resources";
 import { events } from "@/data/events";
 import { EventCard } from "@/components/events/event-card";
-import { ExternalLink, ArrowRight } from "lucide-react";
+import { ExternalLink, ArrowRight } from "@animateicons/react/lucide";
 
 export const metadata: Metadata = {
   title: "Competitive Programming Hub",

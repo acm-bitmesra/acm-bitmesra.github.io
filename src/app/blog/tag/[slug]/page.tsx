@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getPublishedPosts, getPublishedTags } from "@/db/queries/blog";
+import { getPublishedPosts, getPublishedTags, PublishedPostListItem } from "@/db/queries/blog";
+import { getPublishedBlogPosts } from "@/data/blog";
 import { ArticleCard } from "@/components/blog/article-card";
 import { siteConfig } from "@/config/site";
-import { ArrowLeft, Tag } from "lucide-react";
+import { ArrowLeft, Tag } from "@animateicons/react/lucide";
 
 export const dynamic = "force-dynamic";
 
@@ -24,8 +25,50 @@ export async function generateMetadata({ params }: TagPageProps): Promise<Metada
 
 export default async function TagPage({ params }: TagPageProps) {
   const { slug } = await params;
-  const posts = await getPublishedPosts({ tag: slug, limit: 30 });
-  const allTags = await getPublishedTags();
+  let posts: PublishedPostListItem[] = [];
+  let allTags: { name: string; slug: string; count: number }[] = [];
+
+  try {
+    const [fetchedPosts, fetchedTags] = await Promise.all([
+      getPublishedPosts({ tag: slug, limit: 30 }),
+      getPublishedTags(),
+    ]);
+    posts = fetchedPosts;
+    allTags = fetchedTags;
+  } catch (error) {
+    console.error("Failed to query live blog posts by tag, using static:", error);
+  }
+
+  if (posts.length === 0) {
+    const staticPosts = getPublishedBlogPosts().filter((p) =>
+      p.tags.some((t) => t.toLowerCase() === slug.toLowerCase())
+    );
+    posts = staticPosts.map((p) => ({
+      id: p.slug,
+      title: p.title,
+      slug: p.slug,
+      excerpt: p.description,
+      category: p.category,
+      featured: false,
+      readingTimeMinutes: parseInt(p.readingTime) || 5,
+      publishedAt: new Date(p.date),
+      authors: [{ name: p.author, role: "ACM Student Chapter" }],
+      tags: p.tags.map((t) => ({ name: t, slug: t.toLowerCase() })),
+    }));
+  }
+
+  if (allTags.length === 0) {
+    const tagCount = new Map<string, { name: string; slug: string; count: number }>();
+    for (const p of getPublishedBlogPosts()) {
+      for (const t of p.tags) {
+        const s = t.toLowerCase();
+        const existing = tagCount.get(s);
+        if (existing) existing.count += 1;
+        else tagCount.set(s, { name: t, slug: s, count: 1 });
+      }
+    }
+    allTags = Array.from(tagCount.values());
+  }
 
   return (
     <div className="py-10 sm:py-16">

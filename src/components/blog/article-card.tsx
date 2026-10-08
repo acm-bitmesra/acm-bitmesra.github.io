@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { formatDate } from "@/lib/date";
-import { Clock, Calendar, ArrowRight, User } from "lucide-react";
+import { Clock, Calendar, ArrowRight, User } from "@animateicons/react/lucide";
 import { PublishedPostListItem } from "@/db/queries/blog";
 
 interface ArticleCardProps {
@@ -11,7 +11,7 @@ export function ArticleCard({ post }: ArticleCardProps) {
   const primaryAuthor = post.authors[0] || { name: "ACM BIT Mesra", role: "Student Chapter" };
 
   return (
-    <article className="rounded-xl border border-border/80 bg-card p-6 flex flex-col justify-between hover:border-foreground/30 hover:bg-secondary/20 transition-all duration-200 group relative">
+    <article className="card-hover rounded-xl border border-border/80 bg-card p-6 flex flex-col justify-between hover:border-foreground/30 hover:bg-secondary/20 transition-all duration-200 group relative">
       <div className="space-y-4">
         {/* Category & Reading Time */}
         <div className="flex items-center justify-between gap-2">

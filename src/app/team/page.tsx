@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getPublicTeamMembers } from "@/data/team";
 import { MemberCard } from "@/components/team/member-card";
-import { ShieldCheck, Info, ArrowRight } from "lucide-react";
+import { ShieldCheck, Info, ArrowRight } from "@animateicons/react/lucide";
 
 export const metadata: Metadata = {
   title: "Executive Team & Mentors | ACM BIT Mesra",

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { chapterHistory } from "@/data/history";
-import { History as HistoryIcon, ArrowRight, ShieldCheck } from "lucide-react";
+import { History as HistoryIcon, ArrowRight, ShieldCheck } from "@animateicons/react/lucide";
 
 export const metadata: Metadata = {
   title: "Chapter History & Timeline",
