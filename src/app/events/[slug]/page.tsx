@@ -8,7 +8,7 @@ import { EventCard } from "@/components/events/event-card";
 import { siteConfig } from "@/config/site";
 import { GithubIcon } from "@/components/ui/icons";
 import { EventShareActions } from "@/components/events/event-share-actions";
-import { Calendar, Clock, Compass, FileText, HelpCircle, MapPin, ShieldAlert, Sparkles, Trophy, Users } from "lucide-react";
+import { Clock, Compass, FileText, HelpCircle, MapPin, ShieldAlert, Sparkles, Trophy, Users } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 interface EventDetailPageProps {
@@ -191,7 +191,13 @@ export default async function EventDetailPage({
             </header>
 
             <div className="mt-10 lg:hidden">
-              <EventFacts event={event} isRegistrationClosed={isRegistrationClosed} isLive={isLive} isCompleted={isCompleted} />
+              <EventFacts
+                event={event}
+                isRegistrationClosed={isRegistrationClosed}
+                isLive={isLive}
+                isCompleted={isCompleted}
+                isUpcoming={isUpcoming}
+              />
             </div>
 
             <div className="mt-12 space-y-10 sm:mt-16 sm:space-y-12">
@@ -333,7 +339,13 @@ export default async function EventDetailPage({
 
           <aside className="hidden lg:block">
             <div className="sticky top-24">
-              <EventFacts event={event} isRegistrationClosed={isRegistrationClosed} isLive={isLive} isCompleted={isCompleted} />
+              <EventFacts
+                event={event}
+                isRegistrationClosed={isRegistrationClosed}
+                isLive={isLive}
+                isCompleted={isCompleted}
+                isUpcoming={isUpcoming}
+              />
             </div>
           </aside>
         </div>
@@ -363,11 +375,13 @@ function EventFacts({
   isRegistrationClosed,
   isLive,
   isCompleted,
+  isUpcoming,
 }: {
   event: (typeof events)[number];
   isRegistrationClosed: boolean;
   isLive: boolean;
   isCompleted: boolean;
+  isUpcoming: boolean;
 }) {
   return (
     <div className="border-y border-border py-5 sm:py-6 lg:border-y-0 lg:border-l lg:pl-6">

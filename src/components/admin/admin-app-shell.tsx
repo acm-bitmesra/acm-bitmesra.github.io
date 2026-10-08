@@ -310,9 +310,9 @@ export function AdminAppShell({ context, children }: AdminAppShellProps) {
 
       <div className="flex min-h-[calc(100vh-3.5rem)]">
         <aside
-          className={\`sticky top-14 hidden h-[calc(100vh-3.5rem)] shrink-0 flex-col border-r border-zinc-800/70 bg-[#090909] lg:flex ${{
+          className={`sticky top-14 hidden h-[calc(100vh-3.5rem)] shrink-0 flex-col border-r border-zinc-800/70 bg-[#090909] lg:flex ${
             sidebarCollapsed ? "w-[68px]" : "w-[248px]"
-          }\`}
+          }`}
         >
           <div className="flex-1 overflow-y-auto px-2.5 py-4">
             {visibleSections.map((section) => (
@@ -332,16 +332,16 @@ export function AdminAppShell({ context, children }: AdminAppShellProps) {
                         href={item.href}
                         title={sidebarCollapsed ? item.label : undefined}
                         aria-current={active ? "page" : undefined}
-                        className={\`group flex h-9 items-center gap-2.5 rounded-lg px-2.5 font-mono text-[11px] transition ${{
+                        className={`group flex h-9 items-center gap-2.5 rounded-lg px-2.5 font-mono text-[11px] transition ${
                           active
                             ? "bg-zinc-800 text-white shadow-sm"
                             : "text-zinc-500 hover:bg-zinc-900/80 hover:text-zinc-200"
-                        } ${{sidebarCollapsed ? "justify-center px-0" : ""}\`}
+                        } ${sidebarCollapsed ? "justify-center px-0" : ""}`}
                       >
                         <Icon
-                          className={\`h-3.5 w-3.5 shrink-0 ${{
+                          className={`h-3.5 w-3.5 shrink-0 ${
                             active ? "text-red-500" : "text-zinc-600 group-hover:text-zinc-300"
-                          }\`}
+                          }`}
                         />
                         {!sidebarCollapsed && <span className="truncate">{item.label}</span>}
                         {!sidebarCollapsed && active && (
@@ -358,9 +358,9 @@ export function AdminAppShell({ context, children }: AdminAppShellProps) {
           <div className="border-t border-zinc-800/70 p-2.5">
             <Link
               href="/admin/profile"
-              className={\`flex items-center gap-2.5 rounded-lg px-2.5 py-2.5 text-zinc-500 transition hover:bg-zinc-900 hover:text-white ${{
+              className={`flex items-center gap-2.5 rounded-lg px-2.5 py-2.5 text-zinc-500 transition hover:bg-zinc-900 hover:text-white ${
                 sidebarCollapsed ? "justify-center px-0" : ""
-              }\`}
+              }`}
             >
               <UserRound className="h-4 w-4 shrink-0" />
               {!sidebarCollapsed && (
@@ -465,9 +465,9 @@ export function AdminAppShell({ context, children }: AdminAppShellProps) {
                         key={item.href}
                         href={item.href}
                         onClick={() => setMobileDrawerOpen(false)}
-                        className={\`flex items-center gap-3 rounded-lg px-3 py-3 text-xs font-mono ${{
+                        className={`flex items-center gap-3 rounded-lg px-3 py-3 text-xs font-mono ${
                           active ? "bg-zinc-800 text-white" : "text-zinc-400 hover:bg-zinc-900 hover:text-white"
-                        }\`}
+                        }`}
                       >
                         <Icon className="h-4 w-4 shrink-0" />
                         <span>{item.label}</span>
@@ -499,11 +499,11 @@ export function AdminAppShell({ context, children }: AdminAppShellProps) {
                               key={item.href}
                               href={item.href}
                               onClick={() => setMobileDrawerOpen(false)}
-                              className={\`flex items-center gap-3 rounded-lg px-3 py-2.5 text-xs font-mono ${{
+                              className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-xs font-mono ${
                                 active ? "bg-zinc-800 text-white" : "text-zinc-400 hover:bg-zinc-900 hover:text-white"
-                              }\`}
+                              }`}
                             >
-                              <Icon className={\`h-4 w-4 ${{active ? "text-red-500" : "text-zinc-600"}\`} />
+                              <Icon className={`h-4 w-4 ${active ? "text-red-500" : "text-zinc-600"}`} />
                               <span>{item.label}</span>
                               {active && (
                                 <span className="ml-auto text-[9px] uppercase tracking-widest text-red-500">

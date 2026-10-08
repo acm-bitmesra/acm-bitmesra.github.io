@@ -402,7 +402,7 @@ export default async function AdminDashboardPage() {
           <div className="mt-5 space-y-3">
             <MetricRow label="Database latency" value={systemHealth.dbLatencyMs + " ms"} />
             <MetricRow label="Active sessions" value={String(systemHealth.metrics.activeSessions)} />
-            <MetricRow label="Allowlist accounts" value={String(systemHealth.allowlist.size)} />
+            <MetricRow label="Allowlist accounts" value={String(systemHealth.allowlist.length)} />
             <MetricRow label="Active members" value={String(systemHealth.metrics.activeMembers)} />
           </div>
           {isSuperAdmin && (

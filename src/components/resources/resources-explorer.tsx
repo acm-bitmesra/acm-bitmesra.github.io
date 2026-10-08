@@ -54,7 +54,7 @@ const typeLabels: Record<string, string> = {
   github: "GitHub Repository",
   document: "Book & Docs",
   interactive: "Interactive Tool",
-  roadmap: "Curated Sheet",
+  roadmap: "Visual Roadmap / Sheet",
 };
 
 export function ResourcesExplorer({ initialResources }: ResourcesExplorerProps) {
@@ -181,7 +181,7 @@ export function ResourcesExplorer({ initialResources }: ResourcesExplorerProps) 
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <input
             type="text"
-            placeholder="Search roadmaps, algorithms, authors (e.g. AlgoForge, Striver, OSTEP, NeetCode)..."
+            placeholder="Search roadmaps, algorithms, authors (e.g. roadmap.sh, AlgoForge, Striver, OSTEP)..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full h-12 rounded-lg border border-border bg-card pl-10 pr-4 text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow"

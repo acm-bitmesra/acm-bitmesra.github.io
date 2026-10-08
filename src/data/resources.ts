@@ -315,16 +315,28 @@ export const studentResources: Resource[] = [
   {
     title: "Developer Roadmaps (roadmap.sh)",
     description:
-      "Community-driven visual roadmaps, study guides, and skill trees for Frontend, Backend, DevOps, AI Engineers, and Cybersecurity. Follow structured milestones to master any tech stack.",
+      "The definitive community-driven visual roadmaps, study guides, and interactive skill trees for modern software engineering. Features comprehensive career paths for Computer Science, Frontend, Backend, DevOps, AI / ML, and Cybersecurity with curated resources for every milestone.",
     category: "Development",
-    type: "interactive",
+    type: "roadmap",
     url: "https://roadmap.sh/",
     author: "Kamran Ahmed & Community",
     level: "All Levels",
-    tags: ["Frontend", "Backend", "DevOps", "AI Engineer", "Cybersecurity"],
+    featured: true,
+    tags: [
+      "roadmap.sh",
+      "Career Roadmaps",
+      "Computer Science",
+      "Frontend",
+      "Backend",
+      "DevOps",
+      "AI Engineer",
+      "Cybersecurity",
+      "Interactive Skill Trees",
+    ],
     highlights: [
-      "Visual skill trees with recommended articles and exercises per node",
-      "Tracks modern web standards, containerization, and cloud primitives",
+      "Interactive role-based and skill-based roadmaps with vetted articles and videos per node",
+      "Covers fundamental CS tracks: Data Structures, System Design, Git, Docker, and Linux",
+      "World-standard visual learning path benchmark recognized across global tech organizations",
     ],
   },
   {

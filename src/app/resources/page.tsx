@@ -6,11 +6,11 @@ import { BookOpen } from "lucide-react";
 export const metadata: Metadata = {
   title: "Engineering & Programming Resources | ACM BIT Mesra",
   description:
-    "Curated collection of DSA roadmaps, AlgoForge, Striver A2Z DSA sheet, competitive programming guides, systems textbooks, and developer education for BIT Mesra students.",
+    "Curated collection of developer roadmaps (roadmap.sh), AlgoForge, Striver A2Z DSA sheet, competitive programming guides, systems textbooks, and developer education for BIT Mesra students.",
   openGraph: {
     title: "Engineering & Programming Resources | ACM BIT Mesra",
     description:
-      "Vetted problem sets, contest guides, OSTEP, AlgoForge, Striver A2Z DSA sheet, and systems documentation curated by ACM BIT Mesra members for peer learning.",
+      "Vetted problem sets, contest guides, developer roadmaps (roadmap.sh), OSTEP, AlgoForge, and systems documentation curated by ACM BIT Mesra members for peer learning.",
   },
 };
 
