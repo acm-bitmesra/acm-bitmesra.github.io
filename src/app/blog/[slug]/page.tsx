@@ -207,14 +207,14 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             <div className="flex flex-wrap items-center gap-4">
               {post.authors.map((author: { name: string; role: string }, idx: number) => (
                 <div key={idx} className="flex items-center gap-2.5">
-                  <div className="h-8 w-8 rounded-full bg-secondary border border-border/80 flex items-center justify-center text-muted-foreground">
-                    <User className="h-4 w-4" />
+                  <div className="h-8 w-8 rounded-full bg-secondary border border-border/80 flex items-center justify-center text-muted-foreground shrink-0">
+                    <User className="h-4 w-4 shrink-0" />
                   </div>
                   <div className="flex flex-col">
                     <span className="font-semibold text-foreground flex items-center gap-1">
                       {author.name}
                       <span title="Verified Chapter Author">
-                        <ShieldCheck className="h-3 w-3 text-primary" />
+                        <ShieldCheck className="h-3 w-3 shrink-0 text-primary" />
                       </span>
                     </span>
                     <span className="text-[11px] text-muted-foreground">{author.role}</span>
@@ -225,12 +225,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
             <div className="flex items-center gap-4 text-muted-foreground">
               <span className="flex items-center gap-1.5">
-                <Calendar className="h-3.5 w-3.5 text-primary" />
-                {post.publishedAt ? formatDate(post.publishedAt.toISOString()) : "Recently published"}
+                <Calendar className="h-3.5 w-3.5 shrink-0 text-primary" />
+                {post.publishedAt ? formatDate(post.publishedAt) : "Recently published"}
               </span>
               <span>·</span>
               <span className="flex items-center gap-1.5">
-                <Clock className="h-3.5 w-3.5" />
+                <Clock className="h-3.5 w-3.5 shrink-0" />
                 {post.readingTimeMinutes} min read
               </span>
             </div>
@@ -314,7 +314,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 More technical articles from the {post.category} collection.
               </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch">
               {relatedPosts.map((related) => (
                 <ArticleCard key={related.slug} post={related} />
               ))}

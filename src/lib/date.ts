@@ -3,10 +3,24 @@
  * Enforces ISO 8601 input and produces consistent human-readable dates
  */
 
-export function formatDate(isoString: string): string {
+export function formatDate(dateInput: string | Date): string {
   try {
-    const [year, month, day] = isoString.split("-").map(Number);
-    if (!year || !month || !day) return isoString;
+    if (!dateInput) return "";
+    let dateStr = typeof dateInput === "string" ? dateInput : dateInput.toISOString();
+    if (dateStr.includes("T")) {
+      dateStr = dateStr.split("T")[0];
+    }
+    const [year, month, day] = dateStr.split("-").map(Number);
+    if (!year || !month || !day || isNaN(year) || isNaN(month) || isNaN(day)) {
+      const parsed = new Date(dateInput);
+      if (isNaN(parsed.getTime())) return typeof dateInput === "string" ? dateInput : "";
+      return new Intl.DateTimeFormat("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+        timeZone: "UTC",
+      }).format(parsed);
+    }
     const date = new Date(Date.UTC(year, month - 1, day));
     return new Intl.DateTimeFormat("en-US", {
       month: "short",
@@ -15,7 +29,7 @@ export function formatDate(isoString: string): string {
       timeZone: "UTC",
     }).format(date);
   } catch {
-    return isoString;
+    return typeof dateInput === "string" ? dateInput : "";
   }
 }
 
@@ -25,8 +39,10 @@ export function formatDateRange(startDateStr: string, endDateStr?: string): stri
   }
 
   try {
-    const [sYear, sMonth, sDay] = startDateStr.split("-").map(Number);
-    const [eYear, eMonth, eDay] = endDateStr.split("-").map(Number);
+    const sClean = startDateStr.includes("T") ? startDateStr.split("T")[0] : startDateStr;
+    const eClean = endDateStr.includes("T") ? endDateStr.split("T")[0] : endDateStr;
+    const [sYear, sMonth, sDay] = sClean.split("-").map(Number);
+    const [eYear, eMonth, eDay] = eClean.split("-").map(Number);
     const sDate = new Date(Date.UTC(sYear, sMonth - 1, sDay));
     const eDate = new Date(Date.UTC(eYear, eMonth - 1, eDay));
 

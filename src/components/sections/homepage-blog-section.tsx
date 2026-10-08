@@ -43,7 +43,7 @@ export async function HomepageBlogSection() {
         <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-3 border-b border-border/60 pb-4">
           <div>
             <div className="inline-flex items-center gap-2 font-mono text-xs text-primary uppercase tracking-wider mb-1">
-              <BookOpen className="h-3.5 w-3.5" />
+              <BookOpen className="h-3.5 w-3.5 shrink-0" />
               <span>Engineering & Research Publications</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
@@ -58,11 +58,11 @@ export async function HomepageBlogSection() {
             className="text-xs sm:text-sm font-mono font-medium text-foreground hover:text-primary transition-colors inline-flex items-center gap-1.5 group shrink-0"
           >
             <span>All articles</span>
-            <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="h-3.5 w-3.5 shrink-0 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 items-stretch">
           {posts.map((post) => (
             <ArticleCard key={post.slug} post={post} />
           ))}
