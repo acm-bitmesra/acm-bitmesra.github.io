@@ -35,7 +35,7 @@ export const events: Event[] = [
     about: [
       "Hacktoberfest 2026 is a month-long celebration of open source throughout October 2026. The official 2026 focus is on learning and building with open-source AI and open-weight models, through online and in-person activities.",
       "Pull requests and merge requests are no longer used as the official Hacktoberfest reward metric in 2026. Instead, the season centers on exploring, creating, and experimenting with community-driven computing.",
-      "ACM BIT Mesra is proud to host a dedicated challenge during this season to empower campus developers, researchers, and creators to build impactful software together.",
+      "ACM BIT Mesra is proud to host a dedicated challenge during this season to empower campus developers, researchers, and creators to build impactful software together. You can contribute to the event's recommended open-source projects or choose any public project maintained by ACM BIT Mesra on https://github.com/acm-bitmesra/.",
     ],
     expectations: [
       {
@@ -103,6 +103,18 @@ export const events: Event[] = [
       },
     ],
     recommendedRepos: [
+      {
+        name: "acm-bitmesra/NexHound",
+        url: "https://github.com/acm-bitmesra/NexHound",
+        description:
+          "ACM BIT Mesra's lightweight, Linux-first system diagnostics and network troubleshooting CLI. Improve it through documentation, tests, developer experience, and carefully scoped features.",
+        category: "Internal ACM Projects",
+        stars: "ACM",
+        language: "Go",
+        goodFor: "Good first contributions include installer/docs improvements, POSIX shell portability, Go tests, help text, and small, reviewed CLI features. This project is early-stage, so check the README and roadmap before picking work.",
+        issuesUrl: "https://github.com/acm-bitmesra/NexHound/issues",
+        tags: ["ACM BIT Mesra", "Go", "Linux", "CLI", "Internal Project", "Hacktoberfest"],
+      },
       {
         name: "huggingface/transformers",
         url: "https://github.com/huggingface/transformers",
