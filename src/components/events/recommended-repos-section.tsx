@@ -76,9 +76,28 @@ export function RecommendedReposSection({ repos }: RecommendedReposSectionProps)
             <p className="max-w-[75ch] text-sm leading-relaxed text-muted-foreground sm:text-base">
               A handpicked selection of top open-source projects welcoming contributions this season.
               Explore beginner-friendly issues, build with open-weight AI architectures, or contribute to
-              essential developer tooling.
+              essential developer tooling. You can also contribute to any public repository maintained by ACM BIT Mesra, not just the projects listed below.
             </p>
           </div>
+        </div>
+
+        <div className="mt-5 flex flex-col gap-3 border border-primary/20 bg-primary/[0.04] p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
+          <div>
+            <p className="font-semibold text-foreground">Want to contribute to an ACM-built project?</p>
+            <p className="mt-1 max-w-[65ch] text-sm leading-relaxed text-muted-foreground">
+              Explore any repository in the ACM BIT Mesra GitHub organization. Choose a project you like, read its README and contribution guidelines, and check issues before starting.
+            </p>
+          </div>
+          <a
+            href="https://github.com/acm-bitmesra/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 border border-border bg-background px-4 py-2 text-sm font-semibold text-foreground transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            <GithubIcon className="h-4 w-4" />
+            Browse ACM projects
+            <ExternalLink className="h-3.5 w-3.5" />
+          </a>
         </div>
 
         {/* Search and Category Filters */}
