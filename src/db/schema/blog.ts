@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, boolean, integer, jsonb, index, uniqueIndex } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, boolean, integer, jsonb, index, uniqueIndex, bigint } from "drizzle-orm/pg-core";
 import { chapterMembers } from "./members";
 
 export type BlogPostStatus = "DRAFT" | "IN_REVIEW" | "APPROVED" | "PUBLISHED" | "ARCHIVED";
@@ -169,3 +169,15 @@ export const auditLogs = pgTable(
     index("audit_logs_created_at_idx").on(table.createdAt),
   ]
 );
+
+
+/**
+ * Privacy-conscious per-article view totals.
+ * Slugs keep static fallback articles countable too.
+ * No IP address, user agent, cookie, or visitor identifier is stored.
+ */
+export const blogPageViews = pgTable("blog_page_views", {
+  slug: text("slug").primaryKey(),
+  viewCount: bigint("view_count", { mode: "number" }).default(0).notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
