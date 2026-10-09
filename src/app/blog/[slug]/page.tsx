@@ -8,6 +8,7 @@ import { siteConfig } from "@/config/site";
 import { ArticleCard } from "@/components/blog/article-card";
 import { MarkdownRenderer } from "@/components/blog/markdown-renderer";
 import { SocialShareActions } from "@/components/ui/social-share-actions";
+import { BlogPageViews } from "@/components/blog/blog-page-views";
 import { ArrowLeft, Calendar, Clock, Tag, User, ShieldCheck } from "@animateicons/react/lucide";
 
 export const dynamic = "force-dynamic";
@@ -233,6 +234,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 <Clock className="h-3.5 w-3.5 shrink-0" />
                 {post.readingTimeMinutes} min read
               </span>
+              <span>·</span>
+              <BlogPageViews slug={post.slug} />
             </div>
           </div>
         </header>
