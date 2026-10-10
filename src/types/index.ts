@@ -89,6 +89,7 @@ export interface Event {
   status: EventStatus;
   date: string; // ISO YYYY-MM-DD
   endDate?: string;
+  dateTba?: boolean; // date not yet announced; `date` is only a sort anchor and is never displayed
   time?: string;
   location?: string;
   registrationOpen?: boolean;

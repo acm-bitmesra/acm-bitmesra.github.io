@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Event } from "@/types";
-import { formatDate } from "@/lib/date";
+import { formatEventDate } from "@/lib/date";
 import { ArrowRight, ArrowUpRight } from "@animateicons/react/lucide";
 
 interface UpcomingEventsSectionProps {
@@ -21,7 +21,7 @@ function EventRow({ event }: { event: Event }) {
       className="group grid min-h-24 gap-3 border-b border-border py-5 transition-colors hover:bg-secondary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:grid-cols-[7rem_minmax(0,1fr)_8rem] sm:items-center sm:gap-5"
     >
       <time className="text-sm font-semibold text-foreground sm:text-right">
-        {formatDate(event.date)}
+        {formatEventDate(event)}
       </time>
       <span className="min-w-0">
         <span className="block truncate text-base font-semibold text-foreground group-hover:text-primary sm:text-lg">
@@ -97,7 +97,7 @@ export function UpcomingEventsSection({ events }: UpcomingEventsSectionProps) {
                   className="group grid min-h-20 gap-2 border-b border-border py-4 transition-colors hover:bg-secondary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:grid-cols-[7rem_minmax(0,1fr)] sm:gap-5"
                 >
                   <time className="text-sm text-muted-foreground sm:text-right">
-                    {formatDate(event.date)}
+                    {formatEventDate(event)}
                   </time>
                   <span className="flex min-w-0 items-center justify-between gap-4">
                     <span>

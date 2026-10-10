@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Event } from "@/types";
-import { formatDateRange } from "@/lib/date";
+import { formatEventDate } from "@/lib/date";
 import { MapPin, ArrowRight } from "@animateicons/react/lucide";
 
 interface FeaturedEventProps {
@@ -57,7 +57,7 @@ export function FeaturedEventSection({ event }: FeaturedEventProps) {
           <dl className="border-y border-border">
             <div className="grid grid-cols-[6.5rem_minmax(0,1fr)] gap-4 border-b border-border py-4">
               <dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Date</dt>
-              <dd className="text-sm font-medium text-foreground">{formatDateRange(event.date, event.endDate)}</dd>
+              <dd className="text-sm font-medium text-foreground">{formatEventDate(event)}</dd>
             </div>
             <div className="grid grid-cols-[6.5rem_minmax(0,1fr)] gap-4 border-b border-border py-4">
               <dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Location</dt>

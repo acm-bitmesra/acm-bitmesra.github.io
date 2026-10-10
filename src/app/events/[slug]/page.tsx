@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { events } from "@/data/events";
-import { formatDateRange } from "@/lib/date";
+import { formatEventDate } from "@/lib/date";
 import { EventCard } from "@/components/events/event-card";
 import { siteConfig } from "@/config/site";
 import { GithubIcon } from "@/components/ui/icons";
@@ -140,10 +140,13 @@ export default async function EventDetailPage({
 
   return (
     <article className="py-6 sm:py-10 lg:py-14">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      {/* schema.org Event requires a real startDate, so skip it until the date is announced */}
+      {!event.dateTba && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      )}
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border pb-4">
@@ -414,7 +417,7 @@ function EventFacts({
       <dl className="mt-5 divide-y divide-border border-y border-border">
         <div className="grid grid-cols-[7rem_minmax(0,1fr)] gap-4 py-4">
           <dt className="text-xs uppercase tracking-wide text-muted-foreground">Date</dt>
-          <dd className="text-sm font-medium text-foreground">{formatDateRange(event.date, event.endDate)}</dd>
+          <dd className="text-sm font-medium text-foreground">{formatEventDate(event)}</dd>
         </div>
         {event.time && (
           <div className="grid grid-cols-[7rem_minmax(0,1fr)] gap-4 py-4">
@@ -454,8 +457,14 @@ function EventFacts({
             aria-disabled="true"
             className="mt-4 inline-flex min-h-11 w-full items-center justify-center gap-2 border border-border bg-secondary px-4 text-sm font-semibold text-muted-foreground"
           >
-            <GithubIcon className="h-4 w-4 shrink-0 opacity-60" />
-            Register with GitHub
+            {event.registrationType === "github" ? (
+              <>
+                <GithubIcon className="h-4 w-4 shrink-0 opacity-60" />
+                Register with GitHub
+              </>
+            ) : (
+              "Register"
+            )}
           </button>
         </div>
       ) : event.registrationUrl && isUpcoming ? (

@@ -410,6 +410,31 @@ export const events: Event[] = [
     tags: ["Open Source", "Git", "GitHub", "Workshop"],
   },
   {
+    slug: "cybersecurity-workshop-2026",
+    title: "Cybersecurity Workshop",
+    shortDescription:
+      "Upcoming hands-on workshop on cybersecurity fundamentals. Date, venue, speakers, and registration details will be announced soon.",
+    description:
+      "ACM BIT Mesra is organizing an upcoming hands-on cybersecurity workshop for students who want to understand how systems are attacked and, more importantly, how to defend them.\n\nThe date, venue, speakers, session plan, and registration details will be announced on this event page.",
+    category: "Workshop",
+    status: "upcoming",
+    date: "2026-11-30",
+    dateTba: true,
+    time: "To Be Announced",
+    location: "To Be Announced",
+    organizers: ["ACM BIT Mesra"],
+    registrationOpen: false,
+    registrationStatusText: "Registration Opening Soon",
+    registrationHelperText:
+      "Registration details for the Cybersecurity Workshop will be announced soon. Stay tuned to this page for updates.",
+    tags: ["Cybersecurity", "Security", "Workshop", "Hands-on"],
+    about: [
+      "This workshop is planned as a practical introduction to cybersecurity, focused on building a defensive mindset through hands-on learning.",
+      "All sessions are intended for learning and ethical, authorized practice only.",
+      "Full details, including the date, venue, speakers, prerequisites, and registration, will be published on this page once confirmed.",
+    ],
+  },
+  {
     slug: "icpc-regional-prep-sprint",
     title: "ICPC Regional Preparation Sprint",
     shortDescription: "Team contest simulation with ACM ICPC style team coordination and problem prioritization.",

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Event } from "@/types";
-import { formatDateRange } from "@/lib/date";
+import { formatEventDate } from "@/lib/date";
 import { Calendar, MapPin, ArrowUpRight } from "@animateicons/react/lucide";
 import { cn } from "@/lib/utils";
 
@@ -61,7 +61,7 @@ export function EventCard({ event }: EventCardProps) {
       <div className="mt-auto flex flex-col gap-2 pt-5 text-xs text-muted-foreground sm:flex-row sm:items-center sm:gap-5">
         <span className="inline-flex items-center gap-2">
           <Calendar className="h-4 w-4 shrink-0" />
-          {formatDateRange(event.date, event.endDate)}
+          {formatEventDate(event)}
         </span>
         {event.location && (
           <span className="inline-flex min-w-0 items-center gap-2">

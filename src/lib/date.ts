@@ -1,3 +1,5 @@
+import type { Event } from "@/types";
+
 /**
  * Date formatting utilities for ACM BIT Mesra platform
  * Enforces ISO 8601 input and produces consistent human-readable dates
@@ -61,4 +63,11 @@ export function formatDateRange(startDateStr: string, endDateStr?: string): stri
   } catch {
     return `${startDateStr} – ${endDateStr}`;
   }
+}
+
+export const EVENT_DATE_TBA_LABEL = "Date to be announced";
+
+export function formatEventDate(event: Pick<Event, "date" | "endDate" | "dateTba">): string {
+  if (event.dateTba) return EVENT_DATE_TBA_LABEL;
+  return formatDateRange(event.date, event.endDate);
 }
