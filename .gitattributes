@@ -1,0 +1,5 @@
+# GitHub Linguist language statistics and git diff overrides
+# Exclude Hexclave integration files and workflows from repository statistics
+hexclave.config.ts linguist-vendored linguist-generated linguist-detectable=false
+.github/workflows/hexclave-config-sync.yml linguist-vendored linguist-generated linguist-detectable=false
+*hexclave* linguist-vendored linguist-generated linguist-detectable=false

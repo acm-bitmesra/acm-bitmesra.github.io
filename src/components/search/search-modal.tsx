@@ -68,7 +68,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
         description: e.shortDescription,
         category: "EVENT",
         href: `/events/${e.slug}`,
-        meta: e.category,
+        meta: `${e.category} ${e.tags?.join(" ") || ""}`,
       });
     });
 

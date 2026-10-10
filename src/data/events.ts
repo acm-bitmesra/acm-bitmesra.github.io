@@ -7,9 +7,9 @@ export const events: Event[] = [
     tagline: "Build. Experiment. Share.",
     theme: "AI belongs to everyone.",
     shortDescription:
-      "Hacktoberfest 2026 is here. This October, ACM BIT Mesra invites students and developers to explore open source, experiment with AI and open-weight models, and build something meaningful.",
+      "Hacktoberfest 2026 is here! Partnering with the HF26 DEV Challenge Hub (https://dev.to/challenges/hf26): five challenges, one prompt, and a new theme every week centered on building with open-source AI and open-weight models.",
     description:
-      "Hacktoberfest 2026 is here. This October, ACM BIT Mesra invites students and developers to explore open source, experiment with AI and open-weight models, and build something meaningful.\n\nLearn, build, experiment, and showcase what you create throughout the month.\n\nMore challenge details, rules, timelines, judging information, and prizes will be announced on this event page.",
+      "Hacktoberfest 2026 is here. This October, ACM BIT Mesra invites students, researchers, and developers to explore the HF26 DEV Challenge Hub (https://dev.to/challenges/hf26): five Hacktoberfest challenges, one prompt, and a new theme every week.\n\nThis year's Hacktoberfest is not about open-source pull requests. There is no PR count to hit and no repos to hunt for. Instead, you build a brand-new project with open-source AI at its core, and publish your project story on DEV.\n\nLearn, build, experiment with open-weight models, utilize partner developer credits, and showcase what you create throughout the month.",
     category: "Open Source / AI / Developer Community",
     status: "upcoming",
     date: "2026-10-01",
@@ -27,80 +27,138 @@ export const events: Event[] = [
     tags: [
       "Open Source",
       "Hacktoberfest",
+      "HF26",
+      "DEV Challenge Hub",
       "AI",
       "Open-Weight Models",
       "Developer Community",
       "Building & Experimentation",
+      "Touch Grass",
+      "Render",
+      "TabPFN",
+      "Tinker",
+      "Arduino UNO Q",
     ],
     about: [
-      "Hacktoberfest 2026 is a month-long celebration of open source throughout October 2026. The official 2026 focus is on learning and building with open-source AI and open-weight models, through online and in-person activities.",
+      "Hacktoberfest 2026 is a month-long celebration of open source throughout October 2026. The official focus is on learning and building with open-source AI and open-weight models through online and campus activities.",
+      "The flagship challenge season is hosted in collaboration with DEV through the HF26 DEV Challenge Hub (https://dev.to/challenges/hf26), featuring five weekly challenges under one central prompt: 'Build something with open-source AI at its core.'",
       "Pull requests and merge requests are no longer used as the official Hacktoberfest reward metric in 2026. Instead, the season centers on exploring, creating, and experimenting with community-driven computing.",
-      "ACM BIT Mesra is proud to host a dedicated challenge during this season to empower campus developers, researchers, and creators to build impactful software together. You can contribute to the event's recommended open-source projects or choose any public project maintained by ACM BIT Mesra on https://github.com/acm-bitmesra/.",
-      "You don't need to wait for registrations to open. Start contributing now and focus on making meaningful contributions; you may register anytime.",
+      "ACM BIT Mesra is proud to host a dedicated challenge track to empower campus developers, researchers, and creators to build impactful software together. You can contribute to the event's recommended open-source projects, build brand-new AI apps for the DEV Challenge Hub, or build on public projects maintained by ACM BIT Mesra on https://github.com/acm-bitmesra/.",
+      "You don't need to wait for campus registrations to open. Start building right now, claim your free partner credits on hacktoberfest.com, and publish your submissions on DEV.",
     ],
     expectations: [
       {
-        title: "Explore open source",
+        title: "Explore open-source AI",
         description:
-          "Discover impactful repositories, open tools, and community-driven computing practices.",
+          "Discover impactful open-weight models, agent harnesses, and community-driven computing practices.",
       },
       {
-        title: "Experiment with AI",
+        title: "Experiment locally",
         description:
-          "Engage with open-weight models, local inference runtimes, and accessible intelligence.",
+          "Run local inference runtimes, test edge deployment on devices like Arduino UNO Q, and keep data private.",
       },
       {
-        title: "Build meaningful projects",
+        title: "Build brand-new projects",
         description:
-          "Move from passive learning to shipping practical software and prototypes.",
+          "Ship functional prototypes and applications across the 5 weekly DEV Challenge themes.",
       },
       {
-        title: "Learn with the community",
+        title: "Publish on DEV",
         description:
-          "Collaborate alongside peers, mentors, and SIG leads across the chapter.",
+          "Write clear technical stories explaining your design choices, prompt architecture, and open advantages.",
       },
       {
-        title: "Showcase what you create",
+        title: "Win cash & badges",
         description:
-          "Present your work, share insights, and get peer feedback by the end of October.",
+          "Compete for weekly prizes up to $250 USD, DEV++ memberships, and exclusive completion badges.",
       },
     ],
-    challengeTitle: "ACM Hacktoberfest Challenge",
+    challengeTitle: "HF26 DEV Challenge Hub Overview",
     challengeDescription:
-      "ACM BIT Mesra will host a dedicated challenge during Hacktoberfest. Challenge rules, submission requirements, judging criteria, timeline, and other details will be announced soon.",
-    timelineNotice: "October 2026 — Challenge Month",
+      "Hacktoberfest 2026 features five DEV Challenges back-to-back all month long (https://dev.to/challenges/hf26). All five challenges share the prompt: 'Build something with open-source AI at its core', while each week reveals a new secret theme.",
+    timelineNotice: "October 2026 — Weekly Challenge Calendar",
     timelineItems: [
       {
-        date: "October 1 – 31, 2026",
-        title: "Challenge Month",
+        date: "Oct 2 – 5, 2026",
+        title: "Weekend Kickoff: Build for a Friend",
         status: "Confirmed",
-        description: "Month-long building, exploration, and community experimentation.",
+        description: "Closed kickoff weekend challenge. Winners announced week of Oct 5.",
       },
       {
-        date: "To Be Announced",
-        title: "Challenge Rules & Submission Guidelines",
-        status: "Upcoming",
-        description: "Detailed problem tracks, constraints, and submission criteria.",
+        date: "Oct 5 – 11, 2026",
+        title: "Week 1 Challenge: Touch Grass",
+        status: "Confirmed",
+        description: "Active challenge! Build an open-source AI project themed around getting outdoors, wellness, or nature. Winners announced week of Oct 12.",
       },
       {
-        date: "To Be Announced",
-        title: "Workshops & Mentorship Check-Ins",
+        date: "Oct 12 – 18, 2026",
+        title: "Week 2 Challenge: Theme Revealed at Launch",
         status: "Upcoming",
-        description: "Hands-on guidance from chapter leads and technical mentors.",
+        description: "Theme revealed on launch Monday at 09:00 UTC. Winners announced week of Oct 19.",
       },
       {
-        date: "To Be Announced",
-        title: "Submissions & Peer Showcase",
+        date: "Oct 19 – 25, 2026",
+        title: "Week 3 Challenge: Theme Revealed at Launch",
         status: "Upcoming",
-        description: "Project review, project showcases, and community evaluations.",
+        description: "Theme revealed on launch Monday at 09:00 UTC. Winners announced week of Oct 26.",
+      },
+      {
+        date: "Oct 26 – 31, 2026",
+        title: "Week 4 Challenge: Theme Revealed at Launch",
+        status: "Upcoming",
+        description: "Theme revealed on launch Monday at 09:00 UTC. Winners announced week of Nov 2.",
       },
     ],
-    prizesNotice: "Prize and recognition details will be announced by the organizing team.",
+    rules: [
+      "The Prompt: Build something with open-source AI at its core (open-weight model, open-source agent harness/framework, or local inference).",
+      "Tell us why open innovation matters: Explain where your open approach worked better than closed alternatives (offline usage, zero cost, model swapping, data privacy).",
+      "New projects, not PRs: Each submission must be a brand-new project created during that challenge's window. Existing repo PRs do not qualify.",
+      "One submission per challenge: You may submit up to 5 times across October. Each submission qualifies for overall and partner categories.",
+      "Join anytime: Every challenge is a fresh start with its own independent winners.",
+      "Judging criteria: Writing Quality (weighted most heavily), Relevance to Prompt & Theme, Creativity, and Technical Execution.",
+      "Show your work: Embed your GitHub repository and optionally your DevRelay agent recording session.",
+    ],
+    prizesNotice: "Prizes are awarded for each weekly challenge, along with free partner credits for all builders.",
     prizes: [
       {
-        title: "Prizes: To Be Decided",
-        reward: "To Be Decided",
-        description: "Prize and recognition details will be announced by the organizing team.",
+        title: "Overall Challenge Winner",
+        reward: "$250 USD + DEV++ Membership",
+        description: "Overall top submission per challenge plus exclusive DEV winner badge.",
+      },
+      {
+        title: "Best Use of Render",
+        reward: "$200 USD + Exclusive Badge",
+        description: "Use Render as project AI runtime, host agent front end, or run Hermes / OpenClaw.",
+      },
+      {
+        title: "Best Use of TabPFN (Prior Labs)",
+        reward: "$200 USD + Exclusive Badge",
+        description: "Use TabPFN tabular foundation model to forecast, classify, or spot anomalies in tabular data.",
+      },
+      {
+        title: "Best Use of Tinker (Thinking Machines)",
+        reward: "$200 USD + Exclusive Badge",
+        description: "Fine-tune a model for a specific task and show clear improvement over baseline.",
+      },
+      {
+        title: "Best Use of Arduino",
+        reward: "$200 USD + Exclusive Badge",
+        description: "Build with Arduino UNO Q, edge AI models, physical agents, or Qualcomm AI Hub.",
+      },
+      {
+        title: "Partner Categories",
+        reward: "$100 USD + Exclusive Badge",
+        description: "Category winner awards across participating partners each week.",
+      },
+      {
+        title: "Hacktoberfest Completion Badge",
+        reward: "Exclusive DEV Badge",
+        description: "Awarded to every participant with a valid qualifying submission on DEV.",
+      },
+      {
+        title: "Free Partner Credits",
+        reward: "Tinker, Render, Backboard, ElevenLabs",
+        description: "Claim promo credits and free developer tiers at hacktoberfest.com/my/promos.",
       },
     ],
     recommendedRepos: [
@@ -287,28 +345,39 @@ export const events: Event[] = [
     ],
     faqs: [
       {
-        question: "What is Hacktoberfest?",
+        question: "What is Hacktoberfest 2026 and the HF26 DEV Challenge Hub?",
         answer:
-          "A month-long celebration of open source throughout October. In 2026, its focus is on learning and building with open-source AI and open-weight models.",
+          "Hacktoberfest 2026 is a month-long celebration of open source. The centerpiece competition this year is the HF26 DEV Challenge Hub (https://dev.to/challenges/hf26), consisting of five back-to-back weekly challenges asking builders to create projects with open-source AI at their core.",
       },
       {
-        question: "Do pull requests count toward Hacktoberfest rewards in 2026?",
+        question: "Do pull requests to existing repositories count toward Hacktoberfest in 2026?",
         answer:
-          "No. Pull requests and merge requests no longer count toward official Hacktoberfest rewards in 2026.",
+          "No. Pull requests and merge requests no longer count toward official Hacktoberfest rewards in 2026. Instead, builders create brand-new standalone software or agents and write about them on DEV.",
       },
       {
-        question: "When will ACM BIT Mesra challenge registration open?",
+        question: "What is the prompt for the weekly challenges?",
         answer:
-          "Registrations will open soon. The website should show the registration button as disabled until the organizing team activates it.",
+          "The prompt for all five challenges is: 'Build something with open-source AI at its core.' That can mean running an open-weight model, using an open-source agent framework, running inference locally, or all three.",
       },
       {
-        question: "What are the prizes?",
-        answer: "To be decided. Details will be announced later.",
+        question: "What are the prizes and partner categories?",
+        answer:
+          "Each weekly challenge awards an Overall Winner ($250 USD + DEV++ Membership + exclusive badge), Featured Partner Winners ($200 USD each for Best Use of Render, TabPFN, Tinker, and Arduino), Partner Categories ($100 USD each), and an exclusive Hacktoberfest Completion Badge for all qualifying submissions.",
       },
       {
-        question: "Who can participate?",
+        question: "How do I claim free AI partner credits?",
         answer:
-          "Participation eligibility will follow the official ACM BIT Mesra challenge guidelines once finalized. Specific criteria and team guidelines will be posted on this page.",
+          "Several partner organizations (including Tinker, Render, Backboard, and ElevenLabs) provide free API credits and tiers. Participants can claim their codes at https://hacktoberfest.com/my/promos.",
+      },
+      {
+        question: "Can I participate if I join later in the month?",
+        answer:
+          "Yes! Every challenge is a fresh start. Whether you start in Week 1 (Touch Grass) or Week 4, you compete on equal footing with all participants.",
+      },
+      {
+        question: "Can I contribute to ACM BIT Mesra repositories as part of my Hacktoberfest journey?",
+        answer:
+          "Yes! ACM BIT Mesra maintains open-source repositories on https://github.com/acm-bitmesra/ (like NexHound, dev-net-audit, and our chapter website). You can build AI features, improve documentation, and contribute to internal campus projects alongside the DEV Challenge Hub.",
       },
     ],
     disclaimer:

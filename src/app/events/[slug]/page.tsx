@@ -11,6 +11,7 @@ import { EventShareActions } from "@/components/events/event-share-actions";
 import { Clock, Compass, FileText, CircleQuestionMark as HelpCircle, MapPin, ShieldAlert, Sparkles, Trophy, Users } from "@animateicons/react/lucide";
 import { Badge } from "@/components/ui/badge";
 import { RecommendedReposSection } from "@/components/events/recommended-repos-section";
+import { DevChallengeHubSection } from "@/components/events/dev-challenge-hub-section";
 
 interface EventDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -203,6 +204,10 @@ export default async function EventDetailPage({
             </div>
 
             <div className="mt-12 space-y-10 sm:mt-16 sm:space-y-12">
+              {event.slug === "hacktoberfest-2026" && (
+                <DevChallengeHubSection />
+              )}
+
               {event.about && event.about.length > 0 && (
                 <Section title="About the event" icon={<Compass className="h-5 w-5" />}>
                   <div className="max-w-[72ch] space-y-4 text-base leading-7 text-muted-foreground">
