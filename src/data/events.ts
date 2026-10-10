@@ -21,7 +21,7 @@ export const events: Event[] = [
     registrationOpen: false,
     registrationStatusText: "Registration Opening Soon",
     registrationHelperText:
-      "Registrations for the ACM Hacktoberfest Challenge will open soon. Stay tuned for the registration announcement.",
+      "Registrations for the ACM Hacktoberfest Challenge will open soon. You can start contributing right now, before registrations open. Focus on contributing; you may register anytime.",
     registrationType: "github",
     registrationUrl: "/events/hacktoberfest-2026",
     tags: [
@@ -36,6 +36,7 @@ export const events: Event[] = [
       "Hacktoberfest 2026 is a month-long celebration of open source throughout October 2026. The official 2026 focus is on learning and building with open-source AI and open-weight models, through online and in-person activities.",
       "Pull requests and merge requests are no longer used as the official Hacktoberfest reward metric in 2026. Instead, the season centers on exploring, creating, and experimenting with community-driven computing.",
       "ACM BIT Mesra is proud to host a dedicated challenge during this season to empower campus developers, researchers, and creators to build impactful software together. You can contribute to the event's recommended open-source projects or choose any public project maintained by ACM BIT Mesra on https://github.com/acm-bitmesra/.",
+      "You don't need to wait for registrations to open. Start contributing now and focus on making meaningful contributions; you may register anytime.",
     ],
     expectations: [
       {
