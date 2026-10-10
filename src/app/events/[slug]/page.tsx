@@ -8,10 +8,9 @@ import { EventCard } from "@/components/events/event-card";
 import { siteConfig } from "@/config/site";
 import { GithubIcon } from "@/components/ui/icons";
 import { EventShareActions } from "@/components/events/event-share-actions";
-import { Clock, Compass, FileText, CircleQuestionMark as HelpCircle, MapPin, ShieldAlert, Sparkles, Trophy, Users } from "@animateicons/react/lucide";
+import { Clock, Compass, FileText, CircleQuestionMark as HelpCircle, MapPin, ShieldAlert, Sparkles, Trophy, Users, ExternalLink } from "@animateicons/react/lucide";
 import { Badge } from "@/components/ui/badge";
 import { RecommendedReposSection } from "@/components/events/recommended-repos-section";
-import { DevChallengeHubSection } from "@/components/events/dev-challenge-hub-section";
 
 interface EventDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -204,10 +203,6 @@ export default async function EventDetailPage({
             </div>
 
             <div className="mt-12 space-y-10 sm:mt-16 sm:space-y-12">
-              {event.slug === "hacktoberfest-2026" && (
-                <DevChallengeHubSection />
-              )}
-
               {event.about && event.about.length > 0 && (
                 <Section title="About the event" icon={<Compass className="h-5 w-5" />}>
                   <div className="max-w-[72ch] space-y-4 text-base leading-7 text-muted-foreground">
@@ -313,6 +308,32 @@ export default async function EventDetailPage({
                         <span className="text-sm leading-6 text-muted-foreground">{winner.members.join(", ")}</span>
                       </div>
                     ))}
+                  </div>
+                </Section>
+              )}
+
+              {event.slug === "hacktoberfest-2026" && (
+                <Section title="Explore more" icon={<ExternalLink className="h-5 w-5" />}>
+                  <div className="border border-border bg-card p-6 sm:p-8">
+                    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                      <div className="space-y-1.5 max-w-[68ch]">
+                        <h3 className="text-lg font-semibold text-foreground sm:text-xl">
+                          HF26 DEV Challenge Hub
+                        </h3>
+                        <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">
+                          Explore the official Hacktoberfest 2026 weekly prompts, open-weight AI challenges, and community showcases on DEV.
+                        </p>
+                      </div>
+                      <a
+                        href="https://dev.to/challenges/hf26"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 border border-border bg-secondary px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-secondary/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                      >
+                        <span>Explore on dev.to</span>
+                        <ExternalLink className="h-4 w-4" />
+                      </a>
+                    </div>
                   </div>
                 </Section>
               )}
