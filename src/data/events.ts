@@ -116,6 +116,18 @@ export const events: Event[] = [
         tags: ["ACM BIT Mesra", "Go", "Linux", "CLI", "Internal Project", "Hacktoberfest"],
       },
       {
+        name: "acm-bitmesra/dev-net-audit",
+        url: "https://github.com/acm-bitmesra/dev-net-audit",
+        description:
+          "ACM BIT Mesra's local-first, read-only network exposure auditor for developer machines. It explains which services are listening, how they are bound, and what defensive checks are worth reviewing.",
+        category: "Internal ACM Projects",
+        stars: "ACM",
+        language: "Go",
+        goodFor: "Go unit tests, the Linux listener collector, binding-scope edge cases, CLI help text, and learner-friendly networking docs. The project is in early development, so read the README and project status before picking work.",
+        issuesUrl: "https://github.com/acm-bitmesra/dev-net-audit/issues",
+        tags: ["ACM BIT Mesra", "Go", "Networking", "Security", "Internal Project", "Hacktoberfest"],
+      },
+      {
         name: "huggingface/transformers",
         url: "https://github.com/huggingface/transformers",
         description:
@@ -228,12 +240,12 @@ export const events: Event[] = [
         url: "https://github.com/acm-bitmesra/acm-bitmesra.github.io",
         description:
           "The official ACM Student Chapter platform at BIT Mesra. Built with Next.js 15, Tailwind CSS, Neon PostgreSQL, and Cloudflare Workers.",
-        category: "Algorithms & First Contributions",
-        stars: "Chapter",
+        category: "Internal ACM Projects",
+        stars: "ACM",
         language: "TypeScript",
         goodFor: "Chapter contributors, adding guides, improving responsive UI, fixing accessibility, and documentation.",
         issuesUrl: "https://github.com/acm-bitmesra/acm-bitmesra.github.io/issues",
-        tags: ["ACM BIT Mesra", "Next.js", "Tailwind CSS", "TypeScript"],
+        tags: ["ACM BIT Mesra", "Next.js", "Tailwind CSS", "TypeScript", "Internal Project", "Hacktoberfest"],
       },
       {
         name: "TheAlgorithms/Python",

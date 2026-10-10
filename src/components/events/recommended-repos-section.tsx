@@ -83,13 +83,13 @@ export function RecommendedReposSection({ repos }: RecommendedReposSectionProps)
 
         <div className="mt-5 flex flex-col gap-3 border border-primary/20 bg-primary/[0.04] p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
           <div>
-            <p className="font-semibold text-foreground">Want to contribute to an ACM-built project?</p>
+            <p className="font-semibold text-foreground">Contribute to ACM BIT Mesra projects for the OSS community</p>
             <p className="mt-1 max-w-[65ch] text-sm leading-relaxed text-muted-foreground">
-              Explore any repository in the ACM BIT Mesra GitHub organization. Choose a project you like, read its README and contribution guidelines, and check issues before starting.
+              For internal repos, choose any repository from the ACM BIT Mesra GitHub organization. Pick a project you like, read its README and contribution guidelines, and check open issues before starting.
             </p>
           </div>
           <a
-            href="https://github.com/acm-bitmesra/"
+            href="https://github.com/orgs/acm-bitmesra/repositories"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 border border-border bg-background px-4 py-2 text-sm font-semibold text-foreground transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
