@@ -312,28 +312,34 @@ export default async function EventDetailPage({
                 </Section>
               )}
 
-              {event.slug === "hacktoberfest-2026" && (
+              {event.exploreLinks && event.exploreLinks.length > 0 && (
                 <Section title="Explore more" icon={<ExternalLink className="h-5 w-5" />}>
-                  <div className="border border-border bg-card p-6 sm:p-8">
-                    <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                      <div className="space-y-1.5 max-w-[68ch]">
-                        <h3 className="text-lg font-semibold text-foreground sm:text-xl">
-                          HF26 DEV Challenge Hub
-                        </h3>
-                        <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">
-                          Explore the official Hacktoberfest 2026 weekly prompts, open-weight AI challenges, and community showcases on DEV.
-                        </p>
+                  <div className="space-y-4">
+                    {event.exploreLinks.map((link, index) => (
+                      <div key={index} className="border border-border bg-card p-6 sm:p-8">
+                        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                          <div className="space-y-1.5 max-w-[68ch]">
+                            <h3 className="text-lg font-semibold text-foreground sm:text-xl">
+                              {link.title}
+                            </h3>
+                            {link.description && (
+                              <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">
+                                {link.description}
+                              </p>
+                            )}
+                          </div>
+                          <a
+                            href={link.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 border border-border bg-secondary px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-secondary/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                          >
+                            <span>{link.label || "Visit link"}</span>
+                            <ExternalLink className="h-4 w-4" />
+                          </a>
+                        </div>
                       </div>
-                      <a
-                        href="https://dev.to/challenges/hf26"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 border border-border bg-secondary px-5 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-secondary/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                      >
-                        <span>Explore on dev.to</span>
-                        <ExternalLink className="h-4 w-4" />
-                      </a>
-                    </div>
+                    ))}
                   </div>
                 </Section>
               )}

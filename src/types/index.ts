@@ -80,6 +80,13 @@ export interface RecommendedRepo {
   tags?: string[];
 }
 
+export interface EventLink {
+  title: string;
+  description?: string;
+  url: string;
+  label?: string;
+}
+
 export interface Event {
   slug: string;
   title: string;
@@ -121,6 +128,7 @@ export interface Event {
   timelineNotice?: string;
   timelineItems?: EventTimelineItem[];
   recommendedRepos?: RecommendedRepo[];
+  exploreLinks?: EventLink[];
   disclaimer?: string;
 }
 

@@ -62,13 +62,14 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
 
     // Events
     events.forEach((e) => {
+      const exploreLinksText = e.exploreLinks?.map((l) => `${l.title} ${l.url}`).join(" ") || "";
       list.push({
         id: `event-${e.slug}`,
         title: e.title,
         description: e.shortDescription,
         category: "EVENT",
         href: `/events/${e.slug}`,
-        meta: `${e.category} ${e.tags?.join(" ") || ""}`,
+        meta: `${e.category} ${e.tags?.join(" ") || ""} ${exploreLinksText}`.trim(),
       });
     });
 

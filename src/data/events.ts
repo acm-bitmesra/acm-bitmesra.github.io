@@ -311,6 +311,22 @@ export const events: Event[] = [
           "Participation eligibility will follow the official ACM BIT Mesra challenge guidelines once finalized. Specific criteria and team guidelines will be posted on this page.",
       },
     ],
+    exploreLinks: [
+      {
+        title: "Official Hacktoberfest Website",
+        description:
+          "Visit the global home of Hacktoberfest to learn about the worldwide open-source initiative, themes, values, and community activities.",
+        url: "https://hacktoberfest.com/",
+        label: "Visit hacktoberfest.com",
+      },
+      {
+        title: "HF26 DEV Challenge Hub",
+        description:
+          "Explore the official Hacktoberfest 2026 weekly prompts, open-weight AI challenges, and community showcases on DEV.",
+        url: "https://dev.to/challenges/hf26",
+        label: "Explore on dev.to",
+      },
+    ],
     disclaimer:
       "Disclaimer: Hacktoberfest is a registered trademark. This event is an independent community challenge hosted by ACM BIT Mesra associated with the open-source season, and is not officially operated, sponsored, or endorsed by Hacktoberfest, DigitalOcean, MLH, or DEV.",
   },
