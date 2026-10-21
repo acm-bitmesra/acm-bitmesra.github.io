@@ -11,6 +11,7 @@ import { EventShareActions } from "@/components/events/event-share-actions";
 import { Clock, Compass, FileText, CircleQuestionMark as HelpCircle, MapPin, ShieldAlert, Sparkles, Trophy, Users, ExternalLink } from "@animateicons/react/lucide";
 import { Badge } from "@/components/ui/badge";
 import { RecommendedReposSection } from "@/components/events/recommended-repos-section";
+import { EventRegistrationButton } from "@/components/events/event-registration-button";
 
 interface EventDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -190,6 +191,17 @@ export default async function EventDetailPage({
                     </span>
                   </>
                 )}
+              </div>
+
+              <div className="mt-5 flex flex-wrap items-center gap-3">
+                <Link
+                  href={`/events/${event.slug}/rankings`}
+                  className="inline-flex items-center gap-2 rounded-lg border border-border bg-card px-3.5 py-2 text-xs font-semibold text-foreground shadow-sm hover:border-primary/50 hover:bg-muted/50 transition-colors"
+                >
+                  <Trophy className="h-4 w-4 text-amber-500" />
+                  <span>Live Leaderboard & Standings</span>
+                  <span aria-hidden="true" className="text-muted-foreground">→</span>
+                </Link>
               </div>
             </header>
 
@@ -499,14 +511,12 @@ function EventFacts({
             )}
           </button>
         </div>
-      ) : event.registrationUrl && isUpcoming ? (
-        <a
-          href={event.registrationUrl}
-          className="mt-5 inline-flex min-h-11 w-full items-center justify-center gap-2 bg-primary px-4 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
-        >
-          Register for event
-          <span aria-hidden="true">→</span>
-        </a>
+      ) : isUpcoming ? (
+        <EventRegistrationButton
+          slug={event.slug}
+          isUpcoming={isUpcoming}
+          registrationUrl={event.registrationUrl}
+        />
       ) : null}
     </div>
   );

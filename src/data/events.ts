@@ -18,10 +18,10 @@ export const events: Event[] = [
     location: "Online & BIT Mesra Campus, Ranchi",
     organizers: ["ACM BIT Mesra"],
     isFeatured: true,
-    registrationOpen: false,
-    registrationStatusText: "Registration Opening Soon",
+    registrationOpen: true,
+    registrationStatusText: "Registration Open",
     registrationHelperText:
-      "Registrations for the ACM Hacktoberfest Challenge will open soon. You can start contributing right now, before registrations open. Focus on contributing; you may register anytime.",
+      "Registrations are officially open! Connect your GitHub account and register to submit your contributions and track your live standing.",
     registrationType: "github",
     registrationUrl: "/events/hacktoberfest-2026",
     tags: [
@@ -297,9 +297,9 @@ export const events: Event[] = [
           "No. Pull requests and merge requests no longer count toward official Hacktoberfest rewards in 2026.",
       },
       {
-        question: "When will ACM BIT Mesra challenge registration open?",
+        question: "How do I register for the ACM BIT Mesra Hacktoberfest challenge?",
         answer:
-          "Registrations will open soon. The website should show the registration button as disabled until the organizing team activates it.",
+          "Registrations are officially OPEN! Sign in with your university account, connect your GitHub profile, and click 'Register for Hacktoberfest 2026' to start tracking your open-source contributions and compete on the live rankings leaderboard.",
       },
       {
         question: "What are the prizes?",

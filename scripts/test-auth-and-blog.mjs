@@ -13,13 +13,13 @@ if (!DATABASE_URL) {
 
 const sql = neon(DATABASE_URL);
 
-async function queryWithRetry(fn, retries = 3) {
+async function queryWithRetry(fn, retries = 5) {
   for (let i = 0; i < retries; i++) {
     try {
       return await fn();
     } catch (err) {
       if (i === retries - 1) throw err;
-      await new Promise((resolve) => setTimeout(resolve, 300));
+      await new Promise((resolve) => setTimeout(resolve, 1000 * (i + 1)));
     }
   }
 }

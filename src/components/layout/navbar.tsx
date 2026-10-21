@@ -13,6 +13,7 @@ import {
   AcmLogo,
 } from "@/components/ui/icons";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { useSession } from "@/lib/auth/auth-client";
 
 interface NavbarProps {
   onOpenSearch?: () => void;
@@ -21,6 +22,8 @@ interface NavbarProps {
 export function Navbar({ onOpenSearch }: NavbarProps) {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+  const { data: sessionData, isPending: isSessionPending } = useSession();
+  const user = sessionData?.user;
 
   React.useEffect(() => {
     document.body.style.overflow = mobileMenuOpen ? "hidden" : "";
@@ -100,12 +103,41 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
             <ThemeToggle />
           </div>
 
-          <Link
-            href="/join"
-            className="hidden min-h-11 items-center justify-center rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:inline-flex"
-          >
-            Join ACM
-          </Link>
+          {!isSessionPending && user ? (
+            <Link
+              href="/dashboard"
+              className="hidden min-h-9 items-center justify-center gap-2 rounded-md border border-border bg-card px-3 text-xs sm:text-sm font-semibold text-foreground transition-colors hover:bg-muted sm:inline-flex shadow-sm"
+            >
+              {user.image ? (
+                <img
+                  src={user.image}
+                  alt={user.name || "Student"}
+                  className="h-5 w-5 rounded-full object-cover border border-border"
+                />
+              ) : (
+                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/10 text-[10px] font-bold text-primary">
+                  {(user.name || "U").charAt(0).toUpperCase()}
+                </span>
+              )}
+              <span>Dashboard</span>
+            </Link>
+          ) : !isSessionPending ? (
+            <>
+              <Link
+                href="/login"
+                className="hidden min-h-9 items-center justify-center rounded-md px-3 text-xs sm:text-sm font-medium text-muted-foreground transition-colors hover:text-foreground hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:inline-flex"
+              >
+                Log in
+              </Link>
+
+              <Link
+                href="/login?callbackUrl=/dashboard"
+                className="hidden min-h-9 items-center justify-center rounded-md bg-primary px-3.5 text-xs sm:text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:inline-flex"
+              >
+                Sign up
+              </Link>
+            </>
+          ) : null}
 
           <button
             type="button"
@@ -125,7 +157,7 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
 
       {mobileMenuOpen && (
         <div className="border-t border-border bg-background lg:hidden">
-          <nav className="mx-auto max-w-7xl px-4 sm:px-6" aria-label="Mobile navigation">
+          <nav className="mx-auto max-w-7xl px-4 sm:px-6 py-2" aria-label="Mobile navigation">
             {siteConfig.nav.map((item) => {
               const active = isActive(item.href);
               return (
@@ -152,12 +184,42 @@ export function Navbar({ onOpenSearch }: NavbarProps) {
               <ThemeToggle showLabel />
             </div>
 
-            <Link
-              href="/join"
-              className="mt-4 inline-flex min-h-11 w-full items-center justify-center rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
-            >
-              Join ACM
-            </Link>
+            <div className="mt-4 flex flex-col gap-2">
+              {!isSessionPending && user ? (
+                <Link
+                  href="/dashboard"
+                  className="inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+                >
+                  {user.image ? (
+                    <img
+                      src={user.image}
+                      alt={user.name || "Student"}
+                      className="h-5 w-5 rounded-full object-cover"
+                    />
+                  ) : (
+                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary-foreground/20 text-[10px] font-bold text-primary-foreground">
+                      {(user.name || "U").charAt(0).toUpperCase()}
+                    </span>
+                  )}
+                  <span>Open Student Dashboard</span>
+                </Link>
+              ) : !isSessionPending ? (
+                <>
+                  <Link
+                    href="/login"
+                    className="inline-flex min-h-10 w-full items-center justify-center rounded-md border border-border px-4 text-sm font-medium text-foreground hover:bg-secondary transition-colors"
+                  >
+                    Log in
+                  </Link>
+                  <Link
+                    href="/login?callbackUrl=/dashboard"
+                    className="inline-flex min-h-10 w-full items-center justify-center rounded-md bg-primary px-4 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+                  >
+                    Sign up
+                  </Link>
+                </>
+              ) : null}
+            </div>
 
             <div className="mt-5 flex items-center gap-4 text-muted-foreground">
               <a
