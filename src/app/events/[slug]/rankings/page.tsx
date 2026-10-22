@@ -11,7 +11,7 @@ import { db } from "@/db";
 import { connectedAccounts, studentProfiles } from "@/db/schema";
 import { inArray } from "drizzle-orm";
 import { siteConfig } from "@/config/site";
-import { Trophy, ArrowLeft, ExternalLink } from "lucide-react";
+import { Trophy, ArrowLeft, ExternalLink, Info } from "lucide-react";
 import { RankingsTable, type ParticipantStanding } from "./rankings-table";
 import { events } from "@/data/events";
 
@@ -199,6 +199,19 @@ export default async function EventRankingsPage({ params }: RankingsPageProps) {
           </p>
         </div>
 
+        {/* Evaluation Disclaimer Banner */}
+        <div className="rounded-xl border border-border bg-secondary/10 p-4 sm:p-5 flex items-start gap-3.5">
+          <Info className="h-5 w-5 text-amber-500 shrink-0 mt-0.5" />
+          <div className="space-y-1">
+            <h2 className="text-sm font-semibold text-foreground">
+              Evaluation & Scoring Notice
+            </h2>
+            <p className="text-xs sm:text-sm leading-relaxed text-muted-foreground">
+              This is not the final evaluation. These scores and positions represent preliminary automated tracking. The final evaluation will be conducted manually by the judges depending upon the quality of the PR, difficulty, and where you have merged it.
+            </p>
+          </div>
+        </div>
+
         {/* Homepage-aligned Metric Strip */}
         <section className="border-y border-border bg-secondary/10 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 py-8 my-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
@@ -248,7 +261,7 @@ export default async function EventRankingsPage({ params }: RankingsPageProps) {
             How are rankings and points evaluated?
           </h3>
           <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">
-            During the Hacktoberfest 2026 challenge season, every pull request submitted to ACM BIT Mesra repositories and recommended open-source projects is evaluated against community guidelines and technical rubrics. Approved pull requests award points based on complexity, test coverage, and problem impact.
+            Automated metrics provide live tracking of submitted and merged PRs during the event. Please note that this is not the final evaluation. Final scores and standings will be evaluated manually by the judges based on the quality of the PR, difficulty of the contribution, and where you have merged it.
           </p>
           <div className="mt-4 flex flex-wrap gap-4 pt-4 border-t border-border text-xs">
             <Link

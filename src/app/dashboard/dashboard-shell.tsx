@@ -19,6 +19,7 @@ import {
 import { AcmLogo } from "@/components/ui/icons";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { signOut } from "@/lib/auth/auth-client";
+import { cn } from "@/lib/utils";
 
 interface DashboardShellProps {
   user: {
@@ -90,17 +91,17 @@ export function DashboardShell({
   };
 
   return (
-    <div className="min-h-screen bg-muted/20 flex flex-col pb-20 md:pb-8">
+    <div className="min-h-screen bg-background flex flex-col pb-20 md:pb-12">
       {/* Top Header */}
-      <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-border bg-background/95 backdrop-blur-md px-4 sm:px-8">
+      <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-border bg-background/95 backdrop-blur-md px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-3">
           <Link href="/" className="flex items-center gap-2.5 group">
             <AcmLogo className="h-8 w-8 shrink-0 transition-transform group-hover:scale-105" />
             <div className="flex flex-col">
-              <span className="font-bold text-sm leading-tight text-foreground">
+              <span className="font-semibold text-sm leading-tight text-foreground">
                 ACM BIT Mesra
               </span>
-              <span className="font-mono text-[9px] font-semibold text-muted-foreground uppercase tracking-wider">
+              <span className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">
                 Student Platform
               </span>
             </div>
@@ -108,15 +109,15 @@ export function DashboardShell({
         </div>
 
         {/* Header Right Actions */}
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-3">
           {profileSlug && (
             <Link
               href={`/u/${profileSlug}`}
               target="_blank"
-              className="hidden sm:inline-flex items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:bg-muted shadow-sm"
+              className="hidden sm:inline-flex items-center gap-1.5 rounded-md border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:bg-muted"
             >
-              <Globe className="h-3.5 w-3.5 text-primary" />
-              <span>View Live Mini-Site</span>
+              <Globe className="h-3.5 w-3.5 text-muted-foreground" />
+              <span>Public Profile</span>
               <ExternalLink className="h-3 w-3 text-muted-foreground" />
             </Link>
           )}
@@ -124,7 +125,7 @@ export function DashboardShell({
           {isAuthorizedAdmin && (
             <Link
               href="/admin"
-              className="inline-flex items-center gap-1.5 rounded-lg bg-secondary px-3 py-1.5 text-xs font-semibold text-secondary-foreground transition-colors hover:bg-secondary/80"
+              className="inline-flex items-center gap-1.5 rounded-md border border-border bg-secondary px-3 py-1.5 text-xs font-semibold text-secondary-foreground transition-colors hover:bg-secondary/80"
             >
               <ShieldAlert className="h-3.5 w-3.5 text-primary" />
               <span className="hidden sm:inline">Admin Center</span>
@@ -134,7 +135,7 @@ export function DashboardShell({
           <ThemeToggle />
 
           {/* User Profile Capsule */}
-          <div className="flex items-center gap-2 border-l border-border pl-2 sm:pl-3">
+          <div className="flex items-center gap-2 border-l border-border pl-3">
             {user.image ? (
               <img
                 src={user.image}
@@ -142,11 +143,11 @@ export function DashboardShell({
                 className="h-8 w-8 rounded-full border border-border object-cover"
               />
             ) : (
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-xs font-bold text-primary border border-border">
+              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-secondary text-xs font-semibold text-foreground border border-border">
                 {(user.name || "U").charAt(0).toUpperCase()}
               </div>
             )}
-            <div className="hidden text-left lg:block">
+            <div className="hidden text-left sm:block">
               <div className="flex items-center gap-1 text-xs font-semibold text-foreground">
                 <span className="truncate max-w-[120px]">{user.name}</span>
                 <CheckCircle className="h-3 w-3 text-emerald-500 shrink-0" />
@@ -161,7 +162,7 @@ export function DashboardShell({
               onClick={handleSignOut}
               disabled={signingOut}
               title="Sign Out"
-              className="rounded-lg p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+              className="rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
             >
               <LogOut className="h-4 w-4" />
             </button>
@@ -169,11 +170,39 @@ export function DashboardShell({
         </div>
       </header>
 
-      {/* Main Grid: Sidebar + Content */}
-      <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-6 px-4 py-6 sm:px-6 lg:px-8 md:flex-row">
+      {/* Clean Horizontal Sub-Navigation Tabs */}
+      <div className="border-b border-border bg-background/50">
+        <div className="mx-auto flex max-w-7xl items-center gap-1 overflow-x-auto px-4 sm:px-6 lg:px-8">
+          {navItems.map((item) => {
+            const active = isActive(item.href, item.exact);
+            const Icon = item.icon;
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  "inline-flex items-center gap-2 border-b-2 py-3 px-3 text-xs sm:text-sm font-medium transition-colors whitespace-nowrap",
+                  active
+                    ? "border-primary text-foreground font-semibold"
+                    : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
+                )}
+              >
+                <Icon className={cn("h-4 w-4", active ? "text-primary" : "text-muted-foreground")} />
+                <span>{item.label}</span>
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Main Grid: Clean Sidebar + Content */}
+      <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-8 px-4 py-8 sm:px-6 lg:px-8 md:flex-row">
         {/* Desktop Sidebar Navigation */}
-        <aside className="hidden md:block w-64 shrink-0 space-y-4">
-          <nav className="flex flex-col gap-1 rounded-xl border border-border bg-card p-2 shadow-sm">
+        <aside className="hidden md:block w-60 shrink-0 space-y-6">
+          <nav className="flex flex-col gap-1 border-r border-border pr-4">
+            <span className="px-3 pb-2 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+              Navigation
+            </span>
             {navItems.map((item) => {
               const active = isActive(item.href, item.exact);
               const Icon = item.icon;
@@ -181,57 +210,58 @@ export function DashboardShell({
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-xs font-semibold transition-all ${
+                  className={cn(
+                    "flex items-center gap-2.5 rounded-md px-3 py-2 text-xs font-medium transition-colors",
                     active
-                      ? "bg-primary text-primary-foreground shadow-sm"
+                      ? "bg-secondary text-foreground font-semibold"
                       : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                  }`}
+                  )}
                 >
-                  <Icon className={`h-4 w-4 ${active ? "text-primary-foreground" : "text-muted-foreground"}`} />
+                  <Icon className={cn("h-4 w-4", active ? "text-primary" : "text-muted-foreground")} />
                   <span>{item.label}</span>
                 </Link>
               );
             })}
           </nav>
 
-          {/* Hacktoberfest 2026 Promo Box */}
-          <div className="rounded-xl border border-primary/20 bg-primary/[0.06] p-4 space-y-2">
-            <div className="flex items-center gap-1.5 font-bold text-xs text-foreground">
-              <Trophy className="h-3.5 w-3.5 text-amber-500" />
+          {/* Clean Institutional Identity Box */}
+          <div className="rounded-lg border border-border bg-card p-4 space-y-2">
+            <div className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+              Verified Identity
+            </div>
+            <div className="flex items-center gap-1.5 text-xs font-semibold text-foreground">
+              <CheckCircle className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
+              <span>BIT Mesra Student</span>
+            </div>
+            <p className="font-mono text-[10px] text-muted-foreground truncate">
+              {user.email}
+            </p>
+          </div>
+
+          {/* Clean Event Challenge Link */}
+          <div className="rounded-lg border border-border bg-card p-4 space-y-2">
+            <div className="flex items-center gap-1.5 text-xs font-semibold text-foreground">
+              <Trophy className="h-3.5 w-3.5 text-primary" />
               <span>Hacktoberfest 2026</span>
             </div>
             <p className="text-[11px] leading-relaxed text-muted-foreground">
-              Registrations are officially open! Submit your PRs and track your rank on the live leaderboard.
+              Live registrations open. PRs are tracked for manual judging evaluation.
             </p>
-            <div className="pt-1 flex flex-col gap-1.5">
+            <div className="pt-1 flex flex-col gap-1 text-[11px]">
               <Link
                 href="/events/hacktoberfest-2026"
-                className="inline-flex items-center gap-1 font-semibold text-[11px] text-primary hover:underline"
+                className="font-medium text-foreground hover:text-primary transition-colors inline-flex items-center gap-1"
               >
-                <span>View Event Challenge</span>
+                <span>Event Guidelines</span>
                 <span aria-hidden="true">→</span>
               </Link>
               <Link
                 href="/events/hacktoberfest-2026/rankings"
-                className="inline-flex items-center gap-1 font-semibold text-[11px] text-amber-600 dark:text-amber-400 hover:underline"
+                className="font-medium text-primary hover:underline inline-flex items-center gap-1"
               >
-                <span>Live Standings & Leaderboard</span>
+                <span>Live Standings</span>
                 <span aria-hidden="true">→</span>
               </Link>
-            </div>
-          </div>
-
-          {/* Identity Verification Card */}
-          <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
-            <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
-              Student Credential
-            </div>
-            <div className="mt-2 flex items-center gap-1.5 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
-              <CheckCircle className="h-3.5 w-3.5 shrink-0" />
-              <span>Verified BIT Mesra Student</span>
-            </div>
-            <div className="mt-1 font-mono text-[10px] text-muted-foreground truncate">
-              {user.email}
             </div>
           </div>
         </aside>
@@ -240,9 +270,9 @@ export function DashboardShell({
         <main className="min-w-0 flex-1">{children}</main>
       </div>
 
-      {/* Mobile Bottom Navigation Bar (Ultra-clean phone UX) */}
+      {/* Mobile Bottom Navigation Bar */}
       <nav
-        className="fixed bottom-0 left-0 right-0 z-40 flex h-16 items-center justify-around border-t border-border bg-background/95 backdrop-blur-md px-2 md:hidden shadow-lg"
+        className="fixed bottom-0 left-0 right-0 z-40 flex h-16 items-center justify-around border-t border-border bg-background/95 backdrop-blur-md px-2 md:hidden"
         aria-label="Mobile dashboard navigation"
       >
         {navItems.map((item) => {
@@ -252,13 +282,14 @@ export function DashboardShell({
             <Link
               key={item.href}
               href={item.href}
-              className={`flex flex-col items-center justify-center gap-1 py-1 px-3 rounded-lg text-[10px] font-medium transition-colors ${
+              className={cn(
+                "flex flex-col items-center justify-center gap-1 py-1 px-3 text-[10px] transition-colors",
                 active
-                  ? "text-primary font-bold"
+                  ? "text-primary font-semibold"
                   : "text-muted-foreground hover:text-foreground"
-              }`}
+              )}
             >
-              <Icon className={`h-4 w-4 ${active ? "text-primary scale-110" : "text-muted-foreground"}`} />
+              <Icon className={cn("h-4 w-4", active ? "text-primary" : "text-muted-foreground")} />
               <span>{item.label.split(" ")[0]}</span>
             </Link>
           );

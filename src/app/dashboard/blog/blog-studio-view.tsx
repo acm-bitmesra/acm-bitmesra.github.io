@@ -4,7 +4,6 @@ import * as React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
-  BookOpen,
   Plus,
   PenSquare,
   ExternalLink,
@@ -53,45 +52,47 @@ export function BlogStudioView({ initialBlogs, profileSlug }: BlogStudioViewProp
 
   return (
     <div className="space-y-6">
-      {/* Studio Banner */}
-      <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div className="space-y-1">
-            <div className="flex items-center gap-2">
-              <BookOpen className="h-5 w-5 text-primary" />
-              <h1 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">
-                Personal Blog Studio
-              </h1>
+      {/* Studio Header */}
+      <header className="border-b border-border pb-6">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div className="space-y-1.5">
+            <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-primary">
+              <span>Student Developer Platform</span>
+              <span className="text-muted-foreground">/</span>
+              <span className="text-muted-foreground">Blog Studio</span>
             </div>
-            <p className="text-xs text-muted-foreground max-w-xl">
-              Write rich technical articles, project breakdowns, and competitive programming notes using BlockNote. Articles are published exclusively to your verified profile.
+            <h1 className="text-3xl font-semibold tracking-[-0.035em] text-foreground sm:text-4xl">
+              Personal Blog Studio
+            </h1>
+            <p className="max-w-[64ch] text-sm leading-6 text-muted-foreground sm:text-base">
+              Write rich technical articles, project breakdowns, and algorithmic notes using BlockNote. Articles are published exclusively to your verified profile.
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex items-center gap-3 shrink-0">
             <Link
               href="/dashboard/blog/write"
-              className="btn-press inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
+              className="btn-press inline-flex items-center gap-2 rounded-md bg-primary px-3.5 py-2 text-xs font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
             >
-              <Plus className="h-4 w-4" />
+              <Plus className="h-3.5 w-3.5" />
               <span>Write New Article</span>
             </Link>
           </div>
         </div>
 
         {!profileSlug && (
-          <div className="mt-4 flex items-center gap-2 rounded-xl border border-amber-500/20 bg-amber-500/10 p-3 text-xs text-amber-700 dark:text-amber-400">
-            <ShieldAlert className="h-4 w-4 shrink-0" />
+          <div className="mt-4 flex items-center gap-2 rounded-lg border border-border bg-secondary/10 p-3 text-xs text-muted-foreground">
+            <ShieldAlert className="h-4 w-4 text-amber-500 shrink-0" />
             <span>
               You haven&apos;t set up your public profile handle yet.{" "}
-              <Link href="/dashboard/profile" className="font-semibold underline">
+              <Link href="/dashboard/profile" className="font-semibold text-primary underline">
                 Claim your profile handle
               </Link>{" "}
               so your articles can be viewed publicly at /u/[your-handle]/blog.
             </span>
           </div>
         )}
-      </div>
+      </header>
 
       {/* Articles List */}
       {blogs.length === 0 ? (
