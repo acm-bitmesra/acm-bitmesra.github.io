@@ -1,0 +1,103 @@
+name: CI/CD & Cloudflare Deployment
+
+on:
+  push:
+    branches:
+      - main
+      - feat/student-developer-platform
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      deploy:
+        description: "Deploy to Cloudflare Workers upon successful test & build"
+        required: true
+        type: boolean
+        default: true
+
+# Concurrency management: cancel outdated runs for active PRs / branches
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci-cd:
+    name: Test, Lint, Build & Deploy
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+
+    env:
+      # Cloudflare Deployment Credentials
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      # Database & Core Authentication Credentials
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
+      BETTER_AUTH_URL: ${{ secrets.BETTER_AUTH_URL || 'https://acmbitm.campsy.app' }}
+      PUBLIC_SITE_URL: ${{ secrets.PUBLIC_SITE_URL || 'https://acmbitm.campsy.app' }}
+
+      # Administrative & Student Policy Settings
+      ADMIN_EMAIL_ALLOWLIST: ${{ secrets.ADMIN_EMAIL_ALLOWLIST || 'acm@bitmesra.ac.in,Btech10574.24@bitmesra.ac.in' }}
+      ALLOWED_STUDENT_EMAIL_DOMAIN: ${{ secrets.ALLOWED_STUDENT_EMAIL_DOMAIN || 'bitmesra.ac.in' }}
+
+      # Google OAuth Credentials
+      GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+      GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+
+      # GitHub Developer Integration (Secret names prefixed with GH_ to respect GitHub Actions reserved naming)
+      GITHUB_CLIENT_ID: ${{ secrets.GH_CLIENT_ID }}
+      GITHUB_CLIENT_SECRET: ${{ secrets.GH_CLIENT_SECRET }}
+      GITHUB_REDIRECT_URI: ${{ secrets.GH_REDIRECT_URI || 'https://acmbitm.campsy.app/api/integrations/github/callback' }}
+
+      NODE_ENV: production
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🟢 Set up Node.js 22 (LTS)
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: 🥟 Set up Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: 📦 Install project dependencies
+        run: bun install --frozen-lockfile
+
+      - name: 🔒 Zero-Credentials Security Audit
+        run: bun run security:scan
+
+      - name: 🧹 Lint TypeScript & React source code
+        run: bun run lint
+
+      - name: 🔎 TypeScript strict typecheck
+        run: bun run typecheck
+
+      - name: 🧪 Test Authentication & Blog Studio Engine
+        run: bun run test:auth
+
+      - name: 🛡️ Test RBAC & Zero-Trust Security Suite
+        run: bun run test:security
+
+      - name: 🐙 Test GitHub OAuth Integration Credentials
+        run: bun run test:github
+
+      - name: 🏗️ Compile Next.js Production Build
+        run: bun run build
+
+      - name: 🔍 Validate Generated Production Build Output
+        run: bun run test:prod
+
+      - name: 🚀 Deploy to Cloudflare Workers
+        if: |
+          github.event_name != 'pull_request' &&
+          (github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.deploy == true))
+        run: bun run deploy

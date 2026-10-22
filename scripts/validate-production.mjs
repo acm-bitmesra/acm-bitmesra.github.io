@@ -1,13 +1,22 @@
 import fs from "node:fs";
 import path from "node:path";
+import { execSync } from "node:child_process";
 
-const OUT_DIR = fs.existsSync(path.resolve(process.cwd(), "out"))
+let OUT_DIR = fs.existsSync(path.resolve(process.cwd(), "out"))
   ? path.resolve(process.cwd(), "out")
   : path.resolve(process.cwd(), ".next/server/app");
 
 if (!fs.existsSync(OUT_DIR)) {
-  console.error("Error: Production build target directory does not exist. Run 'bun run build' first.");
-  process.exit(1);
+  console.log("ℹ️  Production build target directory does not exist. Triggering 'bun run build'...");
+  try {
+    execSync("bun run build", { stdio: "inherit" });
+  } catch (err) {
+    console.error("Error: Production build failed during validation.");
+    process.exit(1);
+  }
+  OUT_DIR = fs.existsSync(path.resolve(process.cwd(), "out"))
+    ? path.resolve(process.cwd(), "out")
+    : path.resolve(process.cwd(), ".next/server/app");
 }
 
 console.log("🔍 Validating production build output in:", OUT_DIR);

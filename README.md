@@ -111,6 +111,8 @@ bun run build:worker
 bun run deploy
 ```
 
+For automated deployments via GitHub Actions and secrets configuration, see the comprehensive [Deployment & CI/CD Guide](file:///home/btech1057424/OSS/acmbitm/DEPLOYMENT.md).
+
 ---
 
 ## 📁 Repository Structure
