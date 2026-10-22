@@ -136,3 +136,14 @@ If you discover a security vulnerability or sensitive information exposure in th
    - **Subject**: `[SECURITY VULNERABILITY REPORT] ACM BIT Mesra Portal`
 3. Include reproduction steps, affected URLs/endpoints, and proof-of-concept where possible.
 4. The chapter technical team will acknowledge receipt within 24 hours and coordinate responsible disclosure.
+
+---
+
+## 7. Zero-Credentials Policy & Anti-Push Guardrails
+
+To permanently eliminate credential leakage:
+
+1. **Strictly Environment-Driven**: All secrets (database URLs, OAuth client IDs/secrets, API tokens, cryptographic signing keys) MUST remain exclusively in environment variables (`.env` locally, Cloudflare Worker secrets in production).
+2. **Never Commit or Push Credentials**: Committing or pushing secrets to Git is strictly forbidden under all circumstances.
+3. **Automated Pre-Commit & Pre-Push Hooks**: Git hooks (`.git/hooks/pre-commit` and `.git/hooks/pre-push`) automatically invoke `scripts/verify-no-secrets.mjs` before any commit or push is accepted.
+4. **CI/Build Gate**: The security verification scanner is integrated into `bun run test` and runs during production build verification.

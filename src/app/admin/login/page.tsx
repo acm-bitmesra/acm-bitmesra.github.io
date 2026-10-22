@@ -17,15 +17,28 @@ function LoginForm() {
     urlErrorDesc || (urlError ? `Sign-in error: ${urlError}` : null)
   );
 
+  const callbackUrl = searchParams.get("callbackUrl") || "/admin";
+
   const handleGoogleSignIn = async () => {
     try {
       setLoading(true);
       setError(null);
-      await authClient.signIn.social({
+      const res = await authClient.signIn.social({
         provider: "google",
-        callbackURL: "/admin",
+        callbackURL: callbackUrl,
         errorCallbackURL: "/admin/unauthorized",
       });
+
+      if (res?.error) {
+        setError(res.error.message || "Failed to initiate Google sign-in. Please try again.");
+        setLoading(false);
+        return;
+      }
+
+      if (res?.data?.url) {
+        window.location.href = res.data.url;
+        return;
+      }
     } catch (err: unknown) {
       console.error("Sign-in failed:", err);
       const msg = err instanceof Error ? err.message : "Failed to initiate Google sign-in. Please try again.";

@@ -7,3 +7,5 @@ export * from "./announcements";
 export * from "./sponsors";
 export * from "./gallery";
 export * from "./governance";
+export * from "./students";
+export * from "./event-registrations";

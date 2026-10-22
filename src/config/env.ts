@@ -34,6 +34,17 @@ const envSchema = z.object({
     .string()
     .default("acm@bitmesra.ac.in,Btech10574.24@bitmesra.ac.in"),
 
+  ALLOWED_STUDENT_EMAIL_DOMAIN: z
+    .string()
+    .default("bitmesra.ac.in"),
+
+  GITHUB_CLIENT_ID: z.string().optional().default(""),
+  GITHUB_CLIENT_SECRET: z.string().optional().default(""),
+  GITHUB_REDIRECT_URI: z
+    .string()
+    .optional()
+    .default("https://acmbitm.campsy.app/api/integrations/github/callback"),
+
   PUBLIC_SITE_URL: z
     .string()
     .url("PUBLIC_SITE_URL must be a valid URL")
@@ -54,6 +65,10 @@ function parseEnv(): ServerEnv {
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     ADMIN_EMAIL_ALLOWLIST: process.env.ADMIN_EMAIL_ALLOWLIST,
+    ALLOWED_STUDENT_EMAIL_DOMAIN: process.env.ALLOWED_STUDENT_EMAIL_DOMAIN,
+    GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
+    GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
+    GITHUB_REDIRECT_URI: process.env.GITHUB_REDIRECT_URI,
     PUBLIC_SITE_URL: process.env.PUBLIC_SITE_URL,
     NODE_ENV: process.env.NODE_ENV,
   });

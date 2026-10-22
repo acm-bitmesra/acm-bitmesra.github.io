@@ -14,10 +14,13 @@ export function SiteLayout({ children }: SiteLayoutProps) {
   const [searchOpen, setSearchOpen] = React.useState(false);
   const pathname = usePathname();
   const isAdmin = pathname?.startsWith("/admin");
+  const isDashboard = pathname?.startsWith("/dashboard");
+  const isProfile = pathname?.startsWith("/u/");
+  const isStandalone = isAdmin || isDashboard || isProfile;
 
   // Global keyboard shortcut: Cmd+K / Ctrl+K
   React.useEffect(() => {
-    if (isAdmin) return;
+    if (isStandalone) return;
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
         e.preventDefault();
@@ -26,11 +29,11 @@ export function SiteLayout({ children }: SiteLayoutProps) {
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isAdmin]);
+  }, [isStandalone]);
 
-  if (isAdmin) {
+  if (isStandalone) {
     return (
-      <div className="relative min-h-screen bg-background text-foreground flex flex-col">
+      <div className="relative min-h-screen w-full bg-background text-foreground flex flex-col">
         {children}
       </div>
     );

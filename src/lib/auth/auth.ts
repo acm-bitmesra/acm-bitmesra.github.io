@@ -4,6 +4,7 @@ import { db } from "@/db";
 import { env } from "@/config/env";
 import * as schema from "@/db/schema";
 import { isAdminEmailAllowed } from "./config";
+import { isBitMesraStudentEmail } from "./domain-eligibility";
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -31,13 +32,12 @@ export const auth = betterAuth({
 
   user: {
     /**
-     * Enforce the ACM administrator allowlist before Google OAuth can:
-     * - create a Better Auth user
-     * - link an OAuth account
-     * - sign an existing OAuth user in
+     * Enforce Identity Eligibility:
+     * 1. Exact-match Bootstrap Administrator Allowlist (ADMIN_EMAIL_ALLOWLIST)
+     * 2. Active Chapter Members provisioned in chapter_members
+     * 3. Verified University Identity: Any student with normalized email ending in @bitmesra.ac.in
      *
-     * The allowlist is intentionally exact-match, not domain-wide.
-     * Active chapter members provisioned in the roster are also authorized.
+     * Non-qualifying accounts are strictly rejected server-side.
      */
     validateUserInfo: async ({ user, source }) => {
       if (source.oauth?.providerId !== "google") {
@@ -50,7 +50,7 @@ export const auth = betterAuth({
         return {
           error: "email_not_allowed",
           errorDescription:
-            "A valid email address is required to access the ACM BIT Mesra admin console.",
+            "A valid email address is required to access ACM BIT Mesra services.",
         };
       }
 
@@ -72,10 +72,16 @@ export const auth = betterAuth({
         console.error("Error verifying chapter membership in validateUserInfo:", err);
       }
 
+      // 3. University Student Domain Eligibility (Section 2 & 4.1):
+      // Every verified student with exact @bitmesra.ac.in domain is eligible to create an account
+      if (isBitMesraStudentEmail(email)) {
+        return;
+      }
+
       return {
         error: "email_not_allowed",
         errorDescription:
-          "This Google account is not authorized to access the ACM BIT Mesra admin console.",
+          "Access restricted. Only verified Birla Institute of Technology, Mesra (@bitmesra.ac.in) accounts and authorized chapter members are eligible.",
       };
     },
   },

@@ -58,6 +58,7 @@ const NAV_SECTIONS: NavSection[] = [
       { href: "/admin/team", label: "Executive Team", icon: Users, permission: PERMISSIONS.TEAM_VIEW },
       { href: "/admin/alumni", label: "Alumni", icon: GraduationCap, permission: PERMISSIONS.ALUMNI_VIEW },
       { href: "/admin/members", label: "Chapter Members", icon: Users, permission: PERMISSIONS.MEMBERS_VIEW },
+      { href: "/admin/batches", label: "Academic Batches", icon: GraduationCap, permission: PERMISSIONS.MEMBERS_VIEW },
       { href: "/admin/roles", label: "Roles & RBAC", icon: Shield, permission: PERMISSIONS.ROLES_VIEW, requiresSuperAdmin: true },
     ],
   },
