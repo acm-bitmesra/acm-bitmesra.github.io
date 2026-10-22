@@ -62,43 +62,58 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const cleanResumeUrl =
+      typeof body?.resumeUrl === "string" && body.resumeUrl.trim().startsWith("https://")
+        ? body.resumeUrl.trim().slice(0, 300)
+        : "";
+
     await upsertStudentProfile(session.user.id, {
       slug,
-      displayName: typeof body?.displayName === "string" ? body.displayName : (session.user.name || slug),
-      avatarUrl: typeof body?.avatarUrl === "string" ? body.avatarUrl : (session.user.image || undefined),
+      displayName: typeof body?.displayName === "string" ? body.displayName.slice(0, 100) : (session.user.name || slug),
+      avatarUrl: typeof body?.avatarUrl === "string" ? body.avatarUrl.slice(0, 500) : (session.user.image || undefined),
       bio: typeof body?.bio === "string" ? body.bio.slice(0, 1000) : undefined,
-      academicProgram: typeof body?.academicProgram === "string" ? body.academicProgram : "B.Tech",
-      department: typeof body?.department === "string" ? body.department : undefined,
-      batchId: typeof body?.batchId === "string" && body.batchId.length > 0 ? body.batchId : null,
-      skills: Array.isArray(body?.skills) ? body.skills.filter((s: unknown) => typeof s === "string") : [],
-      interests: Array.isArray(body?.interests) ? body.interests.filter((s: unknown) => typeof s === "string") : [],
-      customBioMarkdown: typeof body?.customBioMarkdown === "string" ? body.customBioMarkdown : undefined,
+      academicProgram: typeof body?.academicProgram === "string" ? body.academicProgram.slice(0, 50) : "B.Tech",
+      department: typeof body?.department === "string" ? body.department.slice(0, 100) : undefined,
+      batchId: typeof body?.batchId === "string" && body.batchId.length > 0 ? body.batchId.slice(0, 50) : null,
+      skills: Array.isArray(body?.skills)
+        ? body.skills
+            .filter((s: unknown) => typeof s === "string")
+            .slice(0, 40)
+            .map((s: string) => s.slice(0, 40))
+        : [],
+      interests: Array.isArray(body?.interests)
+        ? body.interests
+            .filter((s: unknown) => typeof s === "string")
+            .slice(0, 40)
+            .map((i: string) => i.slice(0, 40))
+        : [],
+      customBioMarkdown: typeof body?.customBioMarkdown === "string" ? body.customBioMarkdown.slice(0, 50000) : undefined,
       portfolioBlocks: [
         {
           type: "projects" as const,
           title: "Pinned Projects",
-          content: Array.isArray(body?.pinnedProjects) ? body.pinnedProjects : [],
+          content: Array.isArray(body?.pinnedProjects) ? body.pinnedProjects.slice(0, 12) : [],
         },
         {
           type: "blogs" as const,
           title: "Personal Blogs",
-          content: Array.isArray(body?.personalBlogs) ? body.personalBlogs : [],
+          content: Array.isArray(body?.personalBlogs) ? body.personalBlogs.slice(0, 30) : [],
         },
         {
           type: "settings" as const,
           title: "Preferences",
           content: {
             showEmail: Boolean(body?.showEmail),
-            resumeUrl: typeof body?.resumeUrl === "string" ? body.resumeUrl.trim() : "",
+            resumeUrl: cleanResumeUrl,
             showGithubStats: Boolean(body?.showGithubStats),
             showSkillIcons: Boolean(body?.showSkillIcons),
-            statsTheme: typeof body?.statsTheme === "string" ? body.statsTheme : "github_dark",
+            statsTheme: typeof body?.statsTheme === "string" ? body.statsTheme.slice(0, 30) : "github_dark",
           },
         },
       ],
       isPublic: typeof body?.isPublic === "boolean" ? body.isPublic : true,
       isPublished: typeof body?.isPublished === "boolean" ? body.isPublished : true,
-      theme: typeof body?.theme === "string" ? body.theme : "minimal",
+      theme: typeof body?.theme === "string" ? body.theme.slice(0, 30) : "minimal",
     });
 
     // Update Connected Coding & Social Accounts

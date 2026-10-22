@@ -42,9 +42,27 @@ export const metadata: Metadata = {
     "Developer Community",
     "Computer Science",
   ],
-  authors: [{ name: "ACM Student's Chapter, BIT Mesra" }],
+  authors: [{ name: "ACM Student Chapter, BIT Mesra", url: siteConfig.url }],
   creator: "ACM BIT Mesra",
   publisher: "ACM BIT Mesra",
+  category: "technology",
+  alternates: {
+    canonical: siteConfig.url,
+    types: {
+      "application/rss+xml": `${siteConfig.url}/api/blog/rss.xml`,
+    },
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   formatDetection: {
     email: false,
     address: false,
@@ -71,6 +89,7 @@ export const metadata: Metadata = {
     title: "ACM BIT Mesra — Computing, Coding & Innovation",
     description: siteConfig.description,
     images: [`${siteConfig.url}/og.png`],
+    creator: "@acmbitmesra",
   },
   icons: {
     icon: [

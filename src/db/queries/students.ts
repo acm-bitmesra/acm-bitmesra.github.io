@@ -522,3 +522,25 @@ export async function deletePersonalBlog(userId: string, blogId: string): Promis
   return true;
 }
 
+export async function getPublicStudentProfiles(limit = 200) {
+  try {
+    return await db
+      .select({
+        slug: studentProfiles.slug,
+        displayName: studentProfiles.displayName,
+        updatedAt: studentProfiles.updatedAt,
+      })
+      .from(studentProfiles)
+      .where(
+        and(
+          eq(studentProfiles.isPublic, true),
+          eq(studentProfiles.isPublished, true)
+        )
+      )
+      .limit(limit);
+  } catch (error) {
+    console.error("Error fetching public student profiles for sitemap:", error);
+    return [];
+  }
+}
+

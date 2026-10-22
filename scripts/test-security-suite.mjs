@@ -208,6 +208,23 @@ async function runSecuritySuite() {
   await queryWithRetry(() => sql`DELETE FROM audit_logs WHERE id = ${testAuditId};`);
   assert(true, "Temporary security test audit row cleaned up");
 
+  // ==========================================
+  // Section 115: HTTP Security Headers & SEO Invariants
+  // ==========================================
+  console.log("\n6. Verifying HTTP Security Headers & SEO Invariants (Section 115)...");
+
+  const nextConfigContent = fs.readFileSync("next.config.ts", "utf8");
+  assert(nextConfigContent.includes("Strict-Transport-Security"), "HSTS (Strict-Transport-Security) enforced");
+  assert(nextConfigContent.includes("nosniff"), "X-Content-Type-Options: nosniff enforced");
+  assert(nextConfigContent.includes("DENY"), "X-Frame-Options: DENY enforced");
+  assert(nextConfigContent.includes("upgrade-insecure-requests"), "CSP upgrade-insecure-requests enforced");
+  assert(nextConfigContent.includes("/dashboard/:path*"), "Anti-cache headers protect sensitive user dashboard");
+  assert(nextConfigContent.includes("github-readme-stats.vercel.app"), "CSP img-src whitelist allows stats cards securely");
+
+  const robotsContent = fs.readFileSync("src/app/robots.ts", "utf8");
+  assert(robotsContent.includes("/admin/"), "Robots.txt disallows admin paths");
+  assert(robotsContent.includes("/dashboard/"), "Robots.txt disallows dashboard paths");
+
   // Summary
   console.log(`\n==========================================`);
   console.log(`Security Test Results: ${passed} Passed, ${failed} Failed`);

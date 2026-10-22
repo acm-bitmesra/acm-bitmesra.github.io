@@ -1,22 +1,54 @@
 import type { Metadata } from "next";
 import { studentResources } from "@/data/resources";
 import { ResourcesExplorer } from "@/components/resources/resources-explorer";
+import { siteConfig } from "@/config/site";
 import { BookOpen } from "@animateicons/react/lucide";
 
 export const metadata: Metadata = {
   title: "Engineering & Programming Resources | ACM BIT Mesra",
   description:
     "Curated collection of developer roadmaps (roadmap.sh), AlgoForge, Striver A2Z DSA sheet, competitive programming guides, systems textbooks, and developer education for BIT Mesra students.",
+  alternates: {
+    canonical: `${siteConfig.url}/resources`,
+  },
   openGraph: {
     title: "Engineering & Programming Resources | ACM BIT Mesra",
     description:
       "Vetted problem sets, contest guides, developer roadmaps (roadmap.sh), OSTEP, AlgoForge, and systems documentation curated by ACM BIT Mesra members for peer learning.",
+    url: `${siteConfig.url}/resources`,
+    siteName: siteConfig.name,
+    images: [`${siteConfig.url}/og.png`],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Engineering & Programming Resources | ACM BIT Mesra",
+    description:
+      "Vetted problem sets, contest guides, developer roadmaps, OSTEP, AlgoForge, and systems documentation curated by ACM BIT Mesra.",
+    images: [`${siteConfig.url}/og.png`],
   },
 };
 
 export default function ResourcesPage() {
+  const collectionJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Engineering & Developer Resources — ACM BIT Mesra",
+    description:
+      "Curated problem sets, algorithmic pattern roadmaps, systems textbooks, and open-source guides for engineering students.",
+    url: `${siteConfig.url}/resources`,
+    isPartOf: {
+      "@type": "WebSite",
+      name: siteConfig.name,
+      url: siteConfig.url,
+    },
+  };
+
   return (
     <div className="py-12 sm:py-16 md:py-20">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionJsonLd) }}
+      />
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 space-y-12">
         {/* Document Header */}
         <div className="space-y-4 border-b border-border/70 pb-8">

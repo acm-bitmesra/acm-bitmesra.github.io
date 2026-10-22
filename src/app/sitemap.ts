@@ -4,7 +4,8 @@ import { events } from "@/data/events";
 import { activitiesData } from "@/data/activities";
 import { getPublishedBlogPosts } from "@/data/blog";
 import { getPublicTeamMembers } from "@/data/team";
-import { getPublishedPosts } from "@/db/queries/blog";
+import { getPublishedPosts, getPublishedCategories, getPublishedTags } from "@/db/queries/blog";
+import { getPublicStudentProfiles } from "@/db/queries/students";
 
 export const revalidate = 3600; // Hourly sitemap cache revalidation
 
@@ -12,7 +13,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = siteConfig.url;
   const now = new Date();
 
-  // Static routes
+  // 1. Static Core Routes
   const staticRoutes: MetadataRoute.Sitemap = [
     "",
     "/about",
@@ -36,10 +37,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     url: `${baseUrl}${route}`,
     lastModified: now,
     changeFrequency: route === "" || route === "/events" ? "weekly" : "monthly",
-    priority: route === "" ? 1.0 : route === "/events" || route === "/join" ? 0.9 : 0.8,
+    priority: route === "" ? 1.0 : route === "/events" || route === "/join" || route === "/blog" ? 0.9 : 0.8,
   }));
 
-  // Dynamic Event routes
+  // 2. Dynamic Event Routes
   const eventRoutes: MetadataRoute.Sitemap = events.map((event) => ({
     url: `${baseUrl}/events/${event.slug}`,
     lastModified: event.dateTba ? new Date() : new Date(event.date),
@@ -47,7 +48,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: event.status === "upcoming" ? 0.9 : 0.7,
   }));
 
-  // Dynamic Activity routes
+  // 3. Live Rankings Routes
+  const rankingRoutes: MetadataRoute.Sitemap = [
+    {
+      url: `${baseUrl}/events/hacktoberfest-2026/rankings`,
+      lastModified: now,
+      changeFrequency: "daily",
+      priority: 0.85,
+    },
+  ];
+
+  // 4. Dynamic Activity Routes
   const activityRoutes: MetadataRoute.Sitemap = activitiesData.map((act) => ({
     url: `${baseUrl}/activities/${act.slug}`,
     lastModified: now,
@@ -55,7 +66,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
-  // Dynamic Blog routes (published only from database with static fallback)
+  // 5. Dynamic Blog Articles (Database with static fallback)
   let blogItems: { slug: string; date: Date }[] = [];
   try {
     const livePosts = await getPublishedPosts({ limit: 100 });
@@ -78,10 +89,50 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     url: `${baseUrl}/blog/${post.slug}`,
     lastModified: post.date,
     changeFrequency: "weekly",
-    priority: 0.8,
+    priority: 0.85,
   }));
 
-  // Dynamic Team routes (verified only)
+  // 6. Blog Categories & Tags Routes
+  let categoryRoutes: MetadataRoute.Sitemap = [];
+  let tagRoutes: MetadataRoute.Sitemap = [];
+  try {
+    const [categories, tags] = await Promise.all([
+      getPublishedCategories(),
+      getPublishedTags(),
+    ]);
+
+    categoryRoutes = categories.map((cat) => ({
+      url: `${baseUrl}/blog/category/${encodeURIComponent(cat.category.toLowerCase().replace(/\s+/g, "-"))}`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.7,
+    }));
+
+    tagRoutes = tags.map((t) => ({
+      url: `${baseUrl}/blog/tag/${t.slug}`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.65,
+    }));
+  } catch (err) {
+    console.error("Sitemap: Failed to query categories and tags:", err);
+  }
+
+  // 7. Verified Public Student Developer Profiles
+  let studentRoutes: MetadataRoute.Sitemap = [];
+  try {
+    const publicStudents = await getPublicStudentProfiles(100);
+    studentRoutes = publicStudents.map((s) => ({
+      url: `${baseUrl}/u/${s.slug}`,
+      lastModified: s.updatedAt || now,
+      changeFrequency: "weekly",
+      priority: 0.75,
+    }));
+  } catch (err) {
+    console.error("Sitemap: Failed to query student profiles:", err);
+  }
+
+  // 8. Dynamic Team Routes (Verified only)
   const teamRoutes: MetadataRoute.Sitemap = getPublicTeamMembers().map((member) => ({
     url: `${baseUrl}/team/${member.slug}`,
     lastModified: now,
@@ -92,8 +143,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return [
     ...staticRoutes,
     ...eventRoutes,
+    ...rankingRoutes,
     ...activityRoutes,
     ...blogRoutes,
+    ...categoryRoutes,
+    ...tagRoutes,
+    ...studentRoutes,
     ...teamRoutes,
   ];
 }

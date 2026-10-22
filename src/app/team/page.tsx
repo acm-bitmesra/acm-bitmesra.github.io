@@ -3,16 +3,30 @@ import Link from "next/link";
 import { getPublicTeamMembers } from "@/data/team";
 import { MemberCard } from "@/components/team/member-card";
 import { MemberSpotlightCard } from "@/components/team/member-spotlight-card";
+import { siteConfig } from "@/config/site";
 import { ShieldCheck, Info, ArrowRight, Sparkles, Users } from "@animateicons/react/lucide";
 
 export const metadata: Metadata = {
   title: "Executive Team & Mentors | ACM BIT Mesra",
   description:
     "Meet the leadership, faculty advisors, technical leads, and mentors of the ACM Student Chapter at BIT Mesra.",
+  alternates: {
+    canonical: `${siteConfig.url}/team`,
+  },
   openGraph: {
     title: "Executive Team & Mentors | ACM BIT Mesra",
     description:
       "Faculty guidance and student leadership coordinating contests, hackathons, and developer education at BIT Mesra.",
+    url: `${siteConfig.url}/team`,
+    siteName: siteConfig.name,
+    images: [`${siteConfig.url}/og.png`],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Executive Team & Mentors | ACM BIT Mesra",
+    description:
+      "Faculty guidance and student leadership coordinating contests, hackathons, and developer education at BIT Mesra.",
+    images: [`${siteConfig.url}/og.png`],
   },
 };
 
@@ -22,8 +36,34 @@ export default function TeamPage() {
   const executive = publicMembers.filter((m) => m.category === "executive");
   const leads = publicMembers.filter((m) => m.category === "leads");
 
+  const teamJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "Executive Team & Mentors — ACM BIT Mesra",
+    description: "Leadership, faculty advisors, technical leads, and mentors of ACM BIT Mesra.",
+    itemListElement: publicMembers.map((m, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": "Person",
+        name: m.name,
+        jobTitle: m.role,
+        worksFor: {
+          "@type": "EducationalOrganization",
+          name: siteConfig.name,
+          url: siteConfig.url,
+        },
+        url: `${siteConfig.url}/team/${m.slug}`,
+      },
+    })),
+  };
+
   return (
     <div className="py-12 sm:py-16 md:py-20">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(teamJsonLd) }}
+      />
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 space-y-14">
         {/* Document Header */}
         <div className="space-y-4 border-b border-border/70 pb-8">

@@ -14,11 +14,25 @@ interface CategoryPageProps {
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
   const { slug } = await params;
   const decoded = decodeURIComponent(slug);
+  const categoryUrl = `${siteConfig.url}/blog/category/${slug}`;
   return {
     title: `${decoded} — Articles | ACM BIT Mesra Journal`,
-    description: `Engineering articles and technical notes in ${decoded} from ACM BIT Mesra.`,
+    description: `Engineering articles, research notes, and algorithmic guides in ${decoded} from ACM BIT Mesra.`,
     alternates: {
-      canonical: `${siteConfig.url}/blog/category/${slug}`,
+      canonical: categoryUrl,
+    },
+    openGraph: {
+      title: `${decoded} — Technical Articles | ACM BIT Mesra`,
+      description: `Engineering articles, research notes, and algorithmic guides in ${decoded} from ACM BIT Mesra.`,
+      url: categoryUrl,
+      siteName: "ACM BIT Mesra",
+      images: [`${siteConfig.url}/og.png`],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${decoded} — Technical Articles | ACM BIT Mesra`,
+      description: `Engineering articles, research notes, and algorithmic guides in ${decoded} from ACM BIT Mesra.`,
+      images: [`${siteConfig.url}/og.png`],
     },
   };
 }
@@ -36,8 +50,37 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   const categoryName = matched ? matched.category : decodedCategory;
   const posts = await getPublishedPosts({ category: categoryName, limit: 30 });
 
+  const breadcrumbsJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: siteConfig.url,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Journal",
+        item: `${siteConfig.url}/blog`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: categoryName,
+        item: `${siteConfig.url}/blog/category/${slug}`,
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-background py-8 sm:py-12 md:py-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbsJsonLd) }}
+      />
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 space-y-8">
         <header className="space-y-3 border-b border-border/50 pb-6 sm:pb-8">
           <Link

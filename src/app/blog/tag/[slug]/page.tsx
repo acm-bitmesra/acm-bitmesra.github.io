@@ -14,11 +14,25 @@ interface TagPageProps {
 
 export async function generateMetadata({ params }: TagPageProps): Promise<Metadata> {
   const { slug } = await params;
+  const tagUrl = `${siteConfig.url}/blog/tag/${slug}`;
   return {
     title: `#${slug} — Articles | ACM BIT Mesra Journal`,
-    description: `Engineering articles and technical notes tagged with #${slug} from ACM BIT Mesra.`,
+    description: `Engineering articles, problem breakdowns, and technical notes tagged with #${slug} from ACM BIT Mesra.`,
     alternates: {
-      canonical: `${siteConfig.url}/blog/tag/${slug}`,
+      canonical: tagUrl,
+    },
+    openGraph: {
+      title: `#${slug} — Technical Articles | ACM BIT Mesra`,
+      description: `Engineering articles and tutorials tagged #${slug} on the ACM BIT Mesra Knowledge Platform.`,
+      url: tagUrl,
+      siteName: "ACM BIT Mesra",
+      images: [`${siteConfig.url}/og.png`],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `#${slug} — Technical Articles | ACM BIT Mesra`,
+      description: `Engineering articles and tutorials tagged #${slug} on the ACM BIT Mesra Knowledge Platform.`,
+      images: [`${siteConfig.url}/og.png`],
     },
   };
 }
@@ -70,8 +84,37 @@ export default async function TagPage({ params }: TagPageProps) {
     allTags = Array.from(tagCount.values());
   }
 
+  const breadcrumbsJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: siteConfig.url,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Journal",
+        item: `${siteConfig.url}/blog`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: `#${slug}`,
+        item: `${siteConfig.url}/blog/tag/${slug}`,
+      },
+    ],
+  };
+
   return (
     <div className="min-h-screen bg-background py-8 sm:py-12 md:py-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbsJsonLd) }}
+      />
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 space-y-8">
         <header className="space-y-3 border-b border-border/50 pb-6 sm:pb-8">
           <Link

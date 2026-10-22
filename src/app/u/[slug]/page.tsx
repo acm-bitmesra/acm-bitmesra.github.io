@@ -26,6 +26,8 @@ import { GithubIcon } from "@/components/ui/icons";
 import { InteractiveStatsCard } from "@/components/profile/interactive-stats-card";
 import type { PinnedProject, PersonalBlogPost, ProfileCustomSettings } from "@/db/schema/students";
 
+import { siteConfig } from "@/config/site";
+
 interface ProfilePageProps {
   params: Promise<{ slug: string }>;
 }
@@ -43,14 +45,18 @@ export async function generateMetadata({ params }: ProfilePageProps): Promise<Me
   const description =
     profile.bio ||
     `Verified BIT Mesra student developer profile of ${name} on the official ACM BIT Mesra platform.`;
+  const profileUrl = `${siteConfig.url}/u/${profile.slug}`;
 
   return {
     title,
     description,
+    alternates: {
+      canonical: profileUrl,
+    },
     openGraph: {
       title,
       description,
-      url: `https://acmbitm.campsy.app/u/${profile.slug}`,
+      url: profileUrl,
       siteName: "ACM BIT Mesra",
       images: profile.user.image ? [{ url: profile.user.image }] : undefined,
     },
@@ -58,6 +64,7 @@ export async function generateMetadata({ params }: ProfilePageProps): Promise<Me
       card: "summary_large_image",
       title,
       description,
+      images: profile.user.image ? [profile.user.image] : undefined,
     },
   };
 }
@@ -172,9 +179,42 @@ export default async function StudentPublicProfilePage({ params }: ProfilePagePr
     uniqueIconSlugs.length > 0
       ? `https://skillicons.dev/icons?i=${uniqueIconSlugs.join(",")}&perline=9`
       : null;
+  const profileName = profile.displayName || profile.user.name || "Student Developer";
+  const profileUrl = `${siteConfig.url}/u/${profile.slug}`;
+  const profileJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    url: profileUrl,
+    dateCreated: profile.createdAt ? new Date(profile.createdAt).toISOString() : undefined,
+    dateModified: profile.updatedAt ? new Date(profile.updatedAt).toISOString() : undefined,
+    mainEntity: {
+      "@type": "Person",
+      name: profileName,
+      alternateName: `@${profile.slug}`,
+      identifier: profile.slug,
+      url: profileUrl,
+      description: profile.bio || `BIT Mesra student developer @${profile.slug}`,
+      image: profile.avatarUrl || profile.user.image || undefined,
+      alumniOf: {
+        "@type": "EducationalOrganization",
+        name: "Birla Institute of Technology, Mesra",
+        url: "https://bitmesra.ac.in",
+      },
+      memberOf: {
+        "@type": "Organization",
+        name: "ACM Student Chapter, BIT Mesra",
+        url: siteConfig.url,
+      },
+      sameAs: profile.connectedAccounts.map((a) => a.profileUrl).filter(Boolean),
+    },
+  };
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8 space-y-8">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(profileJsonLd) }}
+      />
       {/* OFFICIAL ACM CHAPTER STANDINGS & RANKING BANNER */}
       {acmRanking && (
         <section className="rounded-2xl border border-primary/25 bg-gradient-to-r from-primary/[0.08] via-card to-background p-5 sm:p-6 shadow-sm">

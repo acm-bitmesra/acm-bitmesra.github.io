@@ -26,14 +26,24 @@ export async function generateMetadata({
   const staticEvent = events.find((e) => e.slug === slug);
   const title = staticEvent ? staticEvent.title : "Event";
 
+  const rankingsUrl = `${siteConfig.url}/events/${slug}/rankings`;
+
   return {
     title: `${title} — Live Rankings & Standings | ACM BIT Mesra`,
     description: `Official live standings, rankings, and evaluated GitHub open-source contributions for ${title} at ACM BIT Mesra.`,
+    alternates: {
+      canonical: rankingsUrl,
+    },
     openGraph: {
       title: `${title} — Live Leaderboard | ACM BIT Mesra`,
       description: `View real-time participant standings, approved pull requests, and scores for ${title}.`,
-      url: `${siteConfig.url}/events/${slug}/rankings`,
+      url: rankingsUrl,
       siteName: "ACM BIT Mesra",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${title} — Live Leaderboard | ACM BIT Mesra`,
+      description: `View real-time participant standings, approved pull requests, and scores for ${title}.`,
     },
   };
 }

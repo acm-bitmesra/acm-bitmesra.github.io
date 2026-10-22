@@ -7,10 +7,23 @@ export const metadata: Metadata = {
   title: "About Chapter | ACM BIT Mesra",
   description:
     "Learn about the ACM Student Chapter at BIT Mesra — our mission, foundational beliefs, history, and institutional relationship.",
+  alternates: {
+    canonical: `${siteConfig.url}/about`,
+  },
   openGraph: {
     title: "About Chapter | ACM BIT Mesra",
     description:
       "Learn about the ACM Student Chapter at BIT Mesra — our mission, foundational beliefs, history, and institutional relationship.",
+    url: `${siteConfig.url}/about`,
+    siteName: siteConfig.name,
+    images: [`${siteConfig.url}/og.png`],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About Chapter | ACM BIT Mesra",
+    description:
+      "Learn about the ACM Student Chapter at BIT Mesra — our mission, foundational beliefs, history, and institutional relationship.",
+    images: [`${siteConfig.url}/og.png`],
   },
 };
 
@@ -70,8 +83,31 @@ const historyMilestones = [
 ];
 
 export default function AboutPage() {
+  const aboutJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    name: "About ACM BIT Mesra",
+    description:
+      "Learn about the ACM Student Chapter at BIT Mesra — our mission, foundational beliefs, history, and institutional relationship.",
+    url: `${siteConfig.url}/about`,
+    mainEntity: {
+      "@type": "EducationalOrganization",
+      name: siteConfig.name,
+      url: siteConfig.url,
+      parentOrganization: {
+        "@type": "CollegeOrUniversity",
+        name: siteConfig.institution.name,
+        url: siteConfig.institution.url,
+      },
+    },
+  };
+
   return (
     <div className="py-12 sm:py-16 md:py-20">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutJsonLd) }}
+      />
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 space-y-12">
         {/* Document Header */}
         <div className="space-y-4 border-b border-border/70 pb-8">
