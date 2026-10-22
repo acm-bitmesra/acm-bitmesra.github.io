@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getPublishedPosts, getPublishedTags, PublishedPostListItem } from "@/db/queries/blog";
 import { getPublishedBlogPosts } from "@/data/blog";
-import { ArticleCard } from "@/components/blog/article-card";
+import { MediumStoryRow } from "@/components/blog/medium-story-row";
 import { siteConfig } from "@/config/site";
-import { ArrowLeft, Tag } from "@animateicons/react/lucide";
+import { ArrowLeft } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -71,58 +71,58 @@ export default async function TagPage({ params }: TagPageProps) {
   }
 
   return (
-    <div className="py-10 sm:py-16">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 space-y-10">
-        <div className="space-y-4 border-b border-border/60 pb-8">
+    <div className="min-h-screen bg-background py-8 sm:py-12 md:py-16">
+      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 space-y-8">
+        <header className="space-y-3 border-b border-border/50 pb-6 sm:pb-8">
           <Link
             href="/blog"
-            className="inline-flex items-center gap-1.5 text-xs font-mono text-muted-foreground hover:text-foreground transition-colors group"
+            className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors group"
           >
             <ArrowLeft className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-1" />
-            Back to All Articles
+            <span>All Stories</span>
           </Link>
-          <div className="flex items-center gap-2">
-            <Tag className="h-5 w-5 text-primary" />
-            <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground">
+          <div className="space-y-1">
+            <span className="font-mono text-xs uppercase tracking-wider text-primary">Tag</span>
+            <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-foreground leading-tight">
               #{slug}
             </h1>
           </div>
-          <p className="text-xs sm:text-sm text-muted-foreground max-w-2xl">
+          <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-2xl">
             Technical publications and student engineering notes tagged with #{slug}.
           </p>
-        </div>
+        </header>
 
         {posts.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 items-stretch">
+          <div className="divide-y divide-border/50">
             {posts.map((post) => (
-              <ArticleCard key={post.slug} post={post} />
+              <MediumStoryRow key={post.slug} post={post} />
             ))}
           </div>
         ) : (
           <div className="rounded-lg border border-dashed border-border/80 p-12 text-center space-y-3">
-            <div className="font-mono text-sm text-foreground font-semibold">
+            <div className="text-sm text-foreground font-semibold">
               No published articles found with tag #{slug}.
             </div>
-            <Link href="/blog" className="text-xs font-mono text-primary hover:underline">
-              Browse all articles →
+            <Link href="/blog" className="text-xs text-primary hover:underline font-medium">
+              Browse all stories →
             </Link>
           </div>
         )}
 
         {/* Other Tags */}
-        <div className="pt-8 border-t border-border/60 space-y-3">
-          <div className="text-xs font-mono text-muted-foreground uppercase tracking-wider">
-            Other Topics
+        <div className="pt-8 border-t border-border/50 space-y-3">
+          <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            Explore Other Topics
           </div>
-          <div className="flex flex-wrap gap-1.5">
+          <div className="flex flex-wrap gap-2">
             {allTags.map((t) => (
               <Link
                 key={t.slug}
                 href={`/blog/tag/${t.slug}`}
-                className={`rounded border px-2.5 py-1 text-xs font-mono transition-colors ${
+                className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
                   t.slug === slug
-                    ? "bg-primary text-primary-foreground border-primary"
-                    : "bg-secondary/30 border-border/60 text-muted-foreground hover:text-foreground hover:bg-secondary"
+                    ? "bg-foreground text-background font-semibold"
+                    : "bg-secondary/70 hover:bg-secondary text-muted-foreground hover:text-foreground"
                 }`}
               >
                 #{t.name}

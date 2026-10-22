@@ -2,10 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getPublishedPosts, getPublishedCategories, getPublishedTags, PublishedPostListItem } from "@/db/queries/blog";
 import { getPublishedBlogPosts } from "@/data/blog";
-import { ArticleCard } from "@/components/blog/article-card";
+import { MediumStoryRow } from "@/components/blog/medium-story-row";
+import { MediumSidebar } from "@/components/blog/medium-sidebar";
 import { BlogSearch } from "@/components/blog/blog-search";
 import { siteConfig } from "@/config/site";
-import { Rss, BookOpen, Tag } from "@animateicons/react/lucide";
+import { Rss, BookOpen, PenSquare } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -114,6 +115,11 @@ export default async function BlogIndexPage({ searchParams }: BlogIndexPageProps
     }
   }
 
+  // Staff Picks / Featured Selection
+  const staffPicks = posts.filter((p) => p.featured).length > 0
+    ? posts.filter((p) => p.featured)
+    : posts.slice(0, 3);
+
   // JSON-LD Breadcrumb List
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
@@ -135,115 +141,118 @@ export default async function BlogIndexPage({ searchParams }: BlogIndexPageProps
   };
 
   return (
-    <div className="py-10 sm:py-16">
+    <div className="min-h-screen bg-background py-8 sm:py-12 md:py-16">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
 
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 space-y-10">
-        {/* Document Header */}
-        <div className="space-y-4 border-b border-border/60 pb-8">
-          <div className="flex items-center justify-between">
-            <div className="text-xs font-mono text-muted-foreground uppercase tracking-wider flex items-center gap-1.5">
-              <BookOpen className="h-3.5 w-3.5 text-primary" />
-              Official ACM BIT Mesra Publication
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 space-y-8">
+        {/* Medium-style Publication Masthead */}
+        <header className="border-b border-border/50 pb-6 sm:pb-8">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div className="space-y-2">
+              <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-primary">
+                <BookOpen className="h-3.5 w-3.5" />
+                <span>ACM BIT Mesra Publication</span>
+              </div>
+              <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-foreground leading-[1.08]">
+                The Technical Journal
+              </h1>
+              <p className="max-w-[62ch] text-sm sm:text-base text-muted-foreground leading-relaxed">
+                In-depth engineering notes, algorithmic intuition, open-source maintainer guides, and systems architecture written by BIT Mesra student developers.
+              </p>
             </div>
-            <Link
-              href="/api/blog/rss.xml"
-              target="_blank"
-              title="RSS Feed"
-              className="inline-flex items-center gap-1.5 text-xs font-mono text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <Rss className="h-3.5 w-3.5 text-amber-500" />
-              <span className="hidden sm:inline">RSS Feed</span>
-            </Link>
-          </div>
 
-          <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-foreground leading-[1.1]">
-            The Technical Journal
-          </h1>
-          <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-3xl">
-            Engineering insights, algorithmic problem-solving techniques, open-source maintainer guides, and systems architecture authored by students and mentors at BIT Mesra.
-          </p>
-
-          {/* Search & Filter Bar */}
-          <div className="pt-2">
-            <BlogSearch
-              categories={categories}
-              tags={tags}
-              currentCategory={category}
-              currentTag={tag}
-              currentSearch={q}
-            />
-          </div>
-        </div>
-
-        {/* Filter State Banner (if active filter) */}
-        {(category || tag || q) && (
-          <div className="flex flex-wrap items-center justify-between gap-2 p-3 rounded-md bg-secondary/30 border border-border/60 text-xs font-mono">
-            <span className="text-muted-foreground break-words">
-              Filtering by:{" "}
-              {category && <span className="font-semibold text-foreground">Category: {category}</span>}
-              {tag && <span className="font-semibold text-foreground">Tag: #{tag}</span>}
-              {q && <span className="font-semibold text-foreground">Search: &quot;{q}&quot;</span>}
-            </span>
-            <Link href="/blog" className="text-primary hover:underline shrink-0">
-              Reset filters
-            </Link>
-          </div>
-        )}
-
-        {/* Articles Grid or Intentional Empty State */}
-        {posts.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 items-stretch">
-            {posts.map((post) => (
-              <ArticleCard key={post.slug} post={post} />
-            ))}
-          </div>
-        ) : (
-          <div className="rounded-lg border border-dashed border-border/80 p-12 text-center space-y-3">
-            <div className="font-mono text-sm text-foreground font-semibold">
-              No published articles match your criteria.
-            </div>
-            <p className="text-xs text-muted-foreground max-w-md mx-auto">
-              Try adjusting your search query, selecting a different topic, or resetting your filters.
-            </p>
-            <div className="pt-2">
+            <div className="flex items-center gap-3 shrink-0 pt-2 sm:pt-0">
               <Link
-                href="/blog"
-                className="inline-flex h-8 items-center justify-center rounded-md bg-secondary px-3 text-xs font-medium text-foreground hover:bg-secondary/80 transition-colors"
+                href="/dashboard/blog/write"
+                className="btn-press inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground hover:bg-primary/90 transition-colors shadow-sm"
               >
-                Clear all filters
+                <PenSquare className="h-3.5 w-3.5" />
+                <span>Write a story</span>
+              </Link>
+
+              <Link
+                href="/api/blog/rss.xml"
+                target="_blank"
+                title="RSS Feed"
+                className="inline-flex items-center gap-1.5 rounded-full border border-border/70 bg-background px-3 py-2 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <Rss className="h-3.5 w-3.5 text-amber-500" />
+                <span className="hidden sm:inline">RSS</span>
               </Link>
             </div>
           </div>
-        )}
 
-        {/* Tags Cloud Footer */}
-        {tags.length > 0 && (
-          <div className="pt-10 border-t border-border/60 space-y-3">
-            <div className="text-xs font-mono uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
-              <Tag className="h-3 w-3" />
-              Explore Topics & Tags
-            </div>
-            <div className="flex flex-wrap gap-1.5">
-              {tags.map((t) => (
-                <Link
-                  key={t.slug}
-                  href={`/blog/tag/${t.slug}`}
-                  className={`rounded border px-2.5 py-1 text-xs font-mono transition-colors ${
-                    tag === t.slug
-                      ? "bg-primary text-primary-foreground border-primary"
-                      : "bg-secondary/30 border-border/60 text-muted-foreground hover:text-foreground hover:bg-secondary"
-                  }`}
-                >
-                  #{t.name} <span className="opacity-60 text-[10px]">({t.count})</span>
-                </Link>
-              ))}
-            </div>
+          {/* Medium Topic Navigation & Search */}
+          <div className="mt-6 pt-2">
+            <BlogSearch
+              categories={categories}
+              currentCategory={category}
+              currentSearch={q}
+            />
+          </div>
+        </header>
+
+        {/* Filter State Pill Banner */}
+        {(category || tag || q) && (
+          <div className="flex flex-wrap items-center justify-between gap-2 p-3 rounded-md bg-secondary/30 border border-border/50 text-xs font-mono">
+            <span className="text-muted-foreground">
+              Filtering by:{" "}
+              {category && <span className="font-semibold text-foreground">Topic: {category}</span>}
+              {tag && <span className="font-semibold text-foreground">Tag: #{tag}</span>}
+              {q && <span className="font-semibold text-foreground">Search: &quot;{q}&quot;</span>}
+            </span>
+            <Link href="/blog" className="text-primary hover:underline font-sans font-semibold text-xs shrink-0">
+              Clear filter
+            </Link>
           </div>
         )}
+
+        {/* Main Grid: 2-Column Medium Architecture (Feed Left, Sidebar Right) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+          {/* Main Story Feed (Column 1 - 8 cols) */}
+          <main className="lg:col-span-8 min-w-0">
+            {posts.length > 0 ? (
+              <div className="divide-y divide-border/50">
+                {posts.map((post, idx) => (
+                  <MediumStoryRow
+                    key={post.slug}
+                    post={post}
+                    isFeatured={idx === 0 && !category && !tag && !q}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="py-16 text-center space-y-3 rounded-lg border border-dashed border-border/80 p-8">
+                <div className="font-semibold text-base text-foreground">
+                  No stories match your criteria
+                </div>
+                <p className="text-xs sm:text-sm text-muted-foreground max-w-sm mx-auto">
+                  Try searching for a different keyword or explore other topic tabs above.
+                </p>
+                <div className="pt-2">
+                  <Link
+                    href="/blog"
+                    className="inline-flex h-8 items-center justify-center rounded-full bg-secondary px-4 text-xs font-medium text-foreground hover:bg-secondary/80 transition-colors"
+                  >
+                    View all stories
+                  </Link>
+                </div>
+              </div>
+            )}
+          </main>
+
+          {/* Medium Sidebar (Column 2 - 4 cols) */}
+          <div className="hidden lg:block lg:col-span-4 lg:border-l lg:border-border/50 lg:pl-10">
+            <MediumSidebar
+              featuredPosts={staffPicks}
+              tags={tags}
+              currentTag={tag}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
