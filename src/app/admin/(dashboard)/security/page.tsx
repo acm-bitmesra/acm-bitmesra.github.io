@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import { getAuthorizedMember } from "@/lib/auth/session";
 import { getSecurityOverview } from "@/db/queries/governance";
 import { SecurityManager } from "@/components/admin/security-manager";
@@ -6,7 +7,10 @@ import { Lock } from "lucide-react";
 export const dynamic = "force-dynamic";
 
 export default async function AdminSecurityPage() {
-  const context = (await getAuthorizedMember())!;
+  const context = await getAuthorizedMember();
+  if (!context) {
+    redirect("/admin/login");
+  }
   const isSuperAdmin =
     context.role.hierarchyLevel === 0 || context.role.key === "SUPER_ADMIN";
 

@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import { getAuthorizedMember } from "@/lib/auth/session";
 import { getAuditLogs } from "@/db/queries/audit";
 import { AuditExplorer } from "@/components/admin/audit-explorer";
@@ -7,7 +8,10 @@ import { PERMISSIONS } from "@/lib/permissions/constants";
 export const dynamic = "force-dynamic";
 
 export default async function AdminAuditPage() {
-  const context = (await getAuthorizedMember())!;
+  const context = await getAuthorizedMember();
+  if (!context) {
+    redirect("/admin/login");
+  }
   const isSuperAdmin = context.role.hierarchyLevel === 0 || context.role.key === "SUPER_ADMIN";
   const canView = context.permissions.includes(PERMISSIONS.AUDIT_VIEW) || isSuperAdmin;
 

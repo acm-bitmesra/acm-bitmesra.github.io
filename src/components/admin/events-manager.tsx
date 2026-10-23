@@ -16,8 +16,10 @@ import {
   CheckCircle2,
   AlertCircle,
   Clock,
+  Users,
 } from "lucide-react";
 import { formatDate } from "@/lib/date";
+import { AdminRegistrationsModal } from "./event-registrations-modal";
 
 interface EventItem {
   id: string;
@@ -36,6 +38,7 @@ interface EventItem {
   featured: boolean;
   prizes?: string | null;
   tags: string[];
+  registrationCount?: number;
 }
 
 interface EventsManagerProps {
@@ -46,6 +49,8 @@ export function EventsManager({ initialEvents }: EventsManagerProps) {
   const router = useRouter();
   const [filter, setFilter] = React.useState<"ALL" | "UPCOMING" | "PAST">("ALL");
   const [showAddForm, setShowAddForm] = React.useState(false);
+  const [selectedEventForRegistrations, setSelectedEventForRegistrations] =
+    React.useState<EventItem | null>(null);
 
   // Form State
   const [title, setTitle] = React.useState("");
@@ -403,7 +408,16 @@ export function EventsManager({ initialEvents }: EventsManagerProps) {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 self-end md:self-center shrink-0">
+                <div className="flex flex-wrap items-center gap-2 self-end md:self-center shrink-0">
+                  <button
+                    onClick={() => setSelectedEventForRegistrations(event)}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-900 border border-zinc-700/80 hover:border-red-500/60 hover:bg-zinc-800 text-xs font-mono text-zinc-200 transition-colors cursor-pointer"
+                    title="View & manage registered participants"
+                  >
+                    <Users className="h-3.5 w-3.5 text-[#E31B23]" />
+                    <span>Registrations ({event.registrationCount ?? 0})</span>
+                  </button>
+
                   <button
                     onClick={() => handleToggleFeatured(event.id, event.featured)}
                     title={event.featured ? "Remove from featured" : "Pin as featured"}
@@ -437,6 +451,17 @@ export function EventsManager({ initialEvents }: EventsManagerProps) {
           )}
         </div>
       </div>
+
+      {/* Registrations Drawer / Modal */}
+      {selectedEventForRegistrations && (
+        <AdminRegistrationsModal
+          eventId={selectedEventForRegistrations.id}
+          eventTitle={selectedEventForRegistrations.title}
+          eventSlug={selectedEventForRegistrations.slug}
+          onClose={() => setSelectedEventForRegistrations(null)}
+          onStatusUpdated={() => router.refresh()}
+        />
+      )}
     </div>
   );
 }

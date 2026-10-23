@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import { getAuthorizedMember } from "@/lib/auth/session";
 import { AdminSignOutButton } from "@/components/admin/sign-out-button";
 import {
@@ -13,7 +14,10 @@ import Link from "next/link";
 export const dynamic = "force-dynamic";
 
 export default async function AdminProfilePage() {
-  const context = (await getAuthorizedMember())!;
+  const context = await getAuthorizedMember();
+  if (!context) {
+    redirect("/admin/login");
+  }
   const isSuperAdmin =
     context.role.hierarchyLevel === 0 || context.role.key === "SUPER_ADMIN";
 

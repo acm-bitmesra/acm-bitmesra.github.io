@@ -67,6 +67,11 @@ export async function POST(req: NextRequest) {
         ? body.resumeUrl.trim().slice(0, 300)
         : "";
 
+    const cleanContactNo =
+      typeof body?.contactNo === "string"
+        ? body.contactNo.trim().slice(0, 30)
+        : "";
+
     await upsertStudentProfile(session.user.id, {
       slug,
       displayName: typeof body?.displayName === "string" ? body.displayName.slice(0, 100) : (session.user.name || slug),
@@ -108,6 +113,8 @@ export async function POST(req: NextRequest) {
             showGithubStats: Boolean(body?.showGithubStats),
             showSkillIcons: Boolean(body?.showSkillIcons),
             statsTheme: typeof body?.statsTheme === "string" ? body.statsTheme.slice(0, 30) : "github_dark",
+            contactNo: cleanContactNo,
+            showContactNo: Boolean(body?.showContactNo),
           },
         },
       ],

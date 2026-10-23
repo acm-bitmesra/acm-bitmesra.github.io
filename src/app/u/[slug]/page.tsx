@@ -13,6 +13,7 @@ import {
   GraduationCap,
   Award,
   Mail,
+  Phone,
   FileText,
   Trophy,
   Sparkles,
@@ -327,6 +328,16 @@ export default async function StudentPublicProfilePage({ params }: ProfilePagePr
                     <Mail className="h-3 w-3" />
                     <span>{profile.user.email}</span>
                   </span>
+                )}
+
+                {settings.showContactNo && settings.contactNo && (
+                  <a
+                    href={`tel:${settings.contactNo}`}
+                    className="flex items-center gap-1 font-mono text-[11px] text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    <Phone className="h-3 w-3" />
+                    <span>{settings.contactNo}</span>
+                  </a>
                 )}
               </div>
             </div>

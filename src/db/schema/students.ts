@@ -95,6 +95,8 @@ export interface ProfileCustomSettings {
   showGithubStats?: boolean;
   showSkillIcons?: boolean;
   statsTheme?: string;
+  contactNo?: string;
+  showContactNo?: boolean;
 }
 
 export type ConnectedProvider =

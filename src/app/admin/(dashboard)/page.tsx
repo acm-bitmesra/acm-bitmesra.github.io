@@ -1,5 +1,7 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { getAuthorizedMember } from "@/lib/auth/session";
+import { CommandMenuTrigger } from "@/components/admin/command-menu-trigger";
 import {
   getAdminMetrics,
   getAdminPosts,
@@ -26,7 +28,6 @@ import {
   Server,
   ShieldCheck,
   Users,
-  Zap,
 } from "lucide-react";
 
 export const dynamic = "force-dynamic";
@@ -74,7 +75,10 @@ function ActionCard({
 }
 
 export default async function AdminDashboardPage() {
-  const context = (await getAuthorizedMember())!;
+  const context = await getAuthorizedMember();
+  if (!context) {
+    redirect("/admin/login");
+  }
   const [
     metrics,
     allPosts,
@@ -124,7 +128,7 @@ export default async function AdminDashboardPage() {
               ACM BIT Mesra · Operations
             </div>
             <h1 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
-              Good to see you, {context.member.name.split(" ")[0]}.
+              Good to see you, {(context.member?.name || context.user?.name || "Admin").split(" ")[0]}.
             </h1>
             <p className="mt-2 max-w-2xl text-sm leading-6 text-zinc-400">
               Manage the chapter website, editorial queue, events, people, and governance from one place.
@@ -227,23 +231,7 @@ export default async function AdminDashboardPage() {
               Common operations, optimized for keyboard, desktop, and touch.
             </p>
           </div>
-          <button
-            type="button"
-            onClick={() => {
-              window.dispatchEvent(
-                new KeyboardEvent("keydown", {
-                  key: "k",
-                  metaKey: true,
-                  bubbles: true,
-                }),
-              );
-            }}
-            className="hidden items-center gap-1.5 rounded-md border border-zinc-800 px-2.5 py-1.5 font-mono text-[10px] text-zinc-500 hover:bg-zinc-900 hover:text-zinc-300 sm:inline-flex"
-          >
-            <Zap className="h-3 w-3" />
-            Command menu
-            <kbd className="rounded border border-zinc-800 bg-zinc-950 px-1 text-[9px]">⌘K</kbd>
-          </button>
+          <CommandMenuTrigger />
         </div>
 
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -472,7 +460,7 @@ export default async function AdminDashboardPage() {
       </section>
 
       <footer className="flex flex-col gap-2 border-t border-zinc-800/70 pt-5 text-[10px] font-mono text-zinc-600 sm:flex-row sm:items-center sm:justify-between">
-        <span>{context.role.displayName} · ACM BIT Mesra Admin Console</span>
+        <span>{context.role?.displayName || "Member"} · ACM BIT Mesra Admin Console</span>
         <div className="flex items-center gap-3">
           <span className="inline-flex items-center gap-1.5">
             <ShieldCheck className="h-3 w-3 text-emerald-500" />

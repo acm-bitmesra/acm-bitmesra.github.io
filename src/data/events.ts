@@ -427,27 +427,140 @@ export const events: Event[] = [
   },
   {
     slug: "cybersecurity-workshop-2026",
-    title: "Cybersecurity Workshop",
+    title: "Cybersecurity & Ethical Hacking Workshop 2026",
     shortDescription:
-      "Upcoming hands-on workshop on cybersecurity fundamentals. Date, venue, speakers, and registration details will be announced soon.",
+      "Hands-on intensive workshop exploring offensive security methodologies, defensive system hardening, OWASP Top 10 web vulnerabilities, and live CTF challenges.",
     description:
-      "ACM BIT Mesra is organizing an upcoming hands-on cybersecurity workshop for students who want to understand how systems are attacked and, more importantly, how to defend them.\n\nThe date, venue, speakers, session plan, and registration details will be announced on this event page.",
+      "ACM BIT Mesra presents the 2026 Cybersecurity & Ethical Hacking Workshop — a two-day deep dive into modern network reconnaissance, vulnerability analysis, cryptography fundamentals, web application security (OWASP Top 10), and Capture The Flag (CTF) techniques. Designed for students aspiring toward offensive and defensive security careers, this workshop combines instructor-led demonstrations with hands-on lab environments.",
     category: "Workshop",
     status: "upcoming",
-    date: "2026-11-30",
-    dateTba: true,
-    time: "To Be Announced",
-    location: "To Be Announced",
-    organizers: ["ACM BIT Mesra"],
-    registrationOpen: false,
-    registrationStatusText: "Registration Opening Soon",
+    date: "2026-11-07",
+    endDate: "2026-11-08",
+    dateTba: false,
+    time: "10:00 – 16:30 IST",
+    location: "CSE Department Lab 2 & Online Hybrid, BIT Mesra",
+    organizers: ["ACM Student Chapter, BIT Mesra", "ACM CyberSec Wing"],
+    isFeatured: true,
+    registrationOpen: true,
+    registrationStatusText: "Registrations Open",
     registrationHelperText:
-      "Registration details for the Cybersecurity Workshop will be announced soon. Stay tuned to this page for updates.",
-    tags: ["Cybersecurity", "Security", "Workshop", "Hands-on"],
+      "Registrations are officially open to all BIT Mesra students! Sign in with your university account to secure your lab seat.",
+    registrationUrl: "/events/cybersecurity-workshop-2026",
+    maxParticipants: 80,
+    tags: [
+      "Cybersecurity",
+      "Ethical Hacking",
+      "OWASP",
+      "Network Security",
+      "CTF",
+      "Cryptography",
+      "Workshop",
+    ],
     about: [
-      "This workshop is planned as a practical introduction to cybersecurity, focused on building a defensive mindset through hands-on learning.",
-      "All sessions are intended for learning and ethical, authorized practice only.",
-      "Full details, including the date, venue, speakers, prerequisites, and registration, will be published on this page once confirmed.",
+      "The Cybersecurity Workshop is crafted by ACM BIT Mesra to bridge theoretical computer network knowledge with realistic offensive and defensive operations.",
+      "Participants will interact with virtualized target machines, analyze packet captures, identify injection vulnerabilities, and exploit cryptographic misconfigurations in isolated sandboxes.",
+      "All exercises adhere strictly to ethical guidelines and are conducted in closed, authorized laboratory environments for education only.",
+    ],
+    expectations: [
+      {
+        title: "Network Security & Packet Inspection",
+        description:
+          "Learn Wireshark packet dissection, TCP/IP handshakes, ARP spoofing detection, and firewall configuration.",
+      },
+      {
+        title: "Web Application Pentesting (OWASP Top 10)",
+        description:
+          "Hands-on exploration of SQL injection, cross-site scripting (XSS), insecure deserialization, and authentication bypasses.",
+      },
+      {
+        title: "Applied Cryptography & Steganography",
+        description:
+          "Understand symmetric and asymmetric ciphers, hashing collisions, key exchange flaws, and secret hidden data recovery.",
+      },
+      {
+        title: "Live Capture-the-Flag (CTF) Competition",
+        description:
+          "Compete in an exclusive jeopardy-style CTF challenge at the conclusion of Day 2 with leaderboard rankings and prizes.",
+      },
+    ],
+    timelineItems: [
+      {
+        date: "Nov 7, 10:00 – 13:00 IST",
+        title: "Day 1 Morning: Linux Forensics & Network Analysis",
+        status: "Confirmed",
+        description:
+          "Environment setup, Linux CLI toolchains, Wireshark, Nmap scanning, and network protocol triage.",
+      },
+      {
+        date: "Nov 7, 14:00 – 16:30 IST",
+        title: "Day 1 Afternoon: Web Security & OWASP Top 10",
+        status: "Confirmed",
+        description:
+          "Burp Suite intercepting proxies, SQLi exploitation, XSS filters bypass, and CSRF defense.",
+      },
+      {
+        date: "Nov 8, 10:00 – 13:00 IST",
+        title: "Day 2 Morning: Cryptography & Reverse Engineering",
+        status: "Confirmed",
+        description:
+          "Ghidra basics, binary disassembly, XOR/RSA exploitation, and privilege escalation vectors.",
+      },
+      {
+        date: "Nov 8, 14:00 – 16:30 IST",
+        title: "Day 2 Afternoon: Jeopardy CTF Sprint & Awards",
+        status: "Confirmed",
+        description:
+          "Timed CTF showdown across 15 custom challenge flags, peer presentations, and certificate distribution.",
+      },
+    ],
+    faqs: [
+      {
+        question: "Who is eligible to participate?",
+        answer:
+          "All undergraduate, postgraduate, and research scholars from BIT Mesra with an active university account are eligible to attend.",
+      },
+      {
+        question: "Do I need prior hacking or CTF experience?",
+        answer:
+          "No prior cybersecurity experience is required. Basic understanding of Linux terminal commands and networking concepts is helpful, and complete beginners are warmly welcomed.",
+      },
+      {
+        question: "What should I bring to the workshop?",
+        answer:
+          "Bring your laptop with a working browser and Wi-Fi capability. Setup guides for Kali Linux VMs or Docker environments will be sent prior to the event.",
+      },
+      {
+        question: "Is there any registration fee?",
+        answer:
+          "No. The workshop is completely free of charge, organized by ACM BIT Mesra for the student developer community.",
+      },
+      {
+        question: "Will participants receive certificates?",
+        answer:
+          "Yes, verified digital participation certificates will be awarded to all attendees who complete the hands-on lab challenges.",
+      },
+    ],
+    rules: [
+      "Participants must bring their own laptop with Wi-Fi capability.",
+      "All penetration testing must be performed strictly within the designated target sandboxes.",
+      "Adherence to the ACM Code of Ethics and BIT Mesra Lab Policy is mandatory at all times.",
+    ],
+    prizes: [
+      {
+        title: "CTF Winner (1st Place)",
+        reward: "Certificate of Excellence + Swag Kit",
+        description: "Top individual scorer on the Day 2 Jeopardy CTF leaderboard.",
+      },
+      {
+        title: "Runner-Up (2nd Place)",
+        reward: "Certificate of Distinction + Goodies",
+        description: "Second highest CTF flag solver.",
+      },
+      {
+        title: "Active Contributors",
+        reward: "Participation Certificates",
+        description: "Awarded to all students completing hands-on laboratory checkpoints.",
+      },
     ],
   },
   {

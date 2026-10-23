@@ -45,8 +45,11 @@ export async function POST(
       }
     }
 
-    const { getConnectedAccountByProvider } = await import("@/db/queries/students");
-    const ghAccount = await getConnectedAccountByProvider(session.user.id, "github");
+    const { getConnectedAccountByProvider, getStudentProfileByUserId } = await import("@/db/queries/students");
+    const [ghAccount, studentProfile] = await Promise.all([
+      getConnectedAccountByProvider(session.user.id, "github"),
+      getStudentProfileByUserId(session.user.id),
+    ]);
 
     if (slug === "hacktoberfest-2026" && !ghAccount) {
       return NextResponse.json(
@@ -56,8 +59,21 @@ export async function POST(
     }
 
     const body = await req.json().catch(() => ({}));
+
+    // Extract contact number from body or profile settings
+    const profileSettings = studentProfile?.portfolioBlocks?.find(
+      (b) => b.type === "settings"
+    )?.content as { contactNo?: string } | undefined;
+
+    const contactNo =
+      (typeof body?.contactNo === "string" && body.contactNo.trim()) ||
+      (typeof body?.customAnswers?.contactNo === "string" && body.customAnswers.contactNo.trim()) ||
+      profileSettings?.contactNo ||
+      "";
+
     const customAnswers = {
       ...(body?.customAnswers && typeof body.customAnswers === "object" ? body.customAnswers : {}),
+      ...(contactNo ? { contactNo } : {}),
       ...(ghAccount ? { githubHandle: ghAccount.handle, githubUserId: ghAccount.providerUserId } : {}),
     };
 

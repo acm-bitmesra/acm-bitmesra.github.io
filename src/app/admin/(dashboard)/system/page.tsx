@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import { getAuthorizedMember } from "@/lib/auth/session";
 import { getSystemHealthReport } from "@/db/queries/system";
 import { Server, ShieldCheck, Database, Lock, Key, CheckCircle2 } from "lucide-react";
@@ -5,7 +6,10 @@ import { Server, ShieldCheck, Database, Lock, Key, CheckCircle2 } from "lucide-r
 export const dynamic = "force-dynamic";
 
 export default async function AdminSystemPage() {
-  const context = (await getAuthorizedMember())!;
+  const context = await getAuthorizedMember();
+  if (!context) {
+    redirect("/admin/login");
+  }
   const isSuperAdmin = context.role.hierarchyLevel === 0 || context.role.key === "SUPER_ADMIN";
 
   if (!isSuperAdmin) {

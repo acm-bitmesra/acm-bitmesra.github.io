@@ -285,12 +285,12 @@ export function AdminAppShell({ context, children }: AdminAppShellProps) {
                 {context.user.image ? (
                   <img src={context.user.image} alt="" className="h-full w-full object-cover" />
                 ) : (
-                  context.member.name.charAt(0).toUpperCase()
+                  (context.member?.name || context.user?.name || "A").charAt(0).toUpperCase()
                 )}
               </div>
               <div className="hidden text-left md:block">
                 <div className="flex items-center gap-1 text-[11px] font-semibold leading-none text-white">
-                  <span className="max-w-28 truncate">{context.member.name.split(" ")[0]}</span>
+                  <span className="max-w-28 truncate">{(context.member?.name || context.user?.name || "Admin").split(" ")[0]}</span>
                   {isSuperAdmin && (
                     <span className="rounded border border-red-900 bg-red-950/70 px-1 py-px font-mono text-[8px] text-red-400">
                       ROOT
@@ -298,7 +298,7 @@ export function AdminAppShell({ context, children }: AdminAppShellProps) {
                   )}
                 </div>
                 <div className="mt-1 max-w-32 truncate text-[9px] text-zinc-500">
-                  {context.role.displayName}
+                  {context.role?.displayName || "Member"}
                 </div>
               </div>
             </Link>
@@ -367,10 +367,10 @@ export function AdminAppShell({ context, children }: AdminAppShellProps) {
               {!sidebarCollapsed && (
                 <div className="min-w-0">
                   <div className="truncate text-[11px] font-medium text-zinc-300">
-                    {context.member.name}
+                    {context.member?.name || context.user?.name || "Admin"}
                   </div>
                   <div className="truncate font-mono text-[9px] text-zinc-600">
-                    {context.role.displayName}
+                    {context.role?.displayName || "Member"}
                   </div>
                 </div>
               )}

@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { getAuthorizedMember } from "@/lib/auth/session";
 import { getAdminPostById } from "@/db/queries/admin-blog";
 import { ArticleForm } from "@/components/admin/article-form";
@@ -13,7 +13,10 @@ interface EditArticlePageProps {
 
 export default async function EditArticlePage({ params }: EditArticlePageProps) {
   const { id } = await params;
-  const context = (await getAuthorizedMember())!;
+  const context = await getAuthorizedMember();
+  if (!context) {
+    redirect("/admin/login");
+  }
   const post = await getAdminPostById(id);
 
   if (!post) {

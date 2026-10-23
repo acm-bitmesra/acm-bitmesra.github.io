@@ -97,6 +97,8 @@ export function ProfileEditor({
   const [showGithubStats, setShowGithubStats] = React.useState(Boolean(initialSettings.showGithubStats));
   const [showSkillIcons, setShowSkillIcons] = React.useState(Boolean(initialSettings.showSkillIcons));
   const [statsTheme, setStatsTheme] = React.useState(initialSettings.statsTheme || "github_dark");
+  const [contactNo, setContactNo] = React.useState(initialSettings.contactNo || "");
+  const [showContactNo, setShowContactNo] = React.useState(Boolean(initialSettings.showContactNo));
 
   // Connected Accounts State
   const ghAccount = initialAccounts.find((a) => a.provider === "github");
@@ -310,6 +312,8 @@ export function ProfileEditor({
           isPublished: true,
           showEmail,
           resumeUrl,
+          contactNo,
+          showContactNo,
           showGithubStats,
           showSkillIcons,
           statsTheme,
@@ -518,6 +522,49 @@ export function ProfileEditor({
                     <span
                       className={`inline-block h-3.5 w-3.5 transform rounded-full bg-background transition-transform ${
                         showEmail ? "translate-x-4" : "translate-x-1"
+                      }`}
+                    />
+                  </button>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-foreground mb-1.5">
+                    Contact Number (Optional)
+                  </label>
+                  <input
+                    type="tel"
+                    value={contactNo}
+                    onChange={(e) => setContactNo(e.target.value)}
+                    placeholder="+91 98765 43210"
+                    className="w-full rounded-lg border border-border bg-background px-3 py-2 text-xs text-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary font-mono"
+                  />
+                  <p className="mt-1 text-[10px] text-muted-foreground">
+                    Stored securely and used for chapter event notices & emergency contact.
+                  </p>
+                </div>
+
+                <div className="flex items-center justify-between rounded-lg border border-border bg-background px-3 py-2">
+                  <div>
+                    <div className="text-xs font-semibold text-foreground">Show Contact Number</div>
+                    <div className="text-[10px] text-muted-foreground">
+                      {contactNo
+                        ? showContactNo
+                          ? "Visible on public portfolio"
+                          : "Hidden from public portfolio"
+                        : "Enter contact number above to toggle"}
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    disabled={!contactNo}
+                    onClick={() => setShowContactNo(!showContactNo)}
+                    className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${
+                      showContactNo && contactNo ? "bg-primary" : "bg-muted"
+                    } ${!contactNo ? "opacity-50 cursor-not-allowed" : ""}`}
+                  >
+                    <span
+                      className={`inline-block h-3.5 w-3.5 transform rounded-full bg-background transition-transform ${
+                        showContactNo && contactNo ? "translate-x-4" : "translate-x-1"
                       }`}
                     />
                   </button>

@@ -80,6 +80,8 @@ export function EventRegistrationButton({
     fetchStatus();
   }, [fetchStatus]);
 
+  const [contactNumber, setContactNumber] = React.useState("");
+
   const handleRegister = async () => {
     setSubmitting(true);
     setErrorMessage(null);
@@ -87,7 +89,9 @@ export function EventRegistrationButton({
       const res = await fetch(`/api/events/${slug}/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({}),
+        body: JSON.stringify({
+          contactNo: contactNumber.trim() || undefined,
+        }),
       });
 
       const data = await res.json();
@@ -158,15 +162,17 @@ export function EventRegistrationButton({
           )}
         </div>
 
-        {/* Action: View Rankings */}
-        <Link
-          href={`/events/${slug}/rankings`}
-          className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 text-xs font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 transition-colors"
-        >
-          <Trophy className="h-3.5 w-3.5 text-amber-300" />
-          <span>View Live Rankings & Standings</span>
-          <ArrowRight className="h-3.5 w-3.5" />
-        </Link>
+        {/* Action: View Rankings (only for Hacktoberfest / ranking-based events) */}
+        {isHacktoberfest && (
+          <Link
+            href={`/events/${slug}/rankings`}
+            className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 text-xs font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 transition-colors"
+          >
+            <Trophy className="h-3.5 w-3.5 text-amber-300" />
+            <span>View Live Rankings & Standings</span>
+            <ArrowRight className="h-3.5 w-3.5" />
+          </Link>
+        )}
 
         {/* Secondary: Dashboard Events */}
         <Link
@@ -225,6 +231,21 @@ export function EventRegistrationButton({
           </div>
         )}
 
+        {/* Optional Contact Number Input */}
+        <div className="space-y-1">
+          <label className="text-[11px] font-medium text-muted-foreground flex items-center justify-between">
+            <span>Contact Number (Optional)</span>
+            <span className="text-[10px] text-muted-foreground/70">for updates</span>
+          </label>
+          <input
+            type="tel"
+            value={contactNumber}
+            onChange={(e) => setContactNumber(e.target.value)}
+            placeholder="+91 98765 43210"
+            className="w-full rounded-lg border border-border bg-card px-3 py-2 text-xs text-foreground placeholder:text-muted-foreground/60 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary font-mono"
+          />
+        </div>
+
         {errorMessage && (
           <div className="flex items-start gap-2 rounded-lg border border-red-500/20 bg-red-500/10 p-2.5 text-xs text-red-600 dark:text-red-400">
             <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
@@ -245,19 +266,23 @@ export function EventRegistrationButton({
             </>
           ) : (
             <>
-              <span>Register for {isHacktoberfest ? "Hacktoberfest 2026" : "Event"}</span>
+              <span>
+                Register for {isHacktoberfest ? "Hacktoberfest 2026" : slug === "cybersecurity-workshop-2026" ? "Cybersecurity Workshop" : "Event"}
+              </span>
               <span aria-hidden="true">→</span>
             </>
           )}
         </button>
 
-        <Link
-          href={`/events/${slug}/rankings`}
-          className="inline-flex min-h-9 w-full items-center justify-center gap-1.5 rounded-lg border border-border bg-card px-4 text-xs font-semibold text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
-        >
-          <Trophy className="h-3.5 w-3.5 text-amber-500" />
-          <span>View Live Leaderboard</span>
-        </Link>
+        {isHacktoberfest && (
+          <Link
+            href={`/events/${slug}/rankings`}
+            className="inline-flex min-h-9 w-full items-center justify-center gap-1.5 rounded-lg border border-border bg-card px-4 text-xs font-semibold text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
+          >
+            <Trophy className="h-3.5 w-3.5 text-amber-500" />
+            <span>View Live Leaderboard</span>
+          </Link>
+        )}
       </div>
     );
   }
@@ -273,13 +298,15 @@ export function EventRegistrationButton({
         <span aria-hidden="true">→</span>
       </Link>
 
-      <Link
-        href={`/events/${slug}/rankings`}
-        className="inline-flex min-h-9 w-full items-center justify-center gap-1.5 rounded-lg border border-border bg-card px-4 text-xs font-semibold text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
-      >
-        <Trophy className="h-3.5 w-3.5 text-amber-500" />
-        <span>View Live Leaderboard</span>
-      </Link>
+      {isHacktoberfest && (
+        <Link
+          href={`/events/${slug}/rankings`}
+          className="inline-flex min-h-9 w-full items-center justify-center gap-1.5 rounded-lg border border-border bg-card px-4 text-xs font-semibold text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
+        >
+          <Trophy className="h-3.5 w-3.5 text-amber-500" />
+          <span>View Live Leaderboard</span>
+        </Link>
+      )}
 
       {registrationUrl && (
         <a

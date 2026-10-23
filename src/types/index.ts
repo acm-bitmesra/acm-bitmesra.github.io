@@ -104,6 +104,7 @@ export interface Event {
   registrationHelperText?: string;
   registrationType?: "github" | "form" | "external";
   registrationUrl?: string;
+  maxParticipants?: number;
   tagline?: string;
   theme?: string;
   poster?: string;

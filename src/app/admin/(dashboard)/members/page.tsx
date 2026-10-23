@@ -1,4 +1,5 @@
 
+import { redirect } from "next/navigation";
 import { getAuthorizedMember } from "@/lib/auth/session";
 import { getAllChapterMembers, getAllChapterRoles } from "@/db/queries/members";
 import { MembersManager } from "@/components/admin/members-manager";
@@ -8,7 +9,10 @@ import { Shield } from "lucide-react";
 export const dynamic = "force-dynamic";
 
 export default async function MembersAdminPage() {
-  const context = (await getAuthorizedMember())!;
+  const context = await getAuthorizedMember();
+  if (!context) {
+    redirect("/admin/login");
+  }
 
   const canManage = context.permissions.includes(PERMISSIONS.ADMIN_MANAGE_MEMBERS);
 

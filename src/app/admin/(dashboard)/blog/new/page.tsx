@@ -1,10 +1,14 @@
+import { redirect } from "next/navigation";
 import { getAuthorizedMember } from "@/lib/auth/session";
 import { ArticleForm } from "@/components/admin/article-form";
 
 export const dynamic = "force-dynamic";
 
 export default async function NewArticlePage() {
-  const context = (await getAuthorizedMember())!;
+  const context = await getAuthorizedMember();
+  if (!context) {
+    redirect("/admin/login");
+  }
 
   return (
     <div className="space-y-6">

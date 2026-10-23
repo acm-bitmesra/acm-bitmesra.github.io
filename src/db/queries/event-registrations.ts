@@ -1,15 +1,18 @@
 import { db } from "@/db";
 import {
+  academicBatches,
   chapterEvents,
+  connectedAccounts,
   contributionCandidates,
   eventLeaderboards,
   eventRegistrations,
   eventTeamMembers,
   eventTeams,
+  studentProfiles,
   user,
 } from "@/db/schema";
-import { eq, and, desc } from "drizzle-orm";
-import type { CandidateReviewStatus } from "@/db/schema/event-registrations";
+import { eq, and, desc, inArray } from "drizzle-orm";
+import type { CandidateReviewStatus, RegistrationStatus } from "@/db/schema/event-registrations";
 
 export async function getUserRegistrationsWithEvents(userId: string) {
   try {
@@ -146,6 +149,7 @@ export async function getEventRegistrations(eventId: string) {
         status: eventRegistrations.status,
         teamId: eventRegistrations.teamId,
         customAnswers: eventRegistrations.customAnswers,
+        notes: eventRegistrations.notes,
         registeredAt: eventRegistrations.registeredAt,
         checkedInAt: eventRegistrations.checkedInAt,
         user: {
@@ -160,28 +164,143 @@ export async function getEventRegistrations(eventId: string) {
       .where(eq(eventRegistrations.eventId, eventId))
       .orderBy(desc(eventRegistrations.registeredAt));
 
-    const results = [];
-    for (const reg of registrations) {
-      let team = null;
-      if (reg.teamId) {
-        const [t] = await db
-          .select()
-          .from(eventTeams)
-          .where(eq(eventTeams.id, reg.teamId))
-          .limit(1);
-        team = t || null;
-      }
-      results.push({
-        ...reg,
-        team,
-      });
+    if (registrations.length === 0) return [];
+
+    const userIds = registrations.map((r) => r.userId);
+    const teamIds = registrations.map((r) => r.teamId).filter(Boolean) as string[];
+
+    // Batch query student profiles
+    const profiles = await db
+      .select({
+        userId: studentProfiles.userId,
+        slug: studentProfiles.slug,
+        displayName: studentProfiles.displayName,
+        department: studentProfiles.department,
+        academicProgram: studentProfiles.academicProgram,
+        batchId: studentProfiles.batchId,
+        portfolioBlocks: studentProfiles.portfolioBlocks,
+      })
+      .from(studentProfiles)
+      .where(inArray(studentProfiles.userId, userIds));
+
+    const profileMap = new Map<string, (typeof profiles)[number]>();
+    for (const p of profiles) {
+      profileMap.set(p.userId, p);
     }
 
-    return results;
+    // Batch query batches
+    const batchIds = profiles.map((p) => p.batchId).filter(Boolean) as string[];
+    const batches =
+      batchIds.length > 0
+        ? await db
+            .select({
+              id: academicBatches.id,
+              label: academicBatches.label,
+              endYear: academicBatches.endYear,
+            })
+            .from(academicBatches)
+            .where(inArray(academicBatches.id, batchIds))
+        : [];
+    const batchMap = new Map<string, (typeof batches)[number]>();
+    for (const b of batches) {
+      batchMap.set(b.id, b);
+    }
+
+    // Batch query connected accounts
+    const accounts = await db
+      .select({
+        userId: connectedAccounts.userId,
+        provider: connectedAccounts.provider,
+        handle: connectedAccounts.handle,
+        profileUrl: connectedAccounts.profileUrl,
+        isVerified: connectedAccounts.isVerified,
+      })
+      .from(connectedAccounts)
+      .where(inArray(connectedAccounts.userId, userIds));
+
+    const accountsMap = new Map<string, typeof accounts>();
+    for (const a of accounts) {
+      const list = accountsMap.get(a.userId) || [];
+      list.push(a);
+      accountsMap.set(a.userId, list);
+    }
+
+    // Batch query teams
+    const teams =
+      teamIds.length > 0
+        ? await db
+            .select()
+            .from(eventTeams)
+            .where(inArray(eventTeams.id, teamIds))
+        : [];
+    const teamMap = new Map<string, (typeof teams)[number]>();
+    for (const t of teams) {
+      teamMap.set(t.id, t);
+    }
+
+    return registrations.map((reg) => {
+      const profile = profileMap.get(reg.userId);
+      const batch = profile?.batchId ? batchMap.get(profile.batchId) : null;
+      const userAccounts = accountsMap.get(reg.userId) || [];
+      const team = reg.teamId ? teamMap.get(reg.teamId) || null : null;
+
+      // Extract phone/contact number
+      const settingsBlock = profile?.portfolioBlocks?.find(
+        (b) => b.type === "settings"
+      );
+      const settings = (settingsBlock?.content || {}) as { contactNo?: string };
+      const contactNo =
+        (reg.customAnswers?.contactNo as string) ||
+        (reg.customAnswers?.phone as string) ||
+        (reg.customAnswers?.phoneNumber as string) ||
+        settings.contactNo ||
+        "";
+
+      // Extract GitHub handle
+      const ghAccount = userAccounts.find((a) => a.provider === "github");
+      const githubHandle =
+        (reg.customAnswers?.githubHandle as string) ||
+        ghAccount?.handle ||
+        "";
+
+      return {
+        ...reg,
+        contactNo,
+        githubHandle,
+        profile: profile
+          ? {
+              slug: profile.slug,
+              displayName: profile.displayName,
+              department: profile.department,
+              academicProgram: profile.academicProgram,
+              batch: batch?.label || null,
+            }
+          : null,
+        connectedAccounts: userAccounts,
+        team,
+      };
+    });
   } catch (error) {
     console.error("Error fetching event registrations:", error);
     return [];
   }
+}
+
+export async function updateRegistrationStatus(
+  registrationId: string,
+  status: RegistrationStatus,
+  notes?: string
+) {
+  const [updated] = await db
+    .update(eventRegistrations)
+    .set({
+      status,
+      checkedInAt: status === "CHECKED_IN" ? new Date() : undefined,
+      notes: notes !== undefined ? notes : undefined,
+    })
+    .where(eq(eventRegistrations.id, registrationId))
+    .returning();
+  return updated;
 }
 
 export async function registerForEvent(
