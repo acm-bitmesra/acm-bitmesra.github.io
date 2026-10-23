@@ -117,6 +117,8 @@ export async function getChapterEventBySlug(slug: string) {
         expectedStatus &&
         (existing.status !== expectedStatus ||
           existing.title !== staticEvent.title ||
+          existing.location !== (staticEvent.location || "Online & BIT Mesra Campus, Ranchi") ||
+          existing.startDate.toISOString().slice(0, 10) !== staticEvent.date ||
           existing.maxParticipants !== (staticEvent.maxParticipants || null))
       ) {
         await db

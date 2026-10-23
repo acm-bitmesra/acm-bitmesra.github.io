@@ -12,6 +12,7 @@ import { Clock, Compass, FileText, CircleQuestionMark as HelpCircle, MapPin, Shi
 import { Badge } from "@/components/ui/badge";
 import { RecommendedReposSection } from "@/components/events/recommended-repos-section";
 import { EventRegistrationButton } from "@/components/events/event-registration-button";
+import { WorkshopScheduleSection } from "@/components/events/workshop-schedule-section";
 
 interface EventDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -255,6 +256,10 @@ export default async function EventDetailPage({
 
               {event.recommendedRepos && event.recommendedRepos.length > 0 && (
                 <RecommendedReposSection repos={event.recommendedRepos} />
+              )}
+
+              {event.workshopSchedule && event.workshopSchedule.length > 0 && (
+                <WorkshopScheduleSection sessions={event.workshopSchedule} />
               )}
 
               {event.timelineItems && event.timelineItems.length > 0 && (

@@ -80,6 +80,18 @@ export interface RecommendedRepo {
   tags?: string[];
 }
 
+export interface WorkshopScheduleSession {
+  date: string;
+  day: string;
+  time: string;
+  activity: string;
+  format: "In-person" | "Online" | "Hybrid" | string;
+  venue: string;
+  notes?: string;
+  topicsCovered: string;
+  handsOn: string;
+}
+
 export interface EventLink {
   title: string;
   description?: string;
@@ -128,6 +140,7 @@ export interface Event {
   challengeDescription?: string;
   timelineNotice?: string;
   timelineItems?: EventTimelineItem[];
+  workshopSchedule?: WorkshopScheduleSession[];
   recommendedRepos?: RecommendedRepo[];
   exploreLinks?: EventLink[];
   disclaimer?: string;

@@ -431,14 +431,14 @@ export const events: Event[] = [
     shortDescription:
       "Hands-on intensive workshop exploring offensive security methodologies, defensive system hardening, OWASP Top 10 web vulnerabilities, and live CTF challenges.",
     description:
-      "ACM BIT Mesra presents the 2026 Cybersecurity & Ethical Hacking Workshop — a two-day deep dive into modern network reconnaissance, vulnerability analysis, cryptography fundamentals, web application security (OWASP Top 10), and Capture The Flag (CTF) techniques. Designed for students aspiring toward offensive and defensive security careers, this workshop combines instructor-led demonstrations with hands-on lab environments.",
+      "ACM BIT Mesra presents the 2026 Cybersecurity & Ethical Hacking Workshop — an in-depth hybrid training program featuring in-person opening and three evening classes at BIT Mesra, followed by advanced online guided practice and CTF labs. Designed for students aspiring toward offensive and defensive security careers, this workshop combines instructor-led demonstrations with hands-on lab environments.",
     category: "Workshop",
     status: "upcoming",
-    date: "2026-11-07",
-    endDate: "2026-11-08",
+    date: "2026-10-27",
+    endDate: "2026-10-31",
     dateTba: false,
-    time: "10:00 – 16:30 IST",
-    location: "CSE Department Lab 2 & Online Hybrid, BIT Mesra",
+    time: "Inauguration: 18:00 IST | Evening Classes: 6:00 – 7:30 PM IST",
+    location: "CAT Hall (Inauguration) · In-Person & Online Hybrid, BIT Mesra",
     organizers: ["ACM Student Chapter, BIT Mesra", "ACM CyberSec Wing"],
     isFeatured: true,
     registrationOpen: true,
@@ -458,59 +458,101 @@ export const events: Event[] = [
     ],
     about: [
       "The Cybersecurity Workshop is crafted by ACM BIT Mesra to bridge theoretical computer network knowledge with realistic offensive and defensive operations.",
-      "Participants will interact with virtualized target machines, analyze packet captures, identify injection vulnerabilities, and exploit cryptographic misconfigurations in isolated sandboxes.",
+      "The program begins with an in-person opening at CAT Hall and three evening classes on campus, followed by weekly online labs and guided challenges on PortSwigger Academy, Bandit, picoCTF, and OWASP Juice Shop.",
       "All exercises adhere strictly to ethical guidelines and are conducted in closed, authorized laboratory environments for education only.",
     ],
-    expectations: [
+    workshopSchedule: [
       {
-        title: "Network Security & Packet Inspection",
-        description:
-          "Learn Wireshark packet dissection, TCP/IP handshakes, ARP spoofing detection, and firewall configuration.",
+        date: "27 Oct 2026",
+        day: "Tuesday",
+        time: "18:00 IST (6:00 PM)",
+        activity: "Opening / Inauguration",
+        format: "In-person",
+        venue: "CAT Hall, BIT Mesra",
+        notes: "Workshop opening",
+        topicsCovered: "Workshop roadmap; cybersecurity learning goals; ethical and legal boundaries",
+        handsOn: "Orientation, participant expectations and overview of in-person-to-online plan",
       },
       {
-        title: "Web Application Pentesting (OWASP Top 10)",
-        description:
-          "Hands-on exploration of SQL injection, cross-site scripting (XSS), insecure deserialization, and authentication bypasses.",
+        date: "28 Oct 2026",
+        day: "Wednesday",
+        time: "6:00 – 7:30 PM IST",
+        activity: "Day 1: Cybersecurity foundations, ethics & Linux basics",
+        format: "In-person",
+        venue: "To be confirmed, BIT Mesra",
+        notes: "90-minute class",
+        topicsCovered: "CIA triad; threats, vulnerabilities and risk; phishing and social engineering; password safety and MFA; Linux shell basics",
+        handsOn: "Spot red flags in sample phishing messages; practise safe terminal commands; beginner Linux challenge",
       },
       {
-        title: "Applied Cryptography & Steganography",
-        description:
-          "Understand symmetric and asymmetric ciphers, hashing collisions, key exchange flaws, and secret hidden data recovery.",
+        date: "29 Oct 2026",
+        day: "Thursday",
+        time: "6:00 – 7:30 PM IST",
+        activity: "Day 2: Networking, HTTP, crypto & password security",
+        format: "In-person",
+        venue: "To be confirmed, BIT Mesra",
+        notes: "90-minute class",
+        topicsCovered: "IP addresses, ports, TCP/IP, DNS, OSI vs TCP/IP; HTTP vs HTTPS; requests, responses, cookies and headers",
+        handsOn: "Inspect a sample browser request with DevTools; basic networking/terminal exercises; guided CTF task",
       },
       {
-        title: "Live Capture-the-Flag (CTF) Competition",
-        description:
-          "Compete in an exclusive jeopardy-style CTF challenge at the conclusion of Day 2 with leaderboard rankings and prizes.",
+        date: "30 Oct 2026",
+        day: "Friday",
+        time: "6:00 – 7:30 PM IST",
+        activity: "Day 3: Web security, guided lab & mini-CTF",
+        format: "In-person",
+        venue: "To be confirmed, BIT Mesra",
+        notes: "90-minute class",
+        topicsCovered: "Authentication vs authorization; web app security; SQL injection and access-control concepts; responsible testing and remediation",
+        handsOn: "Guided lab on a deliberately vulnerable training app; mini-CTF in pairs; write up one finding and its fix",
+      },
+      {
+        date: "From 31 Oct 2026",
+        day: "Saturday onward",
+        time: "To be announced",
+        activity: "Online classes and guided practice",
+        format: "Online",
+        venue: "Online Sandbox & Virtual Labs",
+        notes: "Follow-up schedule will be shared separately",
+        topicsCovered: "Linux and networking practice; web vulnerabilities (SQL injection, XSS, access control); CTF problem-solving; basic crypto/forensics as the course progresses",
+        handsOn: "Weekly online lab challenges, hints and write-ups; follow-up projects using Bandit, picoCTF, PortSwigger Academy and OWASP Juice Shop",
       },
     ],
     timelineItems: [
       {
-        date: "Nov 7, 10:00 – 13:00 IST",
-        title: "Day 1 Morning: Linux Forensics & Network Analysis",
+        date: "27 Oct 2026 (Tue), 18:00 IST",
+        title: "Workshop Opening / Inauguration",
         status: "Confirmed",
         description:
-          "Environment setup, Linux CLI toolchains, Wireshark, Nmap scanning, and network protocol triage.",
+          "In-person opening at CAT Hall. Overview of workshop roadmap, ethical boundaries, participant expectations, and transition plan to online modules.",
       },
       {
-        date: "Nov 7, 14:00 – 16:30 IST",
-        title: "Day 1 Afternoon: Web Security & OWASP Top 10",
+        date: "28 Oct 2026 (Wed), 18:00 – 19:30 IST",
+        title: "Day 1: Foundations, Ethics & Linux Basics",
         status: "Confirmed",
         description:
-          "Burp Suite intercepting proxies, SQLi exploitation, XSS filters bypass, and CSRF defense.",
+          "90-minute in-person session covering the CIA triad, threat modeling, phishing recognition, password hygiene, and hands-on Linux CLI drills.",
       },
       {
-        date: "Nov 8, 10:00 – 13:00 IST",
-        title: "Day 2 Morning: Cryptography & Reverse Engineering",
+        date: "29 Oct 2026 (Thu), 18:00 – 19:30 IST",
+        title: "Day 2: Networking, HTTP, Crypto & Password Security",
         status: "Confirmed",
         description:
-          "Ghidra basics, binary disassembly, XOR/RSA exploitation, and privilege escalation vectors.",
+          "90-minute in-person session analyzing TCP/IP, OSI, HTTP headers, DevTools packet inspection, cryptographic fundamentals, and guided CTF exercises.",
       },
       {
-        date: "Nov 8, 14:00 – 16:30 IST",
-        title: "Day 2 Afternoon: Jeopardy CTF Sprint & Awards",
+        date: "30 Oct 2026 (Fri), 18:00 – 19:30 IST",
+        title: "Day 3: Web Security, Guided Lab & Mini-CTF",
         status: "Confirmed",
         description:
-          "Timed CTF showdown across 15 custom challenge flags, peer presentations, and certificate distribution.",
+          "90-minute in-person session covering OWASP Top 10 web vulnerabilities, SQL injection, access control bypasses, and paired mini-CTF lab challenge.",
+      },
+      {
+        date: "From 31 Oct 2026 onward",
+        title: "Online Classes & Guided Practice Labs",
+        status: "Confirmed",
+        description:
+          "Self-paced and guided online CTF tracks on OverTheWire Bandit, picoCTF, PortSwigger Web Security Academy, and OWASP Juice Shop with community hints and write-ups.",
       },
     ],
     faqs: [
@@ -560,6 +602,29 @@ export const events: Event[] = [
         title: "Active Contributors",
         reward: "Participation Certificates",
         description: "Awarded to all students completing hands-on laboratory checkpoints.",
+      },
+    ],
+    exploreLinks: [
+      {
+        title: "Official Workshop Poster & Promo Assets",
+        description:
+          "Expert-led hybrid poster — view and share the conference-style official announcement creative for ACM BIT Mesra.",
+        url: "https://www.canva.com/",
+        label: "Open conference-style poster in Canva",
+      },
+      {
+        title: "OverTheWire: Bandit Wargame Sandbox",
+        description:
+          "Practice foundational Linux command line ergonomics, SSH connections, file permissions, and directory traversal.",
+        url: "https://overthewire.org/wargames/bandit/",
+        label: "Explore Bandit Labs",
+      },
+      {
+        title: "PortSwigger Web Security Academy",
+        description:
+          "Free online interactive web security training and hands-on labs covering SQL injection, authentication bypasses, XSS, and CSRF.",
+        url: "https://portswigger.net/web-security",
+        label: "Explore PortSwigger Academy",
       },
     ],
   },
