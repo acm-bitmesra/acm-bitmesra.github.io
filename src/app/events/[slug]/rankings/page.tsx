@@ -14,6 +14,7 @@ import { siteConfig } from "@/config/site";
 import { Trophy, ArrowLeft, ExternalLink, Info } from "lucide-react";
 import { RankingsTable, type ParticipantStanding } from "./rankings-table";
 import { events } from "@/data/events";
+import { SubmitPrDialog } from "@/components/events/submit-pr-dialog";
 
 interface RankingsPageProps {
   params: Promise<{ slug: string }>;
@@ -187,11 +188,18 @@ export default async function EventRankingsPage({ params }: RankingsPageProps) {
             <span>Back to {event.title}</span>
           </Link>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2.5 py-0.5 font-mono text-[11px] font-semibold text-emerald-600 dark:text-emerald-400">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
               {leaderboard?.isPublished ? "Official Standings" : "Live Real-Time Standings"}
             </span>
+
+            <SubmitPrDialog
+              eventSlug={event.slug}
+              eventTitle={event.title}
+              buttonVariant="compact"
+              buttonLabel="Submit PR"
+            />
           </div>
         </div>
 
@@ -209,16 +217,27 @@ export default async function EventRankingsPage({ params }: RankingsPageProps) {
           </p>
         </div>
 
-        {/* Evaluation Disclaimer Banner */}
-        <div className="rounded-xl border border-border bg-secondary/10 p-4 sm:p-5 flex items-start gap-3.5">
-          <Info className="h-5 w-5 text-amber-500 shrink-0 mt-0.5" />
-          <div className="space-y-1">
-            <h2 className="text-sm font-semibold text-foreground">
-              Evaluation & Scoring Notice
-            </h2>
-            <p className="text-xs sm:text-sm leading-relaxed text-muted-foreground">
-              This is not the final evaluation. These scores and positions represent preliminary automated tracking. The final evaluation will be conducted manually by the judges depending upon the quality of the PR, difficulty, and where you have merged it.
-            </p>
+        {/* Evaluation Disclaimer & Manual Submission Banner */}
+        <div className="rounded-xl border border-border bg-secondary/10 p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="flex items-start gap-3.5">
+            <Info className="h-5 w-5 text-amber-500 shrink-0 mt-0.5" />
+            <div className="space-y-1">
+              <h2 className="text-sm font-semibold text-foreground">
+                Evaluation & Scoring Notice
+              </h2>
+              <p className="text-xs sm:text-sm leading-relaxed text-muted-foreground">
+                This is preliminary automated tracking. Final scores are evaluated manually by chapter judges based on contribution complexity, PR quality, and target repository. You can manually add your PR links anytime to track them live.
+              </p>
+            </div>
+          </div>
+
+          <div className="shrink-0 pl-8 sm:pl-0">
+            <SubmitPrDialog
+              eventSlug={event.slug}
+              eventTitle={event.title}
+              buttonVariant="primary"
+              buttonLabel="Submit Pull Request"
+            />
           </div>
         </div>
 

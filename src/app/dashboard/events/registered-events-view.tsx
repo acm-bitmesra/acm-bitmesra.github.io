@@ -12,7 +12,9 @@ import {
   MapPin,
   Clock,
   Loader2,
+  Trophy,
 } from "lucide-react";
+import { SubmitPrDialog } from "@/components/events/submit-pr-dialog";
 
 interface RegistrationItem {
   id: string;
@@ -156,7 +158,24 @@ export function RegisteredEventsView({
               </div>
 
               {!isCancelled && (
-                <div>
+                <div className="flex flex-wrap items-center gap-2">
+                  {reg.event.slug === "hacktoberfest-2026" && (
+                    <>
+                      <SubmitPrDialog
+                        eventSlug={reg.event.slug}
+                        eventTitle={reg.event.title}
+                        buttonVariant="compact"
+                        buttonLabel="Submit PR"
+                      />
+                      <Link
+                        href={`/events/${reg.event.slug}/rankings`}
+                        className="inline-flex items-center gap-1 rounded-md border border-border bg-card px-2.5 py-1.5 text-xs font-semibold text-foreground hover:bg-muted/50 transition-colors"
+                      >
+                        <Trophy className="h-3 w-3 text-amber-500" />
+                        <span>Rankings</span>
+                      </Link>
+                    </>
+                  )}
                   <button
                     type="button"
                     onClick={() => handleCancel(reg.event.slug)}

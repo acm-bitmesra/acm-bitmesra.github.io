@@ -87,6 +87,20 @@ export async function GET(
         totalScore: userStanding?.totalScore ?? calculatedScore,
         rank: userStanding?.rank || null,
       },
+      contributions: userCandidates.map((c) => ({
+        id: c.id,
+        prNumber: c.prNumber,
+        prTitle: c.prTitle,
+        prUrl: c.prUrl,
+        repoOwner: c.repoOwner,
+        repoName: c.repoName,
+        prState: c.prState,
+        isMerged: c.isMerged,
+        reviewStatus: c.reviewStatus,
+        assignedScore: c.assignedScore,
+        reviewerNotes: c.reviewerNotes,
+        createdAt: c.createdAt,
+      })),
     });
   } catch (error) {
     console.error("Error fetching event status:", error);

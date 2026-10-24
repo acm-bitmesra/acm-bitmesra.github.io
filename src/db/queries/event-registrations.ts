@@ -554,3 +554,54 @@ export async function getUserAcmRankings(userId: string): Promise<UserAcmRanking
   }
 }
 
+export async function getUserContributions(eventId: string, userId: string) {
+  try {
+    return await db
+      .select()
+      .from(contributionCandidates)
+      .where(
+        and(
+          eq(contributionCandidates.eventId, eventId),
+          eq(contributionCandidates.userId, userId)
+        )
+      )
+      .orderBy(desc(contributionCandidates.createdAt));
+  } catch (error) {
+    console.error("Error fetching user contributions:", error);
+    return [];
+  }
+}
+
+export async function deleteUserContribution(
+  eventId: string,
+  userId: string,
+  candidateId: string
+) {
+  try {
+    const [existing] = await db
+      .select()
+      .from(contributionCandidates)
+      .where(
+        and(
+          eq(contributionCandidates.id, candidateId),
+          eq(contributionCandidates.eventId, eventId),
+          eq(contributionCandidates.userId, userId)
+        )
+      )
+      .limit(1);
+
+    if (!existing) {
+      return { success: false, error: "Candidate not found or unauthorized" };
+    }
+
+    await db
+      .delete(contributionCandidates)
+      .where(eq(contributionCandidates.id, candidateId));
+
+    return { success: true };
+  } catch (error) {
+    console.error("Error deleting contribution candidate:", error);
+    return { success: false, error: "Database deletion failed" };
+  }
+}
+

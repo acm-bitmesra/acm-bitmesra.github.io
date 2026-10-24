@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { alumniBatches, alumniEngagementPaths } from "@/data/alumni";
+import { AlumniDirectory } from "./alumni-directory";
 import { GraduationCap, ShieldCheck } from "@animateicons/react/lucide";
 
 export const metadata: Metadata = {
@@ -26,6 +27,9 @@ export default function AlumniPage() {
             Preserving institutional memory across graduating batches. Our alumni have mentored generations of student engineers, organized flagship events, and fostered an enduring computing tradition at BIT Mesra.
           </p>
         </div>
+
+        {/* Verified Alumni Directory */}
+        <AlumniDirectory />
 
         {/* Engagement Avenues */}
         <section className="space-y-6">

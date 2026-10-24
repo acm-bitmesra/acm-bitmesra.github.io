@@ -13,6 +13,7 @@ import { Badge } from "@/components/ui/badge";
 import { RecommendedReposSection } from "@/components/events/recommended-repos-section";
 import { EventRegistrationButton } from "@/components/events/event-registration-button";
 import { WorkshopScheduleSection } from "@/components/events/workshop-schedule-section";
+import { SubmitPrDialog } from "@/components/events/submit-pr-dialog";
 
 interface EventDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -243,11 +244,33 @@ export default async function EventDetailPage({
 
               {event.challengeTitle && (
                 <Section title={event.challengeTitle} icon={<FileText className="h-5 w-5" />}>
-                  <div className="border border-primary/20 bg-primary/[0.06] px-5 py-5 sm:px-6 sm:py-6">
+                  <div className="border border-primary/20 bg-primary/[0.06] px-5 py-5 sm:px-6 sm:py-6 space-y-4">
                     <p className="max-w-[72ch] text-base leading-7 text-muted-foreground">
                       {event.challengeDescription}
                     </p>
-                    <p className="mt-4 border-t border-primary/15 pt-4 text-sm leading-6 text-foreground/75">
+
+                    {event.slug === "hacktoberfest-2026" && (
+                      <div className="rounded-lg border border-border bg-card p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                        <div className="space-y-1">
+                          <h3 className="text-sm font-semibold text-foreground">
+                            Submit Your Pull Request Link
+                          </h3>
+                          <p className="text-xs text-muted-foreground max-w-xl">
+                            Contributed to an ACM BIT Mesra repository or curated open-weight AI project? Add your public GitHub PR URL to track your score on the live leaderboard.
+                          </p>
+                        </div>
+                        <div className="shrink-0">
+                          <SubmitPrDialog
+                            eventSlug={event.slug}
+                            eventTitle={event.title}
+                            buttonVariant="primary"
+                            buttonLabel="Submit PR Link"
+                          />
+                        </div>
+                      </div>
+                    )}
+
+                    <p className="border-t border-primary/15 pt-4 text-sm leading-6 text-foreground/75">
                       More challenge details, rules, judging information, and submission procedures will be announced on this page.
                     </p>
                   </div>

@@ -4,6 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { CheckCircle, Loader2, ArrowRight, Trophy, AlertCircle } from "lucide-react";
 import { GithubIcon } from "@/components/ui/icons";
+import { SubmitPrDialog, type UserContributionItem } from "./submit-pr-dialog";
 
 interface GitHubAccountInfo {
   handle: string;
@@ -38,6 +39,7 @@ export function EventRegistrationButton({
     registered: boolean;
     githubAccount: GitHubAccountInfo | null;
     stats: EventStats;
+    contributions: UserContributionItem[];
   }>({
     authenticated: false,
     registered: false,
@@ -48,6 +50,7 @@ export function EventRegistrationButton({
       totalScore: 0,
       rank: null,
     },
+    contributions: [],
   });
 
   const isHacktoberfest = slug === "hacktoberfest-2026";
@@ -67,6 +70,7 @@ export function EventRegistrationButton({
             totalScore: 0,
             rank: null,
           },
+          contributions: Array.isArray(data.contributions) ? data.contributions : [],
         });
       }
     } catch {
@@ -147,9 +151,9 @@ export function EventRegistrationButton({
           {isHacktoberfest && (
             <div className="mt-2.5 grid grid-cols-2 gap-2 border-t border-emerald-500/15 pt-2.5 font-mono text-[11px]">
               <div className="rounded bg-background/60 p-1.5 text-center">
-                <span className="text-muted-foreground block text-[10px]">Approved PRs</span>
+                <span className="text-muted-foreground block text-[10px]">Submitted PRs</span>
                 <span className="font-bold text-foreground text-xs">
-                  {authStatus.stats.approvedCount}
+                  {authStatus.stats.approvedCount} / {authStatus.stats.contributionsCount}
                 </span>
               </div>
               <div className="rounded bg-background/60 p-1.5 text-center">
@@ -162,13 +166,25 @@ export function EventRegistrationButton({
           )}
         </div>
 
+        {/* Action: Manual PR Submission for Hacktoberfest */}
+        {isHacktoberfest && (
+          <SubmitPrDialog
+            eventSlug={slug}
+            eventTitle="Hacktoberfest 2026"
+            buttonLabel="Submit Pull Request Link"
+            buttonVariant="primary"
+            className="w-full min-h-11 shadow-sm font-semibold"
+            onPrSubmitted={fetchStatus}
+          />
+        )}
+
         {/* Action: View Rankings (only for Hacktoberfest / ranking-based events) */}
         {isHacktoberfest && (
           <Link
             href={`/events/${slug}/rankings`}
-            className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 text-xs font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 transition-colors"
+            className="inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-lg border border-border bg-card px-4 text-xs font-semibold text-foreground hover:bg-muted/50 transition-colors"
           >
-            <Trophy className="h-3.5 w-3.5 text-amber-300" />
+            <Trophy className="h-3.5 w-3.5 text-amber-500" />
             <span>View Live Rankings & Standings</span>
             <ArrowRight className="h-3.5 w-3.5" />
           </Link>
